@@ -32,7 +32,7 @@
                         <hr><!-- horizontal line -->
 
                         <!-- Login form -->
-                        <form class="panel" name="form-login" method="post" action="{{ route('api.login') }}">
+                        <form class="panel" name="form-login" method="post" action="{{ route('gerbang.login') }}">
                             {{ csrf_field() }}
                             <div class="panel-body">
                                 @include('layouts.elements.alert')

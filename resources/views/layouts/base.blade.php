@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="@yield('body-class')">
+<html class="@yield('html-class')">
     <!-- START Head -->
     <head>
         <!-- START META SECTION -->
@@ -42,7 +42,7 @@
     <!--/ END Head -->
 
     <!-- START Body -->
-    <body class="@yield('body-class2')">
+    <body class="@yield('body-class')">
         @yield('body')
         
         <!-- START Template Main -->

@@ -75,6 +75,9 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::resource('kategori', 'CategoryCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('kategori/post','CategoryCtrl@postCategory')->name('kategori.post');
 
+	Route::resource('mobil', 'MobilCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
+	Route::post('mobil/post','MobilCtrl@postMobil')->name('mobil.post');
+
 	
 	// User Profile
     Route::group(['prefix' => 'me'], function($router){

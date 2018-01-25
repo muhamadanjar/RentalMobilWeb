@@ -32,6 +32,7 @@ class DashboardCtrl extends BackendCtrl{
         //$countagenda = $this->agenda->countNewThisWeek();
         $datastatistik = $this->activity->statistikPengunjung();
         $chartstatistik = $this->getChartStatistik();
+        //dd($chartstatistik);
         return view('backend.dashboard.index')
         //->with('transdata',$transdata)
         //->with('transdatadaerah',$transdatadaerah)
