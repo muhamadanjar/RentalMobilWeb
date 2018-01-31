@@ -116,8 +116,8 @@ trait CustomLogin{
             return response()->json(['success' => false, 'error' => 'could_not_create_token'], 500);
         }
         // all good so return the token
-        
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token ]])->header('Authorization','Bearer '.$token);
+        $_user = DB::table('users')->where('username',$request->username)->first();
+        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user ]])->header('Authorization','Bearer '.$token);
         //return response()->json(compact('token'));
     }
     /**

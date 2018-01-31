@@ -17,9 +17,11 @@ class Officers extends Migration
             $table->increments('id');
             $table->string('name',190);
             $table->string('nip');
-            $table->unsignedInteger('pangkat_id');
-            $table->unsignedInteger('jabatan_id');
-            $table->enum('role', ['staff', 'operator']);
+            $table->string('alamat');
+            $table->unsignedInteger('no_telp');
+            $table->unsignedInteger('pangkat_id')->nullable();
+            $table->unsignedInteger('jabatan_id')->nullable();
+            $table->enum('role', ['staff/karyawan', 'customer']);
             $table->timestamps();
             $table->softDeletes();
         });
