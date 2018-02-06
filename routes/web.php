@@ -61,11 +61,11 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::get('setting/profile', ['as' => 'setting.profile', 'uses' => 'SettingCtrl@profile']);
     //Route::get('setting/sop', ['as' => 'setting.sop', 'uses' => 'SettingCtrl@sop']);
 	Route::post('setting', ['as' => 'setting.store', 'uses' => 'SettingCtrl@store']);
-	Route::resource('files', 'FileCtrl');
+	//Route::resource('files', 'FileCtrl');
 	Route::resource('log', 'LogCtrl', ['only' => ['index', 'show']]);
-	Route::resource('album', 'AlbumCtrl');
-	Route::resource('media', 'MediaCtrl',['only'=> ['index','create','store','edit','update','destroy']]);
-	Route::post('media/postimage', 'MediaCtrl@postimage')->name('media.postimage');
+	//Route::resource('album', 'AlbumCtrl');
+	//Route::resource('media', 'MediaCtrl',['only'=> ['index','create','store','edit','update','destroy']]);
+	//Route::post('media/postimage', 'MediaCtrl@postimage')->name('media.postimage');
 
 	Route::resource('faq', 'FaqCtrl');
 
@@ -77,6 +77,8 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 
 	Route::resource('mobil', 'MobilCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('mobil/post','MobilCtrl@postMobil')->name('mobil.post');
+	Route::resource('fasilitas', 'FasilitasCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
+	Route::post('fasilitas/post','FasilitasCtrl@postFasilitas')->name('fasilitas.post');
 
 	
 	// User Profile

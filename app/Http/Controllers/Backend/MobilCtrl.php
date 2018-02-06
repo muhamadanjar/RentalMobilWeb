@@ -49,12 +49,16 @@ class MobilCtrl extends BackendCtrl
         return redirect()->route('backend.index')->with('flash.error','Anda Tidak diijinkan Mengakses Halaman ini');
     }
 
-    public function postMobil(Request $request,$id){
-        $layer = (session('aksi') == 'edit') ? Mobil::find($request->id) : new Mobil;
-        $layer->nama = $request->namalayer;
-        $layer->merk = $request->merk;
-        $layer->type = $request->type;
-        $layer->save();
+    public function postMobil(Request $request){
+        $user = auth()->user();
+        $mobil = (session('aksi') == 'edit') ? Mobil::find($request->id) : new Mobil;
+        $mobil->no_plat = $request->no_plat;
+        $mobil->merk = $request->merk;
+        $mobil->type = $request->type;
+        $mobil->warna = $request->warna;
+        $mobil->harga = $request->harga;
+        $mobil->author()->associate($user);
+        $mobil->save();
         return redirect()->route('backend.mobil.index');
     }
 }

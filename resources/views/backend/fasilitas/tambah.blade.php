@@ -3,51 +3,30 @@
 @section('content-admin')
   <?php
     $id = '';
-    $no_plat='';
-    $merk='';
-    $type='';
-    $warna='';
-    $harga='';
-    
+    $name='';
+    $slug='';
+   
     if (session('aksi') == 'edit') {
-      $id = $mobil->id;
-      $no_plat= $mobil->no_plat;
-      $merk= $mobil->merk;
-      $type = $mobil->type;
-      $warna = $mobil->warna;
-      $harga = $mobil->harga;
+      $id = $fasilitas->id;
+      $name= $fasilitas->name;
+      $slug= $fasilitas->slug;
+      
       
     }
   ?>
-<form role="form" method="post" action="{{ route('backend.mobil.post')}}" enctype='multipart/form-data'>
+<form role="form" method="post" action="{{ route('backend.fasilitas.post')}}" enctype='multipart/form-data'>
   {{ csrf_field() }}
   <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title"> Mobil</h3>
+              <h3 class="panel-title"> Fasilitas</h3>
             </div>
             <div class="panel-body">
                 <input type="hidden" name="id" class="form-control" id="id" value="{{$id}}">
                 <div class="form-group">
-                  <label for="no_plat">No Plat</label>
-                  <input type="text" name="no_plat" class="form-control" id="no_plat" value="{{$no_plat}}">
-                </div>
-                <div class="form-group">
-                  <label for="merk">Merk Mobil</label>
-                  <input type="text" name="merk" class="form-control" id="merk" value="{{$merk}}">
-                </div>
-                <div class="form-group">
-                  <label for="type">Type Mobil</label>
-                  <input type="text" name="type" class="form-control" id="type" value="{{$type}}">
-                </div>
-                <div class="form-group">
-                  <label for="type">Warna Mobil</label>
-                  <input type="text" name="warna" class="form-control" id="warna" value="{{$warna}}">
-                </div>
-                <div class="form-group">
-                  <label for="type">Harga Mobil</label>
-                  <input type="text" name="harga" class="form-control" id="harga" value="{{$harga}}">
+                  <label for="name">Nama Fasilitas</label>
+                  <input type="text" name="name" class="form-control" id="name" value="{{$name}}">
                 </div>
                 
 

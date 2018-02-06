@@ -16,13 +16,14 @@ class Mobil extends Migration
         Schema::create('mobil', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->integer('no_plat');
+            $table->string('no_plat');
             $table->string('merk');
             $table->string('type');
             $table->string('warna');
             $table->integer('harga');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

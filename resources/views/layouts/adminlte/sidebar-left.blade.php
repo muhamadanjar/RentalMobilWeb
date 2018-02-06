@@ -34,7 +34,7 @@
           </a>
         </li>
         <li class="{{ (session('link_web') == 'fasilitas')?'active':'' }}">
-          <a href="{{ route('backend.dashboard.index') }}">
+          <a href="{{ route('backend.fasilitas.index') }}">
             <i class="fa fa-dashboard"></i> <span>Fasilitas</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -57,8 +57,8 @@
             </span>
           </a>
         </li>
-        <li class="treeview">
-          <a href="#">
+        <li class="">
+          <a href="{{ route('backend.mobil.index') }}">
             <i class="fa fa-car"></i>
             <span>Mobil</span>
             <span class="pull-right-container">

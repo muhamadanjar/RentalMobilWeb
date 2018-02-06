@@ -9,12 +9,12 @@ class Mobil extends Model
     protected $table = 'mobil';
 
     protected $primaryKey = 'id';
-
+    public $timestamps = false;
     public function author(){
-        return $this->belongsTo('App\User', 'author_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function fasilitas(Type $var = null){
+    public function fasilitas(){
         return $this->hasMany('App\Mobil\Fasilitas', 'fasilitas_id');
         //return $this->belongsToMany(Fasilitas::class,'post_tag');
     }

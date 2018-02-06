@@ -2,14 +2,12 @@
 @section('content-admin')
     <div class="panel panel-default">
         <div class="panel-heading with-border">
-            <h3 class="panel-title">Mobil</h3>
+            <h3 class="panel-title">Fasilitas</h3>
             <div class="panel-toolbar text-right">
                 <div class="btn-group">
-                    <a href="{{ route('backend.mobil.create') }}" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span> Tambah</a>
-                    
+                    <a href="{{ route('backend.fasilitas.create') }}" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span> Tambah</a>
                 </div>
             </div>
-            
         </div>
             <!-- /.box-header -->
         <div class="panel-body">
@@ -19,14 +17,11 @@
                         <th></th>
                         <th>Nama</th>
                         <th>Merk</th>
-                        <th>Type</th>
-                        <th>Warna</th>
-                        <th>Harga</th>
                     </tr>
                 </thead>
                 
                 <tbody>
-                    @foreach($mobil as $key => $p)
+                    @foreach($fasilitas as $key => $p)
                     <tr>
                         <td>
                             <div class="btn-group">
@@ -34,13 +29,13 @@
                                 <i class="caret"></i>&nbsp;
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('backend.mobil.edit',array($p->id,'edit')) }}"><i class="fa fa-edit"></i> Edit</a></li>
+                                    <li><a href="{{ route('backend.fasilitas.edit',array($p->id,'edit')) }}"><i class="fa fa-edit"></i> Edit</a></li>
                                     <li data-form="#frmDelete-{{ $p->id }}" 
-                                        data-title="Hapus Informasi" 
-                                        data-message="Anda yakin menghapus informasi ini ?">
+                                        data-title="Hapus Fasilitas" 
+                                        data-message="Anda yakin menghapus Fasilitas ini ?">
                                         <a href="#" class="formConfirm"><i class="fa fa-trash"></i> Hapus</a></li>
                                         <form 
-                                            action="{{ route('backend.mobil.destroy',array($p->id)) }}" 
+                                            action="{{ route('backend.fasilitas.destroy',array($p->id)) }}" 
                                             method="post" 
                                             style="display:none" 
                                             id="frmDelete-{{ $p->id }}">
@@ -50,11 +45,8 @@
                                 </ul>
                             </div>
                         </td>
-                        <td>{{ $p->no_plat }}</td>
-                        <td><span class="badge badge-primary">{{ $p->merk }}</span></td>
-                        <td>{{ $p->type }}</td>
-                        <td>{{ $p->warna }}</td>
-                        <td>{{ $p->harga }}</td>        
+                        <td>{{ $p->name }}</td>
+                        <td><span class="badge badge-primary">{{ $p->slug }}</span></td>     
                     </tr>
                     @endforeach
                 </tbody>
