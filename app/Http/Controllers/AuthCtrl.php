@@ -24,7 +24,7 @@ class AuthCtrl extends Controller{
     }
 	
 	public function showLoginForm(){
-        return view('login');
+        return view('layouts.adminlte.login');
     }
 
     /**

@@ -64,7 +64,7 @@
     </div>
 
 @endsection
-@section('title','Layer')
+@section('title','Mobil')
 @section('style-head')
 @parent
 <link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/datatables.css')}}">

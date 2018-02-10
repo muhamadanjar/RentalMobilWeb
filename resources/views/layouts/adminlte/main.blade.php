@@ -5,7 +5,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}">
 <!-- Ionicons -->
-<link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="{{ asset('plugins/Ionicons/css/ionicons.min.css')}}">
 <link rel="stylesheet" href="{{ url('dist/css/AdminLTE.min.css')}}">
 
 <link rel="stylesheet" href="{{ url('dist/css/skins/_all-skins.min.css')}}">
