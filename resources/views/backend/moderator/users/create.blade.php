@@ -1,4 +1,4 @@
-@extends('layouts.admin.admin')
+@extends('layouts.adminlte.main')
 @section('title','User')
 @section('content-admin')
 <?php

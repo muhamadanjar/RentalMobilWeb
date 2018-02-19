@@ -25,7 +25,6 @@
             </h1>
             <ol class="breadcrumb">
                 @yield('breadcrumb')
-                
             </ol>
         </section>
 
@@ -47,8 +46,7 @@
 
 @section('script-end')
 @parent
-<script src="{{asset('/js/app.js')}}"></script>
-
+<script src="{{ asset('/js/app.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->

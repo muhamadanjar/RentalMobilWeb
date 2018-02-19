@@ -1,4 +1,4 @@
-@extends('layouts.admin.admin')
+@extends('layouts.adminlte.main')
 
 @section('breadcrumb')
     @parent
@@ -11,7 +11,7 @@
 
         <form action="" class="mb">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Cari berdasar nama pengguna atau kasus posisi ..." value="{{ Input::get('q') }}">
+                <input type="text" name="q" class="form-control" placeholder="Cari berdasar nama pengguna atau kasus posisi ..." value="{{ \Input::get('q') }}">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">Cari</button>
                 </span>
@@ -43,7 +43,7 @@
                     <tr><td><span class="empty">Belum ada data</span></td></tr>
                 @endforelse
             </table>
-            <div class="panel-footer">{{ $logs->appends(['q' => Input::get('q')])->links() }}</div>
+            <div class="panel-footer">{{ $logs->appends(['q' => \Input::get('q')])->links() }}</div>
         </div>
 
     </div>

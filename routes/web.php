@@ -32,8 +32,6 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::get('/', 'DashboardCtrl@getIndex')->name('index');
 	Route::get('dashboard/index', ['as' => 'dashboard.index', 'uses' => 'DashboardCtrl@getIndex']);
 	
-	
-	
 	Route::resource('officers', 'OfficerCtrl');
 	/*Route::group(['prefix'=>'dokumen','as'=>'dokumen.'], function(){
 		Route::get('/','DokumenCtrl@getIndex')->name('index');
@@ -80,7 +78,8 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::resource('fasilitas', 'FasilitasCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('fasilitas/post','FasilitasCtrl@postFasilitas')->name('fasilitas.post');
 
-	
+	Route::resource('permissions', 'PermissionCtrl',['only' => ['index']]);
+
 	// User Profile
     Route::group(['prefix' => 'me'], function($router){
         $router->get('/', 'MeCtrl@index')->name('me.profile');

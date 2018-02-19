@@ -1,9 +1,9 @@
 @extends('layouts.adminlte.main')
 @section('content-admin')
-    <div class="panel panel-default">
-        <div class="panel-heading with-border">
-            <h3 class="panel-title">Mobil</h3>
-            <div class="panel-toolbar text-right">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Mobil</h3>
+            <div class="box-tools text-right">
                 <div class="btn-group">
                     <a href="{{ route('backend.mobil.create') }}" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span> Tambah</a>
                     
@@ -12,12 +12,12 @@
             
         </div>
             <!-- /.box-header -->
-        <div class="panel-body">
+        <div class="box-body">
         	<table class="display table" cellspacing="0" width="100%" id="table_dom">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Nama</th>
+                        <th>No Plat</th>
                         <th>Merk</th>
                         <th>Type</th>
                         <th>Warna</th>
@@ -54,7 +54,7 @@
                         <td><span class="badge badge-primary">{{ $p->merk }}</span></td>
                         <td>{{ $p->type }}</td>
                         <td>{{ $p->warna }}</td>
-                        <td>{{ $p->harga }}</td>        
+                        <td>{{ number_format($p->harga) }}</td>        
                     </tr>
                     @endforeach
                 </tbody>
@@ -85,5 +85,5 @@
 <script type="text/javascript" src="{{ url('assets/plugins/datatables/tabletools/js/dataTables.tableTools.js')}}"></script>
 <script type="text/javascript" src="{{ url('assets/plugins/datatables/js/datatables-bs3.js')}}"></script>
 <script type="text/javascript" src="{{ url('js/sikko.js')}}"></script>
-
+<script src="{{ asset('/js/rm.js') }}"></script>
 @endsection

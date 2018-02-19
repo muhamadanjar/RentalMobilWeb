@@ -1,21 +1,17 @@
-@extends('layouts.admin.admin')
+@extends('layouts.adminlte.main')
 @section('style-head')
 @parent
-<link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/datatables.css')}}">
+<link rel="stylesheet" href="{{ url('/plugins/datatables/datatables.min.css')}}">
 <link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/tabletools.css')}}">
 @endsection
 @section('content-admin')
-
-<div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h6 class="panel-title">Manajemen User</h6>
             <div class="panel-toolbar text-right">
-                <span class="subtitle">{{ count($users) }} User Terdaftar</span>
                 <div class="btn-group pull-right">
-                    
                     <a href="{{ route('backend.pengaturan.users.create') }}" class=" btn btn-sm btn-primary">
-                    <i class="fa fa-mail-reply ico-user-plus2"></i> Tambah</a>
+                    <i class="fa fa-plus ico-user-plus2"></i> Tambah</a>
                 </div>
             </div>
             
@@ -48,8 +44,7 @@
                                 <a href="{{ route('backend.pengaturan.users.edit', [$user->id]) }}" class="btn btn-default btn-xs">Edit</a>
                                 <a href="{{ route('backend.pengaturan.users.resetpassword', [$user->id]) }}" class="btn btn-xs btn-info btn-reset-password">Reset Password</a>
                                 <input type="hidden" name="_method" value="delete">
-                                <button type="submit" class="btn btn-danger btn-xs btn-delete @if($user->isSuper()) disabled @endif">Delete</button>
-                                
+                                <!--<button type="submit" class="btn btn-danger btn-xs btn-delete @if($user->isSuper()) disabled @endif">Delete</button>-->
                             </div>
                         </form>
                         <div class="btn-group">
@@ -80,7 +75,7 @@
             </tbody>
         </table>
     </div>
-</div>
+
 
 @stop
 
@@ -91,14 +86,12 @@
     <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/addon/timepicker/jquery-ui-timepicker.js')}}"></script>
     <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui-touch.js')}}"></script>
     <script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/select2/js/select2.js')}}"></script>
+    <script type="text/javascript" src="{{ url('/plugins/select2/js/select2.js')}}"></script>
     <script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
     <script type="text/javascript" src="{{ url('assets/javascript/backend/forms/element.js')}}"></script>
 
-    <script type="text/javascript" src="{{ url('assets/plugins/datatables/js/jquery.dataTables.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/datatables/tabletools/js/dataTables.tableTools.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/datatables/js/datatables-bs3.js')}}"></script>
-    <script src="{{ asset('vendor/bootbox.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
+    <script src="{{ asset('plugins/bootbox/js/bootbox.js') }}"></script>
     <script>
         $(function(){
             $(document).on('click', '.btn-reset-password', function(e){
@@ -116,7 +109,7 @@
                         }).done(function(response){
                             bootbox.alert("Password baru: " + response.password);
                         }).fail(function(){
-                            alert('Oops, tidak bisa melakukan perubahan password saati ini. Coba lagi beberapa saat atau hubungi admin.');
+                            bootbox.alert('Oops, tidak bisa melakukan perubahan password saati ini. Coba lagi beberapa saat atau hubungi admin.');
                         }).always(function(){
                             //btn.button('reset');
                         });
@@ -126,5 +119,5 @@
             });
         });
     </script>
-    <script type="text/javascript" src="{{ url('js/sikko.js')}}"></script>
+    <script type="text/javascript" src="{{ url('js/rm.js')}}"></script>
 @stop

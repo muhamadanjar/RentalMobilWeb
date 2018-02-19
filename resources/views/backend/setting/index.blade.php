@@ -2,12 +2,14 @@
 
 @section('breadcrumb')
     @parent
-    <span class="trail"><i class="fa fa-angle-right"></i></span>
-    <span class="trail">Konfigurasi</span>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
 @endsection
 
 @section('content-admin')
-    <h2 class="page-title">Konfigurasi</h2>
 
     
     <form role="form" method="POST" enctype="multipart/form-data" action="{{ route('backend.setting.store') }}">
@@ -18,21 +20,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Setting</h3>
                     </div>
-                    <div class="panel-toolbar-wrapper">
-                                    <div class="panel-toolbar">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-default"><i class="ico-align-left2"></i></button>
-                                            <button type="button" class="btn btn-sm btn-default"><i class="ico-align-center"></i></button>
-                                            <button type="button" class="btn btn-sm btn-default"><i class="ico-align-right2"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="panel-toolbar text-right">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-default"><i class="ico-bold"></i></button>
-                                            <button type="button" class="btn btn-sm btn-default"><i class="ico-text-height"></i></button>
-                                        </div>
-                                    </div>
-                    </div>
+                    
                     <div class="panel-body">
                             <div class="form-group">
                                 <h5 class="semibold text-primary nm">Umum.</h5>

@@ -17,7 +17,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-
 Route::post('register', 'AuthCtrl@register');
 Route::post('login', 'AuthCtrl@loginjwt')->name('api.login');
 Route::post('recover', 'AuthCtrl@recover');
@@ -53,3 +52,6 @@ Route::group(['middleware' => ['jwt.auth']], function() {
         //return JWTAuth::parseToken()->authenticate();
     });
 });
+
+
+Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
