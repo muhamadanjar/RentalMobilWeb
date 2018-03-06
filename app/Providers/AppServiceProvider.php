@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
         $site_settings = Setting::pluck('value', 'key');
         View::share('site_settings', $site_settings);
         //Schema::defaultStringLength(191);
+        
+        
     }
 
     /**

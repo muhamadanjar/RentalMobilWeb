@@ -53,5 +53,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     });
 });
 
-
+Route::get('user',function(){
+	return 'foo';
+});
 Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
