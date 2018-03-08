@@ -40,7 +40,7 @@
       opacity: 0.5;
       filter: alpha(opacity=50); /* For IE8 and earlier */
     }
-    .logo-box {
+    .login-box {
       position: absolute;
       width: 330px;
       right: 10%;

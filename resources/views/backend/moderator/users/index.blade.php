@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/tabletools.css')}}">
 @endsection
 @section('content-admin')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h6 class="panel-title">Manajemen User</h6>
-            <div class="panel-toolbar text-right">
+    <div class="box box-default">
+        <div class="box-header">
+            <h6 class="box-title">Manajemen User</h6>
+            <div class="box-tools text-right">
                 <div class="btn-group pull-right">
                     <a href="{{ route('backend.pengaturan.users.create') }}" class=" btn btn-sm btn-primary">
                     <i class="fa fa-plus ico-user-plus2"></i> Tambah</a>
@@ -39,14 +39,6 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td class="text-center">
-                        <form method="post" action="{{ route('backend.pengaturan.users.delete', [$user->id]) }}" class="form-delete">
-                            <div class="btn-group">
-                                <a href="{{ route('backend.pengaturan.users.edit', [$user->id]) }}" class="btn btn-default btn-xs">Edit</a>
-                                <a href="{{ route('backend.pengaturan.users.resetpassword', [$user->id]) }}" class="btn btn-xs btn-info btn-reset-password">Reset Password</a>
-                                <input type="hidden" name="_method" value="delete">
-                                <!--<button type="submit" class="btn btn-danger btn-xs btn-delete @if($user->isSuper()) disabled @endif">Delete</button>-->
-                            </div>
-                        </form>
                         <div class="btn-group">
 					        <button data-toggle="dropdown" class="btn btn-xs {{ $class_active }} btn-icon dropdown-toggle" type="button"><i class="icon-cog4"></i><span class="caret"></span></button>
 									<ul class="dropdown-menu icons-right dropdown-menu-right">
@@ -66,7 +58,8 @@
 											data-message="Apa anda yakin mengaktifkan/menonaktifkan {{ $user->username }} ?">
 											<a class= "formConfirm {{$currentuser_class}}" href="#"><i class="fa {{$fa_active}}"></i> Aktif / Non Aktif</a>
 										</li>
-										<form action="{{ route('backend.pengaturan.users.na', array($user->id) ) }}" method="get" style="display:none" id="frmaktif-{{$user->id}}"></form>					
+										<form action="{{ route('backend.pengaturan.users.na', array($user->id) ) }}" method="get" style="display:none" id="frmaktif-{{$user->id}}"></form>
+                                        <li><a href="{{ route('backend.pengaturan.users.resetpassword', [$user->id]) }}" class="btn btn-reset-password">Reset Password</a></li>
 									</ul>
 				        </div>
                     </td>
@@ -81,17 +74,11 @@
 
 @section('script-end')
     @parent
-    <script type="text/javascript" src="{{ url('assets/plugins/selectize/js/selectize.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/addon/timepicker/jquery-ui-timepicker.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui-touch.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
+    
+    
     <script type="text/javascript" src="{{ url('/plugins/select2/js/select2.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
-    <script type="text/javascript" src="{{ url('assets/javascript/backend/forms/element.js')}}"></script>
-
     <script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
-    <script src="{{ asset('plugins/bootbox/js/bootbox.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/plugins/bootbox/js/bootbox.js') }}"></script>
     <script>
         $(function(){
             $(document).on('click', '.btn-reset-password', function(e){

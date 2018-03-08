@@ -47,6 +47,7 @@
 @section('script-end')
 @parent
 <script src="{{ asset('/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ url('/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->

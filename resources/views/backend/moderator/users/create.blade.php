@@ -28,13 +28,13 @@ if(session('aksi') == 'edit'){
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading with-border">
-                            <h6 class="panel-title"><i class="fa fa-building"></i> Tambah User</h6>
+                            <h6 class="panel-title"><i class="fa fa-user"></i> Tambah User</h6>
                             <div class="panel-toolbar text-right">
                                 <div class="btn-group pull-right">
                                     <button type="submit" class="btn btn-sm btn-primary">
                                         <i class="fa fa-send ico-save"></i> Simpan
                                     </button>
-                                    <a href="{{ route('backend.posts.index') }}" class=" btn btn-sm btn-primary">
+                                    <a href="{{ route('backend.pengaturan.users') }}" class=" btn btn-sm btn-primary">
                                     <i class="fa fa-mail-reply ico-reply3"></i> Kembali</a>
                                 </div>
                             </div>
@@ -122,26 +122,11 @@ if(session('aksi') == 'edit'){
 
 @section('style-head')
 @parent
-<link rel="stylesheet" href="{{ url('assets/plugins/selectize/css/selectize.css')}}">
-<link rel="stylesheet" href="{{ url('assets/plugins/jquery-ui/css/jquery-ui.css')}}">
-<link rel="stylesheet" href="{{ url('assets/plugins/select2/css/select2.css')}}">
-<link rel="stylesheet" href="{{ url('assets/plugins/touchspin/css/touchspin.css')}}">
+<link rel="stylesheet" href="{{ url('/plugins/jquery-ui/css/jquery-ui.css')}}">
 @endsection
 @section('script-end')
 @parent
-<script type="text/javascript" src="{{ url('assets/plugins/selectize/js/selectize.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/addon/timepicker/jquery-ui-timepicker.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui-touch.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/select2/js/select2.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/javascript/backend/forms/element.js')}}"></script>
-
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/tabletools/js/dataTables.tableTools.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/js/datatables-bs3.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/tinymce/tinymce.min.js')}}"></script>
-
-<script type="text/javascript" src="{{ url('js/sikko.js')}}"></script>
+<script type="text/javascript" src="{{ url('/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
+<script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('js/rm.js')}}"></script>
 @endsection
