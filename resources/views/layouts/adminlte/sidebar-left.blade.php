@@ -33,30 +33,6 @@
             </span>
           </a>
         </li>
-        <li class="{{ (session('link_web') == 'fasilitas')?'active':'' }}">
-          <a href="{{ route('backend.fasilitas.index') }}">
-            <i class="fa fa-dashboard"></i> <span>Fasilitas</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-        <li class="{{ (session('link_web') == 'harga')?'active':'' }}">
-          <a href="{{ route('backend.dashboard.index') }}">
-            <i class="fa fa-dashboard"></i> <span>Harga</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
-        <li class="{{ (session('link_web') == 'tujuan')?'active':'' }}">
-          <a href="{{ route('backend.dashboard.index') }}">
-            <i class="fa fa-dashboard"></i> <span>Tujuan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        </li>
         <li class="">
           <a href="{{ route('backend.mobil.index') }}">
             <i class="fa fa-car"></i>
@@ -69,7 +45,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-config"></i> <span>Laporan</span>
+            <i class="fa fa-book"></i> <span>Laporan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -80,7 +56,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-config"></i> <span>Pengaturan</span>
+            <i class="fa fa-gear"></i> <span>Pengaturan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

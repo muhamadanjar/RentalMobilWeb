@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
+use Yajra\Datatables\Facades\Datatables;
+use Laracasts\Flash\Flash;
+//use Yajra\Datatables\Datatables;
 use App\Mobil\Mobil;
 class MobilCtrl extends BackendCtrl
 {
@@ -13,17 +19,15 @@ class MobilCtrl extends BackendCtrl
     }
     public function index(){
         $mobil = Mobil::get();
-        
         return view('backend.mobil.index')->with('mobil',$mobil);
     }
 
     public function create(){
         if(Gate::check('create.mobil')){
             session(['aksi'=>'tambah']);
-            
             return view('backend.mobil.tambah');
         }
-        return redirect()->route('backend.index')->with('flash.error','Anda Tidak diijinkan Mengakses Halaman ini');
+        return redirect()->route('backend.index')->with('flash.error',trans('flash/mobil.create_not_allowed'));
     }
 
     public function edit($id){
@@ -36,8 +40,8 @@ class MobilCtrl extends BackendCtrl
 
     }
 
-
     public function update($request){
+        Flash::success(trans('flash/mobil.updated'));
         $this->postMobil($request);
     }
 
@@ -46,7 +50,8 @@ class MobilCtrl extends BackendCtrl
             $layer = $this->layer->delete($id);
             return redirect()->route('backend.mobil.index')->with('flash.success','Layer Berhasil di Hapus..!!');
         }
-        return redirect()->route('backend.index')->with('flash.error','Anda Tidak diijinkan Mengakses Halaman ini');
+        //Flash::success(trans('flash/case.created'));
+        return redirect()->route('backend.index')->with('flash.error',trans('flash/mobil.delete_not_allowed'));
     }
 
     public function postMobil(Request $request){
@@ -60,5 +65,10 @@ class MobilCtrl extends BackendCtrl
         $mobil->author()->associate($user);
         $mobil->save();
         return redirect()->route('backend.mobil.index');
+    }
+
+    public function getData(){
+        $mobil = Mobil::orderBy('id')->select(['id','no_plat', 'merk','type','warna',\DB::raw("CONCAT('Rp.',FORMAT(harga,2)) as harga")]);
+        return Datatables::of($mobil)->make(true);
     }
 }

@@ -339,10 +339,10 @@ function loadDesa(id){
     var table_dom = $('#table_dom').DataTable();
     var table_user = $('#table_user').DataTable();
     var table_role = $('#table_role').DataTable({});
-    var table_agenda = $('#table_agenda').DataTable({
+    var table_mobil = $('#table_mobil').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '/backend/agenda/getdata',
+        ajax: '/backend/mobil/getdata',
         columns: [
             {
                 //"className":      'details-control',
@@ -356,26 +356,28 @@ function loadDesa(id){
                             '<span class="fa fa-caret-down ico-caret-down"></span></button>' +
                             '<ul class="dropdown-menu">' +
                                 '<li><a class="edit">Edit</a></li>' +
-                                '<li data-title="Hapus Agenda" data-message="Hapus Agenda ??"><a class="hapus">Hapus</a></li>' +
+                                '<li data-title="Hapus Mobil" data-message="Hapus Mobil ??"><a class="hapus">Hapus</a></li>' +
                             '</ul>' +
                         '</div>' +
                     '</div>' 
                 ,
             },
-            {data: 'judul_agenda', name: 'judul_agenda'},
-            {data: 'tempat', name: 'tempat'},
-            {data: 'waktu', name: 'waktu'},
+            {data: 'no_plat', name: 'no_plat'},
+            {data: 'merk', name: 'merk'},
+            {data: 'type', name: 'type'},
+            {data: 'warna', name: 'warna'},
+            {data: 'harga', name: 'harga'},
             
         ],
     });
-    $('#table_agenda tbody').on('click', 'a',function(e) {
-        var data =  table_agenda.row($(this).parents('tr')).data();
+    $('#table_mobil tbody').on('click', 'a',function(e) {
+        var data =  table_mobil.row($(this).parents('tr')).data();
         var id = data.id;
         
         if ($(this).hasClass('edit')) {
-            document.location ='/backend/agenda/'+id+'/ubah';
+            document.location ='/backend/mobil/'+id+'/edit';
         }else if ($(this).hasClass('lihat')) {
-            document.location ='/backend/agenda/'+id+'/lihat';
+            document.location ='/backend/mobil/'+id+'/lihat';
         }else if($(this).hasClass('hapus')){
             e.preventDefault();
             var el = $(this).parent();
@@ -384,7 +386,7 @@ function loadDesa(id){
             var dataForm = el.attr('data-form');
             
             var newForm = jQuery('<form>', {
-                'action': '/backend/agenda/'+id+'/hapus',
+                'action': '/backend/mobil/'+id,
                 'target': '_top',
                 'method' : 'post',
             }).append(jQuery('<input>', {

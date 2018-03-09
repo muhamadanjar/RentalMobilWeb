@@ -1,5 +1,5 @@
 @extends('layouts.full.full')
-@section('body-class','hold-transition skin-yellow sidebar-mini')
+@section('body-class','hold-transition skin-yellow sidebar-mini fixed')
 @section('style-head')
 <link rel="stylesheet" href="{{ asset('/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
 <!-- Font Awesome -->

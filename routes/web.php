@@ -75,6 +75,8 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 
 	Route::resource('mobil', 'MobilCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('mobil/post','MobilCtrl@postMobil')->name('mobil.post');
+	Route::get('mobil/getdata','MobilCtrl@getData');
+
 	Route::resource('fasilitas', 'FasilitasCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('fasilitas/post','FasilitasCtrl@postFasilitas')->name('fasilitas.post');
 
