@@ -65,7 +65,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <!--<div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
@@ -89,6 +89,32 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+            </div>
+        </div>-->
+
+        <div class="flex-center position-ref full-height">
+            <div class="col-md-12">
+            @if(Auth::check())
+                <!-- left side start -->
+                <div class="col-md-3 left-sidebar hidden-xs hidden-sm" style="position:fixed; left:10px">
+                    <h3 align="center">Left Sidebar</h3>
+                </div>
+                <!-- left side end -->
+
+                <!-- center content start -->
+                <div class="col-md-6 col-sm-12 col-xs-12 center-con">
+                    <h3 align="center">Center</h3>
+                </div>
+                <!-- center content end -->
+
+                <!-- right side start -->
+                <div class="col-md-3 right-sidebar hidden-sm hidden-xs" style="position:fixed; right:10px">
+                    <h3 align="center">Right Sidebar</h3>
+                </div>
+              <!-- right side end -->
+              @else
+              <h1 align="center">Please login</h1>
+            @endif
             </div>
         </div>
     </body>

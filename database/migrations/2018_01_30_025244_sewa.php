@@ -15,15 +15,19 @@ class Sewa extends Migration
     {
         Schema::create('sewa', function(Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('karyawan_id');
+            //$table->unsignedInteger('karyawan_id')->nullable();
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('mobil_id');
 
-            $table->datetime('tgl_pinjam');
-            $table->datetime('tgl_kembali');
+            $table->datetime('tgl_mulai');
+            $table->datetime('tgl_akhir');
             
+            $table->string('origin');
+            $table->string('destination');
+
             $table->unsignedInteger('total_bayar')->nullable();
             $table->unsignedInteger('denda')->nullable();
+            $table->enum('status', array('cancelled', 'collected','confirmed', 'complete', 'pending'))->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

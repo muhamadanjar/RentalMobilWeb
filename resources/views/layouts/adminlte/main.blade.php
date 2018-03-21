@@ -3,16 +3,15 @@
 @section('style-head')
 <link rel="stylesheet" href="{{ asset('/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
 <!-- Font Awesome -->
-<link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/font-awesome.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/plugins/font-awesome/css/font-awesome.min.css')}}">
 <!-- Ionicons -->
-<link rel="stylesheet" href="{{ asset('plugins/Ionicons/css/ionicons.min.css')}}">
-<link rel="stylesheet" href="{{ url('dist/css/AdminLTE.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/plugins/Ionicons/css/ionicons.min.css')}}">
+<link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/AdminLTE.min.css')}}">
 
-<link rel="stylesheet" href="{{ url('dist/css/skins/_all-skins.min.css')}}">
+<link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/skins/_all-skins.min.css')}}">
 
- <!-- Google Font -->
- <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<!-- Google Font -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
 @endsection
 @section('content')
@@ -49,7 +48,7 @@
 <script src="{{ asset('/js/app.js') }}"></script>
 <script type="text/javascript" src="{{ url('/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('/dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('assets/adminlte/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('/dist/js/demo.js')}}"></script>
+<script src="{{ asset('assets/adminlte/dist/js/demo.js')}}"></script>
 @endsection
