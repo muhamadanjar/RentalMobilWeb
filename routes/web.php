@@ -80,6 +80,8 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::resource('fasilitas', 'FasilitasCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('fasilitas/post','FasilitasCtrl@postFasilitas')->name('fasilitas.post');
 
+	Route::resource('transaksi', 'SewaCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
+	Route::post('transaksi/post','SewaCtrl@post')->name('transaksi.post');
 	Route::resource('permissions', 'PermissionCtrl',['only' => ['index']]);
 
 	// User Profile

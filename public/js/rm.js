@@ -444,6 +444,29 @@ function loadDesa(id){
         }
         table_agenda.draw();
     });
+
+    var table_reservation = $('#table_reservation').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url:'/api/reservation',
+            data: function (d) {
+                d.tgl_mulai = $('input[name=tgl_mulai]').val();
+                d.status = $('select[name=status]').val();
+            }
+        },
+        columns: [
+            {data: 'rownum',name:'rank', orderable: false, searchable: false},
+            {data: 'origin'},
+            {data: 'destination'},
+            {data: 'total_bayar'},
+            {data: 'status'}
+        ]
+    });
+    $('#table_reservation_search_form').on('submit', function(e) {
+        table_reservation.draw();
+        e.preventDefault();
+    });
     
 }(jQuery, window, document));
 //Form

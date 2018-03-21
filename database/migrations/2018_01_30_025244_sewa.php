@@ -27,7 +27,8 @@ class Sewa extends Migration
 
             $table->unsignedInteger('total_bayar')->nullable();
             $table->unsignedInteger('denda')->nullable();
-            $table->enum('status', array('cancelled', 'collected','confirmed', 'complete', 'pending'))->default('pending');
+            //$table->enum('status', array('cancelled', 'collected','confirmed', 'complete', 'pending'))->default('pending');
+            $table->string('status',20)->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

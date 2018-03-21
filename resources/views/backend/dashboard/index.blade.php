@@ -76,19 +76,44 @@
                 <!-- /.col -->
                 <div class="col-md-4">
                   <p class="text-center">
-                    <strong>Goal Completion</strong>
+                    <strong>Data Transaksi</strong>
                   </p>
 
-                  <!--<div class="progress-group">
-                    <span class="progress-text">Add Products to Cart</span>
-                    <span class="progress-number"><b>160</b>/200</span>
+                 
+                  <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Data Transaksi</h3>
 
-                    <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                      <div class="box-tools pull-right">
+                      </div>
                     </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <ul class="products-list product-list-in-box">
+                        <li class="item">
+                          <div class="product-img">
+                            <img src="dist/img/default-50x50.gif" alt="Product Image">
+                          </div>
+                          <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                              <span class="label label-warning pull-right">Rp. 401.800</span></a>
+                              <span class="product-description">
+                                  Transaksi 1
+                              </span>
+                          </div>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer text-center">
+                      <a href="{{ route('backend.transaksi.index')}}" class="uppercase">Lihat Semua Transaksi</a>
+                    </div>
+                    
                   </div>
                   
-                  <div class="progress-group">
+                  
+                  <!--<div class="progress-group">
                     <span class="progress-text">Complete Purchase</span>
                     <span class="progress-number"><b>310</b>/400</span>
 
