@@ -10,6 +10,7 @@ use App\Post\RepositoryInterface as PostInterface;
 //use App\Transmigrasi\RepositoryInterface as TransmigrasiInterface;
 use App\AuditTrail\Activity\RepositoryInterface as ActivityInterface;
 use DB;
+use App\Mobil\Mobil;
 class DashboardCtrl extends BackendCtrl{
     public function __construct(
         ModeratorInterface $mi,
@@ -32,13 +33,13 @@ class DashboardCtrl extends BackendCtrl{
         //$countagenda = $this->agenda->countNewThisWeek();
         $datastatistik = $this->activity->statistikPengunjung();
         $chartstatistik = $this->getChartStatistik();
-        //dd($chartstatistik);
+        $totalmobil = Mobil::count();
         return view('backend.dashboard.index')
         //->with('transdata',$transdata)
         //->with('transdatadaerah',$transdatadaerah)
         ->with('countuser',$countuser)
         ->with('countpost',$countpost)
-        //->with('countagenda',$countagenda)
+        ->with('countmobil',$totalmobil)
         ->with('datastatistik',$datastatistik)
         ->with('chartstatistik',$chartstatistik);
     }

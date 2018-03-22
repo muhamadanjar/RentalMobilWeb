@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Mobil\Mobil;
 use App\Sewa;
 use Carbon\Carbon;
@@ -11,9 +12,12 @@ use DB;
 class ApiCtrl extends Controller{
     public function getAllMobil(){
         $mobil = Mobil::orderBy('id')->where('status','tersedia')->get();
-        return $mobil;
+        return response($mobil,200);
     }
-
+    public function getTotalMobil(){
+        $mobil = Mobil::count();
+        return response($mobil,200);
+    }
     public function getReservation(Request $request) {
         \DB::statement(DB::raw('set @rownum=0'));
         $sewa = Sewa::select([
@@ -56,4 +60,18 @@ class ApiCtrl extends Controller{
 
         return response()->json(['foo'=> $reservation]);
     }
+    public function getDataPemesananBulanan(){
+        $pemesananbulan_query = DB::table('sewa')
+            ->select(
+                DB::raw('MONTH(sewa.tgl_mulai) as bulan'),
+                DB::raw('YEAR(sewa.tgl_mulai) as tahun'),
+                DB::raw('COUNT(sewa.tgl_mulai) as total_bulan')
+            )->groupBy('bulan')
+            ->groupBy('tahun')
+            ->orderBy('tahun')->get();
+
+        return $pemesananbulan_query;
+    }
+
+
 }

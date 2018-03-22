@@ -57,5 +57,8 @@ Route::get('user',function(){
 	return 'foo';
 });
 Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
+Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
+
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');
+Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');
