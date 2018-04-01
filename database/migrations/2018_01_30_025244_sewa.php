@@ -16,6 +16,7 @@ class Sewa extends Migration
         Schema::create('sewa', function(Blueprint $table) {
             $table->increments('id');
             //$table->unsignedInteger('karyawan_id')->nullable();
+            $table->unsignedInteger('no_transaksi');
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('mobil_id');
 

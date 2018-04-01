@@ -8,7 +8,7 @@ use Mail;
 use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-
+use Laracasts\Flash\Flash;
 trait CustomLogin{
     
     /**
@@ -36,20 +36,33 @@ trait CustomLogin{
             $error = $validator->messages()->toJson();
             return response()->json(['success'=> false, 'error'=> $error]);
         }
+        $checkuser = User::where('username',$request->username)->count();
+        if(($checkuser) > 0){
+            Flash::error(trans('flash/register.already'));
+            return response()->json([
+                'success'=> true,
+                'message'=> 'Account already used..'
+            ]);
+        }
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
-        $user = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        $user = User::create(['username'=>$request->username,'name' => $name, 'email' => $email, 'password' => Hash::make($password),'isactived'=> 1]);
+        $user->assignRole('customer');
         $verification_code = str_random(30); //Generate verification code
         DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
         $subject = "Please verify your email address.";
-        Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
+        /*Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
                 $mail->from(getenv('FROM_EMAIL_ADDRESS'), "From User/Company Name Goes Here");
                 $mail->to($email, $name);
                 $mail->subject($subject);
-            });
-        return response()->json(['success'=> true, 'message'=> 'Thanks for signing up! Please check your email to complete your registration.']);
+        });*/
+        Flash::success(trans('flash/register.success'));
+        return response()->json([
+            'success'=> true, 
+            'message'=> 'Thanks for signing up! Please check your email to complete your registration.'
+        ]);
     }
 
     /**
@@ -62,13 +75,13 @@ trait CustomLogin{
         $check = DB::table('user_verifications')->where('token',$verification_code)->first();
         if(!is_null($check)){
             $user = User::find($check->user_id);
-            if($user->is_verified == 1){
+            if($user->isverified == 1){
                 return response()->json([
                     'success'=> true,
                     'message'=> 'Account already verified..'
                 ]);
             }
-            $user->update(['is_verified' => 1]);
+            $user->update(['isverified' => 1]);
             DB::table('user_verifications')->where('token',$verification_code)->delete();
             return response()->json([
                 'success'=> true,
@@ -84,8 +97,7 @@ trait CustomLogin{
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function loginjwt(Request $request)
-    {
+    public function loginjwt(Request $request){
         $rules = [
             //'email' => 'required|email',
             'username' => 'required',
@@ -100,7 +112,7 @@ trait CustomLogin{
         $credentials = [
             'username' => $request->username,
             'password' => $request->password,
-            'is_verified' => 1,
+            'isverified' => 1,
             'isactived' => 1
         ];
 

@@ -8,6 +8,7 @@
     $type='';
     $warna='';
     $harga='';
+    $harga_perjam ='';
     
     if (session('aksi') == 'edit') {
       $id = $mobil->id;
@@ -16,6 +17,7 @@
       $type = $mobil->type;
       $warna = $mobil->warna;
       $harga = $mobil->harga;
+      $harga_perjam = $mobil->harga_perjam;
       
     }
   ?>
@@ -49,7 +51,10 @@
                   <label for="type">Harga Mobil</label>
                   <input type="text" name="harga" class="form-control" id="harga" value="{{$harga}}">
                 </div>
-                
+                <div class="form-group">
+                  <label for="type">Harga Mobil</label>
+                  <input type="text" name="harga_perjam" class="form-control" id="harga_perjam" value="{{$harga_perjam}}">
+                </div>
 
             </div>
 

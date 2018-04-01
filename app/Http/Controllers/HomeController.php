@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Mobil\Mobil;
 class HomeController extends Controller
 {
     /**
@@ -24,5 +24,19 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function getPilihSewa(){
+        return view('pilihsewa');
+    }
+
+    public function getRentalMobil(){
+        $mobil = Mobil::orderBy('id')->where('status','tersedia')->get();
+	    return view('welcome')->with('mobil',$mobil);
+    }
+
+    public function getTaxiMobil(){
+        $mobil = Mobil::orderBy('id')->where('status','tersedia')->get();
+	    return view('welcome')->with('mobil',$mobil);
     }
 }

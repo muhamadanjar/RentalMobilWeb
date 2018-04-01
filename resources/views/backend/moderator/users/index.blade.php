@@ -22,6 +22,8 @@
             <tr>
                 <th>Nama</th>
                 <th>Username/Email</th>
+                <th>Role</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
             </thead>
@@ -38,6 +40,8 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td><span class="label label-success">{{ $user->roles }}</span></td>
+                    <td><span class="label label-success">{{ $user->isverified }}</span></td>
                     <td class="text-center">
                         <div class="btn-group">
 					        <button data-toggle="dropdown" class="btn btn-xs {{ $class_active }} btn-icon dropdown-toggle" type="button"><i class="icon-cog4"></i><span class="caret"></span></button>

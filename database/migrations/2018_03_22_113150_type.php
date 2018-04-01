@@ -17,6 +17,9 @@ class Type extends Migration
             $table->bigIncrements('id');
             $table->string('type');
             $table->string('image')->nullable();
+            $table->integer('passengers')->nullable();
+            $table->integer('bags')->nullable();
+            $table->integer('doors')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

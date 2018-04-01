@@ -1,15 +1,15 @@
 @extends('layouts.base')
   @section('style-head')
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/plugins/bootstrap/dist/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/font-awesome/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('/plugins/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/Ionicons/css/ionicons.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('/plugins/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/adminlte/dist/css/AdminLTE.min.css')}}">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('assets/adminlte/plugins/iCheck/square/blue.css')}}">
+  <link rel="stylesheet" href="{{ asset('/plugins/iCheck/square/blue.css')}}">
   <style type="text/css">
     html { 
       background: url({{ url('http://3.bp.blogspot.com/-klRlVSCozsE/VIqqsOMjHVI/AAAAAAAAHVE/MLosY_-IhZc/s1600/Foto%2BMobil%2BSport%2BMewah%2BAudi%2BR8%2B1.jpg') }}) no-repeat center center fixed;
@@ -150,7 +150,8 @@
 
       <!--<a href="#">I forgot my password</a><br>
       <a href="register.html" class="text-center">Register a new membership</a>-->
-
+      <a href="#">Lupa password</a><br>
+      <a href="{{ route('registration')}}" class="text-center">Daftar Anggota Baru</a>
     </div>
     <!-- /.login-box-body -->
   </div>
@@ -159,12 +160,10 @@
 
 <!-- /.login-box -->
 @section('script-end')
-<!-- jQuery 3 -->
-<script src="{{ asset('assets/adminlte/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('assets/adminlte/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+
+<script src="{{ asset('js/app.js')}}"></script>
 <!-- iCheck -->
-<script src="{{ asset('assets/adminlte/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ asset('/plugins/iCheck/icheck.min.js')}}"></script>
 <script>
   $(function () {
     $('input').iCheck({

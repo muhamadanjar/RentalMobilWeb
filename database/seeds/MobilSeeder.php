@@ -21,6 +21,7 @@ class MobilSeeder extends Seeder
                 'type' => $faker->randomElement(array('Sedan','Truk','Cumperback')),
                 'warna' => $faker->randomElement(array('Hitam','Putih','biru')),
                 'harga' => $faker->randomNumber(4),
+                'harga_perjam' => $faker->randomNumber(4),
                 'status' => $faker->randomElement(array('tersedia','dipinjam')),
                 'user_id' => 2,
             ]);

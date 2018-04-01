@@ -11,9 +11,14 @@ use Yajra\Datatables\Facades\Datatables;
 use Laracasts\Flash\Flash;
 //use Yajra\Datatables\Datatables;
 use App\Mobil\Mobil;
+use App\Mobil\Merk;
+use App\Mobil\Type;
+use App\Officer\Officer;
+use App\User;
+use Hash;
 class MobilCtrl extends BackendCtrl
 {
-    private $layer;
+    private $mobil;
     public function __construct(){
        
     }
@@ -46,9 +51,9 @@ class MobilCtrl extends BackendCtrl
     }
 
     public function destroy($id){
-        if(Gate::check('delete.layer')){
-            $layer = $this->layer->delete($id);
-            return redirect()->route('backend.mobil.index')->with('flash.success','Layer Berhasil di Hapus..!!');
+        if(Gate::check('delete.mobil')){
+            $mobil = Mobil::find($id)->delete();
+            return redirect()->route('backend.mobil.index')->with('flash.success','Mobil Berhasil di Hapus..!!');
         }
         //Flash::success(trans('flash/case.created'));
         return redirect()->route('backend.index')->with('flash.error',trans('flash/mobil.delete_not_allowed'));
@@ -62,6 +67,7 @@ class MobilCtrl extends BackendCtrl
         $mobil->type = $request->type;
         $mobil->warna = $request->warna;
         $mobil->harga = $request->harga;
+        $mobil->harga_perjam = $request->harga_perjam;   
         $mobil->author()->associate($user);
         $mobil->save();
         return redirect()->route('backend.mobil.index');
@@ -70,5 +76,44 @@ class MobilCtrl extends BackendCtrl
     public function getData(){
         $mobil = Mobil::orderBy('id')->select(['id','no_plat', 'merk','type','warna',\DB::raw("CONCAT('Rp.',FORMAT(harga,2)) as harga")]);
         return Datatables::of($mobil)->make(true);
+    }
+
+    public function getFormDriver(){
+        $merk = Merk::orderBy('merk','ASC')->get();
+        $type= Type::orderBy('type','ASC')->get();
+        
+        return view('backend.mobil.formDriver')->with('merkselect',$merk)->with('typeselect',$type);
+    }
+    public function postFormDriver(Request $request){
+        $driver = new User();
+        $driver->name = $request->name;
+        $driver->username = $request->username;
+        $driver->email = $request->email;
+        $driver->password = Hash::make($request->password);
+        $driver->save();
+
+        $driver->assignRole('driver');
+
+        $officers = new Officer();
+        $officers->name = $request->name;
+        $officers->nip = ' ';
+        $officers->alamat = $request->alamat;;
+        $officers->no_telp = $request->no_telp;
+        $officers->role = 'staff/karyawan';
+        $officers->user_id = $driver->id;
+        $officers->save();
+
+        $mobil = new Mobil();
+        $mobil->no_plat = $request->no_plat;
+        $mobil->merk = $request->merk;
+        $mobil->type = $request->type;
+        $mobil->warna = $request->warna;
+        $mobil->harga = $request->harga;
+        $mobil->harga_perjam = $request->harga_perjam;   
+        $mobil->author()->associate($driver);
+        $mobil->save();
+        Flash::success(trans('flash/mobil.drivercreated'));
+        return redirect()->route('backend.dashboard.index');
+        
     }
 }

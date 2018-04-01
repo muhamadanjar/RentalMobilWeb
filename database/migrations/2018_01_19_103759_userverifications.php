@@ -20,7 +20,7 @@ class Userverifications extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_verified')->default(0);
+            $table->boolean('isverified')->default(0);
         });
     }
 
@@ -33,7 +33,7 @@ class Userverifications extends Migration
     {
         Schema::dropIfExists("user_verifications");
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_verified');
+            $table->dropColumn('isverified');
         });
     }
 }

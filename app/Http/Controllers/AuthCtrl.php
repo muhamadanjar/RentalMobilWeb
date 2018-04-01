@@ -16,7 +16,7 @@ use App\User;
 use App\Traits\CustomLogin;
 class AuthCtrl extends Controller{
 	use RedirectsUsers, ThrottlesLogins,CustomLogin;
-    public $redirectTo = '/backend';
+    public $redirectPath = '/backend';
 	public function __construct($value=''){
         $this->middleware('guest', ['except' => 'logout']);
         //$this->redirect = new RedirectsUsers();
@@ -81,11 +81,11 @@ class AuthCtrl extends Controller{
         $credentials = [
             'username' => $request->username,
             'password' => $request->password,
-            'is_verified' => 1,
+            'isverified' => 1,
             'isactived' => 1
         ];
         return $this->guard()->attempt(
-            $credentials
+            $credentials,$request->has('remember')
         );
         /*if (count($users) > 0) {
             if ($users->isactived) {
@@ -95,7 +95,7 @@ class AuthCtrl extends Controller{
             }
         }*/
         
-        //return $this->sendFailedLoginResponse($request);
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**

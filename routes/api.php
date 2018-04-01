@@ -17,8 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::post('register', 'AuthCtrl@register');
-Route::post('login', 'AuthCtrl@loginjwt')->name('api.login');
+
 Route::post('recover', 'AuthCtrl@recover');
 Route::get('/test2', function () {
     try {
@@ -56,9 +55,11 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 Route::get('user',function(){
 	return 'foo';
 });
+
+Route::post('register', 'AuthCtrl@register')->name('api.register');
+Route::post('login', 'AuthCtrl@loginjwt')->name('api.login');
 Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
 Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
-
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');
 Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');

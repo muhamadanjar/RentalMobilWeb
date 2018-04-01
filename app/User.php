@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Officer\Officer;
+use App\Customer;
 use App\Post\Post;
 use App\Post\Comment;
 class User extends Authenticatable
@@ -14,7 +15,7 @@ class User extends Authenticatable
     const ROLE_EDITOR = 'editor';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 'email', 'password', 'is_verified',
+        'username','name', 'email', 'password', 'is_verified','isactived'
     ];
     protected $hidden = [
         'password', 'remember_token',
@@ -79,6 +80,9 @@ class User extends Authenticatable
     public function officers(){
         return $this->hasOne(Officer::class);
         //return $this->hasMany(Officer::class);
+    }
+    public function customers(){
+        return $this->hasOne(Customer::class);
     }
     public function posts(){
         return $this->hasMany(Post::class, 'author_id');

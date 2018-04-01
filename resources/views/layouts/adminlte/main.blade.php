@@ -6,6 +6,19 @@
 <link rel="stylesheet" href="{{ asset('/plugins/font-awesome/css/font-awesome.min.css')}}">
 <!-- Ionicons -->
 <link rel="stylesheet" href="{{ asset('/plugins/Ionicons/css/ionicons.min.css')}}">
+<!-- daterange picker -->
+<link rel="stylesheet" href="plugins/bootstrap-daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="/plugins/iCheck/all.css">
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet" href="plugins/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+<!-- Bootstrap time Picker -->
+<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/plugins/select2/dist/css/select2.min.css')}}">
+
 <link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/AdminLTE.min.css')}}">
 
 <link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/skins/_all-skins.min.css')}}">
@@ -50,5 +63,5 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/adminlte/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ asset('assets/adminlte/dist/js/demo.js')}}"></script>
+<!--<script src="{{ asset('assets/adminlte/dist/js/demo.js')}}"></script>-->
 @endsection

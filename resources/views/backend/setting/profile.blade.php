@@ -16,17 +16,15 @@
                     <h3 class="profile-username text-center">{{ auth()->user()->name }}</h3>
                     <p class="text-muted text-center">Software Engineer</p>
 
-                    <!--<ul class="list-group list-group-unbordered">
+                    <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                        <b>Followers</b> <a class="pull-right">1,322</a>
+                            <i class="fa fa-archive"></i><a href="#" class="link-black"><b>Pesanan</b></a> <a class="label pull-right bg-blue">12</a>
                         </li>
                         <li class="list-group-item">
-                        <b>Following</b> <a class="pull-right">543</a>
+                            <i class="fa fa-question-circle"></i><a href="#" class="link-black"><b>Pusan Bantuan</b></a>
                         </li>
-                        <li class="list-group-item">
-                        <b>Friends</b> <a class="pull-right">13,287</a>
-                        </li>
-                    </ul>-->
+                        
+                    </ul>
 
                     <!--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
                 </div>

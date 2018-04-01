@@ -33,15 +33,33 @@
             </span>
           </a>
         </li>
-        <li class="">
-          <a href="{{ route('backend.mobil.index') }}">
-            <i class="fa fa-car"></i>
-            <span>Mobil</span>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-car"></i> <span>Mobil</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          
+          <ul class="treeview-menu">
+            <li>
+              <a href="{{ route('backend.mobil.index') }}">
+                <i class="fa fa-car"></i>
+                <span>Mobil</span>
+                <span class="pull-right-container">
+                  <span class="label label-primary pull-right">4</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('backend.mobil.driver') }}">
+                <i class="fa fa-car"></i>
+                <span>Tambah Driver</span>
+                <span class="pull-right-container">
+                  <span class="fa fa-plus pull-right"></span>                  
+                </span>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="treeview">
           <a href="#">

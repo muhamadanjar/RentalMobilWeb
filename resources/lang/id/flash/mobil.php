@@ -8,5 +8,7 @@ return array(
     'create_not_allowed' => 'Anda tidak diijinkan untuk Menambahkan data mobil ini',
     'edit_not_allowed' => 'Anda tidak diijinkan untuk mengedit data mobil ini',
     'delete_not_allowed' => 'Anda tidak diijinkan untuk Menghapus data mobil ini',
+
+    'drivercreated'   => 'Driver berhasil ditambahkan',
     
 );

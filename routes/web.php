@@ -11,14 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/*Route::get('/', function () {
+	$mobil = App\Mobil\Mobil::orderBy('id')->where('status','tersedia')->get();
+	return view('welcome')->with('mobil',$mobil);
+	
     //return redirect()->route('gerbang.login');
-});
+});*/
 
 Auth::routes();
+Route::get('/', 'HomeController@getPilihSewa')->name('pilihsewa');
+Route::get('/rentalmobil', 'HomeController@getRentalMobil')->name('rentalmobil');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index');
 
 Route::get('/login', function () {
 	return redirect()->route('gerbang.login');
@@ -28,6 +32,10 @@ Route::group(['prefix'=>'gerbang'], function(){
 	Route::post('login','AuthCtrl@login')->name('gerbang.loginpost');
 	Route::get('logout','AuthCtrl@logout')->name('gerbang.logout');
 });
+Route::get('registration', 'RegisterCtrl@showRegistrationForm')->name('registration');
+Route::post('registration', 'RegisterCtrl@post');
+Route::get('user/verify/{verification_code}', 'AuthCtrl@verifyUser');
+
 Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','middleware' => 'auth'], function(){
 	Route::get('/', 'DashboardCtrl@getIndex')->name('index');
 	Route::get('dashboard/index', ['as' => 'dashboard.index', 'uses' => 'DashboardCtrl@getIndex']);
@@ -77,6 +85,9 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::post('mobil/post','MobilCtrl@postMobil')->name('mobil.post');
 	Route::get('mobil/getdata','MobilCtrl@getData');
 
+	Route::get('mobil/driver','MobilCtrl@getFormDriver')->name('mobil.driver');
+	Route::post('mobil/driver','MobilCtrl@postFormDriver');
+
 	Route::resource('fasilitas', 'FasilitasCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('fasilitas/post','FasilitasCtrl@postFasilitas')->name('fasilitas.post');
 
@@ -107,6 +118,6 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	});
 });
 
-Route::get('user/verify/{verification_code}', 'AuthCtrl@verifyUser');
+
 //Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 //Route::post('password/reset', 'Auth\PasswordController@reset');
