@@ -24,7 +24,11 @@ class Sewa extends Migration
             $table->datetime('tgl_akhir');
             
             $table->string('origin');
+            $table->float('origin_latitude',8,5)->nullable();
+            $table->float('origin_longitude',8,5)->nullable();
             $table->string('destination');
+            $table->float('destination_latitude',8,5)->nullable();
+            $table->float('destination_longitude',8,5)->nullable();
 
             $table->unsignedInteger('total_bayar')->nullable();
             $table->unsignedInteger('denda')->nullable();
