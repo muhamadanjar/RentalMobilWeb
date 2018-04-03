@@ -32,16 +32,36 @@
                 <?php $class_active = ($user->isactived==0) ? 'btn-danger':'' ?>
                 <?php $fa_active = ($user->isactived==0) ? 'fa-circle':'fa-circle-o' ?>
                 <?php 
-					$currentuser_class = '';
+                    $currentuser_class = '';
+                    $role_status = '';
+                    $label_status = '';
+                    $verified_status = '';
 					if(\Auth::user()->id == $user->id){
 						$currentuser_class = 'disabled';
-					}
+                    }
+                    if($user->hasRole('driver')){
+                        $role_status = 'Driver';
+                        $label_status = 'label-warning';
+                    }elseif($user->hasRole('customer')){
+                        $role_status = 'Customer';
+                        $label_status = 'label-info';
+                    }elseif($user->hasRole('admin')){
+                        $role_status = 'Administrator';
+                        $label_status = 'label-success';
+                    }elseif($user->hasRole('superadmin')){
+                        $role_status = 'Super Admin';
+                        $label_status = 'label-danger';
+                    }
+
+                    if($user->isverified){
+                        $verified_status = 'Terverifikasi';
+                    }
 				?>
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td><span class="label label-success">{{ $user->roles }}</span></td>
-                    <td><span class="label label-success">{{ $user->isverified }}</span></td>
+                    <td><span class="label {{$label_status}}">{{ $role_status }}</span></td>
+                    <td><span class="label label-success">{{ $verified_status }}</span></td>
                     <td class="text-center">
                         <div class="btn-group">
 					        <button data-toggle="dropdown" class="btn btn-xs {{ $class_active }} btn-icon dropdown-toggle" type="button"><i class="icon-cog4"></i><span class="caret"></span></button>

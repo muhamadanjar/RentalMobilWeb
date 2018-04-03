@@ -209,7 +209,7 @@ class UserCtrl extends BackendCtrl{
     }
 
     public function getRole(){
-        return Role::where('name','<>','admin')->get();
+        return Role::where('name','<>','superadmin')->get();
     }
 
     public function GetDftrLevel($lvl='') {
