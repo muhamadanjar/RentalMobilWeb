@@ -90,18 +90,21 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                       <ul class="products-list product-list-in-box">
+                        @foreach($listtransaksi as $k => $v)
                         <li class="item">
                           <div class="product-img">
-                            <img src="dist/img/default-50x50.gif" alt="Product Image">
+                            <img src="http://placehold.it/160" alt="Product Image">
                           </div>
                           <div class="product-info">
                             <a href="javascript:void(0)" class="product-title">
-                              <span class="label label-warning pull-right">Rp. 401.800</span></a>
+                              {{$v->mobil->name}} ({{$v->mobil->no_plat}})
+                              <span class="label label-warning pull-right">Rp. {{number_format($v->total_bayar)}}</span></a>
                               <span class="product-description">
-                                  Transaksi 1
+                                  {{$v->origin }} <i class="fa fa-arrow-right"></i> {{$v->destination}}
                               </span>
                           </div>
                         </li>
+                        @endforeach
                         
                       </ul>
                     </div>
@@ -184,6 +187,55 @@
         </div>
         <!-- /.col -->
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Carousel</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
+
+                    <div class="carousel-caption">
+                      First Slide
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide">
+
+                    <div class="carousel-caption">
+                      Second Slide
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap" alt="Third slide">
+
+                    <div class="carousel-caption">
+                      Third Slide
+                    </div>
+                  </div>
+                </div>
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                  <span class="fa fa-angle-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                  <span class="fa fa-angle-right"></span>
+                </a>
+              </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
 @endsection
 
 @section('script-end')
@@ -237,11 +289,11 @@
             }
         },
         series: [{
-            name: 'Mobil',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            name: 'Rental',
+            data: [49.9, 71.5, 106.4]
         }, {
-            name: 'Bus',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+            name: 'Taxi',
+            data: [83.6, 78.8, 98.5]
 
         }]
     });

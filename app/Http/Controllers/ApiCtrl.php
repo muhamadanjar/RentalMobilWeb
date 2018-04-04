@@ -5,45 +5,59 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Mobil\Mobil;
-use App\Sewa;
+use App\Transaksi\Sewa;
 use App\User;
 use Carbon\Carbon;
 use Datatables;
 use DB;
+use App\Mobil\RepositoryInterface as MobilInterface;
+use App\Transaksi\RepositoryInterface as TransaksiInterface;
 
 class ApiCtrl extends Controller{
-    
+    public function __construct(MobilInterface $mobil,TransaksiInterface $transaksi){
+        $this->mobil = $mobil;
+        $this->transaksi = $transaksi;
+    }
     public function getAllMobil(){
-        $mobil = Mobil::orderBy('id')->where('status','tersedia')->get();
+        $mobil = $this->mobil->mobilavailable();
         return response($mobil,200);
     }
+    public function updateStatusMobil($id){
+        return $this->mobil->updatestatusmobil($id);
+    }
     public function getTotalMobil(){
-        $mobil = Mobil::count();
+        $mobil = $this->mobil->countmobil();
         return response($mobil,200);
     }
     public function getReservation(Request $request) {
-        \DB::statement(DB::raw('set @rownum=0'));
-            $sewa = Sewa::select([
-                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-                'id',
-                'customer_id',
-                'mobil_id',
-                'tgl_mulai',
-                'tgl_akhir',
-                'origin',
-                'destination',
-                'total_bayar',
-                'status',
-                'created_at',
-                'updated_at']);
-        
-        
+        $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
+        ->editColumn('tgl_mulai', function ($user) {
+            return $user->tgl_mulai->format('H:i:s');
+        })
+        ->editColumn('created_at', '{!! $created_at !!}')
+        ->editColumn('updated_at', function ($user) {
+            return $user->updated_at->format('Y/m/d');
+        })
+       
         ->editColumn('status', '{{$status}}')
         ->filter(function ($query) use ($request) {
             if ($request->has('status')) {
-                $query->where('status', 'like', "%{$request->get('status')}%");
+                $query->where('sewa.status', 'like', "%{$request->get('status')}%");
             }
+            if ($request->has('tgl_mulai')) {
+                $query->whereRaw("DATE_FORMAT(sewa.tgl_mulai,'%H:%i:%s') like ?", ["%{$request->get('tgl_mulai')}%"]);
+            }
+
+            if ($request->has('sq')) {
+                $query->whereRaw("DATE_FORMAT(sewa.tgl_mulai,'%H:%i:%s') like ?", ["%{$request->get('sq')}%"])
+                    ->orWhere('sewa.origin', 'like', "%{$request->get('sq')}%")
+                    ->orWhere('sewa.destination', 'like', "%{$request->get('sq')}%")
+                    ->orWhere('mobil.no_plat', 'like', "%{$request->get('sq')}%")
+                    ->orWhere('mobil.warna', 'like', "%{$request->get('sq')}%")
+                    ->orWhere('mobil.merk', 'like', "%{$request->get('sq')}%");
+            }
+            
         })
         ->make(true);
     }
@@ -52,8 +66,8 @@ class ApiCtrl extends Controller{
         $reservation = new Sewa();
         $reservation->status = $request->status;
         //$reservation->no_transaksi = $request->no_transaksi;
-        $reservation->tgl_mulai = Carbon::now();
-        $reservation->tgl_akhir = Carbon::now();
+        //$reservation->tgl_mulai = Carbon::now();
+        //$reservation->tgl_akhir = Carbon::now();
         $reservation->origin = $request->origin;
         $reservation->destination = $request->destination;
         $reservation->total_bayar = $request->total_bayar;
@@ -62,7 +76,7 @@ class ApiCtrl extends Controller{
         $reservation->mobil_id = $request->mobil_id;
         $reservation->save();
 
-        return response()->json(['foo'=> $reservation]);
+        return response()->json($reservation);
     }
     public function getDataPemesananBulanan(){
         $pemesananbulan_query = DB::table('sewa')

@@ -40,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Menu\RepositoryInterface', 'App\Menu\EloquentRepository');
         $this->app->bind('App\AuditTrail\Activity\RepositoryInterface', 'App\AuditTrail\Activity\EloquentRepository');
         //$this->app->bind('App\Gallery\RepositoryInterface', 'App\Gallery\EloquentRepository');
-        //$this->app->bind('App\Transmigrasi\RepositoryInterface', 'App\Transmigrasi\EloquentRepository');
+        $this->app->bind('App\Transaksi\RepositoryInterface', 'App\Transaksi\EloquentRepository');
+        $this->app->bind('App\Mobil\RepositoryInterface', 'App\Mobil\EloquentRepository');
         //$this->app->bind('App\Map\RepositoryInterface', 'App\Map\EloquentRepository');
 
         /*$this->app->bind('path.public', function() {

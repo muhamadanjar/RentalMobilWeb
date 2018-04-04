@@ -16,8 +16,9 @@
             <form id="table_reservation_search_form">
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="tgl_mulai">Tgl Mulai</label>
-                        <input type="text" class="form-control" id="tgl_mulai" name="tgl_mulai" placeholder="Tanggal Mulai">
+                        <label for="tgl_mulai">Waktu Penjemputan</label>
+                        <!--<input type="text" class="form-control" id="tgl_mulai" name="tgl_mulai" placeholder="Tanggal Mulai">-->
+                        <input type="text" class="form-control" id="sq" name="sq" placeholder="Cari">
                     </div>
                     <div class="col-md-6">
                         <label for="status">Status</label>
@@ -49,6 +50,12 @@
                         <th>Tujuan</th>
                         <th>Biaya</th>
                         <th>Status</th>
+                        <th>No Plat</th>
+                        <th>Warna</th>
+                        <th>Merk</th>
+                        <th>Waktu Penjemputan</th>
+                        <th>Tanggal Pemesanan</th>
+                        <th>Tanggal Update</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +70,6 @@
 @section('style-head')
 @parent
 <link rel="stylesheet" href="{{ url('/plugins/datatables/datatables.min.css')}}">
-<link rel="stylesheet" href="{{ url('assets/plugins/datatables/css/tabletools.css')}}">
 @endsection
 
 @section('script-end')

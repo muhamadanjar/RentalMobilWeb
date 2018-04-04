@@ -16,8 +16,7 @@ class SewaDetail extends Migration
         Schema::create('sewa_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('sewa_id');
-            
-            
+            $table->string('type_sewa')->default('rental');
             $table->timestamps();
         });
     }

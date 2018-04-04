@@ -1,15 +1,21 @@
 <?php
 
-namespace App;
+namespace App\Transaksi;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\Mobil\Mobil;
 class Sewa extends Model
 {
     protected $table = 'sewa';
     protected $fillable = array('status', 'tgl_mulai', 'tgl_akhir', 'type_id', 'origin', 'destination', 'user_id');
     public $timestamps = true;
+
+    protected $dates = ['tgl_mulai','tgl_akhir'];
     
+    public function mobil(){
+        return $this->belongsTo(Mobil::class,'mobil_id');
+    }
     public function Payment(){
         return $this->hasOne('PaymentDetail','reservation_id');
     }

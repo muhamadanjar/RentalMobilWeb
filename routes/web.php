@@ -95,6 +95,8 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::post('transaksi/post','SewaCtrl@post')->name('transaksi.post');
 	Route::resource('permissions', 'PermissionCtrl',['only' => ['index']]);
 
+	Route::resource('laporan', 'LaporanCtrl',['only' => ['index']]);
+	Route::post('laporan/proses','SewaCtrl@post')->name('laporan.proses');
 	// User Profile
     Route::group(['prefix' => 'me'], function($router){
         $router->get('/', 'MeCtrl@index')->name('me.profile');

@@ -7,21 +7,22 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="{{ asset('/plugins/Ionicons/css/ionicons.min.css')}}">
 <!-- daterange picker -->
-<link rel="stylesheet" href="plugins/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="{{ asset('/plugins/bootstrap-daterangepicker/daterangepicker.css')}}">
 <!-- bootstrap datepicker -->
-<link rel="stylesheet" href="plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="{{ asset('/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/plugins/jquery-ui/css/jquery-ui.css')}}">
 <!-- iCheck for checkboxes and radio inputs -->
-<link rel="stylesheet" href="/plugins/iCheck/all.css">
+<link rel="stylesheet" href="{{ asset('/plugins/iCheck/all.css')}}">
 <!-- Bootstrap Color Picker -->
-<link rel="stylesheet" href="plugins/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+<link rel="stylesheet" href="{{ asset('/plugins/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
 <!-- Bootstrap time Picker -->
-<link rel="stylesheet" href="/plugins/timepicker/bootstrap-timepicker.min.css">
+<link rel="stylesheet" href="{{ asset('/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 <!-- Select2 -->
 <link rel="stylesheet" href="{{ asset('/plugins/select2/dist/css/select2.min.css')}}">
 
-<link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/AdminLTE.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/adminlte/dist/css/AdminLTE.min.css')}}">
 
-<link rel="stylesheet" href="{{ url('assets/adminlte/dist/css/skins/_all-skins.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/adminlte/dist/css/skins/_all-skins.min.css')}}">
 
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use App\Sewa;
+use App\Transaksi\Sewa;
 class SewaCtrl extends BackendCtrl
 {
     public function __construct(Sewa $res)

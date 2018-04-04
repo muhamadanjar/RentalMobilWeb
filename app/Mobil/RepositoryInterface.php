@@ -2,7 +2,11 @@
 
 interface RepositoryInterface {
     public function all();
-    public function find();
-    public function delete();
-    public function autoNumber();
+    public function find($id);
+    public function delete($id);
+    public function countmobil();
+    public function updatestatusmobil($id);
+    public function mobilavailable();
+    public function autoNumber($table,$primary,$prefix);
+
 }

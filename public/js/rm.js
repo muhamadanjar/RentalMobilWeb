@@ -453,6 +453,7 @@ function loadDesa(id){
             data: function (d) {
                 d.tgl_mulai = $('input[name=tgl_mulai]').val();
                 d.status = $('select[name=status]').val();
+                d.sq = $('input[name=sq]').val();
             }
         },
         columns: [
@@ -460,7 +461,13 @@ function loadDesa(id){
             {data: 'origin'},
             {data: 'destination'},
             {data: 'total_bayar'},
-            {data: 'status'}
+            {data: 'status'},
+            {data: 'no_plat'},
+            {data: 'warna'},
+            {data: 'merk'},
+            {data: 'tgl_mulai', name: 'tgl_mulai'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'updated_at', name: 'updated_at'}
         ]
     });
     $('#table_reservation_search_form').on('submit', function(e) {

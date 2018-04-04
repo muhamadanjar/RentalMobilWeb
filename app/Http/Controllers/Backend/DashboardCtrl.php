@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 //use App\Agenda\Agenda;
 //use App\Agenda\RepositoryInterface;
+use App\Mobil\RepositoryInterface as MobilInterface;
 use App\Moderator\RepositoryInterface as ModeratorInterface;
 use App\Post\RepositoryInterface as PostInterface;
-//use App\Transmigrasi\RepositoryInterface as TransmigrasiInterface;
+use App\Transaksi\RepositoryInterface as TransaksiInterface;
 use App\AuditTrail\Activity\RepositoryInterface as ActivityInterface;
 use DB;
 use App\Mobil\Mobil;
@@ -15,25 +16,29 @@ class DashboardCtrl extends BackendCtrl{
     public function __construct(
         ModeratorInterface $mi,
         PostInterface $post,
-        //TransmigrasiInterface $transmigrasi,
+        TransaksiInterface $transaksi,
+        MobilInterface $mobil,
         //RepositoryInterface $agenda,
         ActivityInterface $activity){
         $this->user = $mi;
         $this->post = $post;
         //$this->agenda = $agenda;
+        $this->mobil = $mobil;
         $this->activity = $activity;
-        //$this->transmigrasi = $transmigrasi;
+        $this->transaksi = $transaksi;
     }
     public function getIndex(){
         session(['link_web'=>'dashboard']);
         //$transdata = $this->transmigrasi->getTransPivotData();
         //$transdatadaerah = $this->transmigrasi->getTransPivotDaerahData();
+
+        $listtransaksi = $this->transaksi->getlimit(3);
         $countpost = $this->post->countByType('post');
         $countuser = $this->user->countUser();
         //$countagenda = $this->agenda->countNewThisWeek();
         $datastatistik = $this->activity->statistikPengunjung();
         $chartstatistik = $this->getChartStatistik();
-        $totalmobil = Mobil::count();
+        $totalmobil = $this->mobil->countmobil();
         return view('backend.dashboard.index')
         //->with('transdata',$transdata)
         //->with('transdatadaerah',$transdatadaerah)
@@ -41,6 +46,7 @@ class DashboardCtrl extends BackendCtrl{
         ->with('countpost',$countpost)
         ->with('countmobil',$totalmobil)
         ->with('datastatistik',$datastatistik)
+        ->with('listtransaksi',$listtransaksi)
         ->with('chartstatistik',$chartstatistik);
     }
 

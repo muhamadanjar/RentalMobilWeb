@@ -20,8 +20,8 @@ class Sewa extends Migration
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('mobil_id');
 
-            $table->datetime('tgl_mulai');
-            $table->datetime('tgl_akhir');
+            $table->datetime('tgl_mulai')->nullable();
+            $table->datetime('tgl_akhir')->nullable();
             
             $table->string('origin');
             $table->float('origin_latitude',8,5)->nullable();

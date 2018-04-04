@@ -23,32 +23,34 @@ class DatabaseSeeder extends Seeder
         // Basic permissions data
         App\Permission::insert([
             ['name' => 'access.backend'],
+            ['name' => 'access.user'],
             ['name' => 'create.user'],
             ['name' => 'edit.user'],
             ['name' => 'delete.user'],
             ['name' => 'create.article'],
             ['name' => 'edit.article'],
             ['name' => 'delete.article'],
-
             ['name' => 'create.dokumen'],
             ['name' => 'edit.dokumen'],
             ['name' => 'delete.dokumen'],
-
             ['name' => 'create.informasi'],
             ['name' => 'edit.informasi'],
             ['name' => 'delete.informasi'],
+            ['name' => 'access.transaksi'],
         ]);
     
         // Add a permission to a role
-        $role = App\Role::where('name', 'superadmin')->first();
-        $role->addPermission('access.backend');
-        $role->addPermission('create.user');
-        $role->addPermission('edit.user');    
-        $role->addPermission('delete.user');
+        $superadmin = App\Role::where('name', 'superadmin')->first();
+        $superadmin->addPermission('access.backend');
+        $superadmin->addPermission('access.user');
+        $superadmin->addPermission('create.user');
+        $superadmin->addPermission('edit.user');    
+        $superadmin->addPermission('delete.user');
 
-        $role->addPermission('create.mobil');
-        $role->addPermission('edit.mobil');    
-        $role->addPermission('delete.mobil');
+        $superadmin->addPermission('create.mobil');
+        $superadmin->addPermission('edit.mobil');    
+        $superadmin->addPermission('delete.mobil');
+        $superadmin->addPermission('access.transaksi');
 
         $admin = App\Role::where('name', 'admin')->first();
         $admin->addPermission('access.backend');
@@ -73,6 +75,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'name' => 'Administrator',
             'password' => bcrypt('password'),
+            'isactived' => 1,
+            'isverified' => 1,
         ]);
         $user->assignRole('admin');
     }

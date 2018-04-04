@@ -52,12 +52,12 @@ trait CustomLogin{
         $verification_code = str_random(30); //Generate verification code
         DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
         $subject = "Please verify your email address.";
-        /*Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
+        Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
                 $mail->from(getenv('FROM_EMAIL_ADDRESS'), "From User/Company Name Goes Here");
                 $mail->to($email, $name);
                 $mail->subject($subject);
-        });*/
+        });
         Flash::success(trans('flash/register.success'));
         return response()->json([
             'success'=> true, 

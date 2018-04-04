@@ -33,6 +33,7 @@
             </span>
           </a>
         </li>
+        @if(auth()->user()->isRole('superadmin') || auth()->user()->isRole('admin'))
         <li class="treeview">
           <a href="#">
             <i class="fa fa-car"></i> <span>Mobil</span>
@@ -63,13 +64,24 @@
         </li>
         <li class="treeview">
           <a href="#">
+            <i class="fa fa-shopping-cart"></i> <span>Transaksi</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('backend.transaksi.index')}}"><i class="fa fa-circle-o"></i> Pemesanan</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-book"></i> <span>Laporan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('backend/setting/index')}}"><i class="fa fa-circle-o"></i> Pemesanan</a></li>
+            <li><a href="{{ route('backend.laporan.index')}}"><i class="fa fa-circle-o"></i> Pemesanan</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -86,6 +98,7 @@
             <li><a href="{{ route('backend.pengaturan.users')}}"><i class="fa fa-circle-o"></i> User</a></li>
           </ul>
         </li>
+        @endif
         
         <li><a href="{{ url('/') }}"><i class="fa fa-book"></i> <span>Dokumentasi</span></a></li>
         <li class="header">LABELS</li>
