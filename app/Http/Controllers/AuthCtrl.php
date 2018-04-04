@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\RedirectsUsers;
+//use Illuminate\Foundation\Auth\RedirectsUsers;
+use App\Traits\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -16,11 +17,12 @@ use App\User;
 use App\Traits\CustomLogin;
 class AuthCtrl extends Controller{
 	use RedirectsUsers, ThrottlesLogins,CustomLogin;
-    public $redirectPath = '/backend';
+    public $redirectTo = '/backend';
 	public function __construct($value=''){
         $this->middleware('guest', ['except' => 'logout']);
         //$this->redirect = new RedirectsUsers();
         //$this->ThrottlesLogins = new ThrottlesLogins();
+        //$this->redirectTo = (auth()->user()->isRole('superadmin')) ? '/backend/dashboard/index' : '/';
     }
 	
 	public function showLoginForm(){
@@ -118,10 +120,12 @@ class AuthCtrl extends Controller{
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
-
+        
         $this->clearLoginAttempts($request);
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+                ? : redirect($this->redirectPath());
+        /*return $this->authenticated($request, $this->guard()->user())
+                ? : redirect()->intended($this->redirectPath());*/
     }
 
     /**

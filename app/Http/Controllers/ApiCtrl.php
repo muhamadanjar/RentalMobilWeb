@@ -69,7 +69,11 @@ class ApiCtrl extends Controller{
         //$reservation->tgl_mulai = Carbon::now();
         //$reservation->tgl_akhir = Carbon::now();
         $reservation->origin = $request->origin;
+        $reservation->origin_latitude = (isset($request->origin_latitude)) ? $request->origin_latitude : null;
+        $reservation->origin_longitude = (isset($request->origin_longitude)) ? $request->origin_longitude : null;
         $reservation->destination = $request->destination;
+        $reservation->destination_latitude = (isset($request->destination_latitude)) ? $request->destination_latitude : null;
+        $reservation->destination_longitude = (isset($request->destination_longitude)) ? $request->destination_longitude : null;
         $reservation->total_bayar = $request->total_bayar;
         $reservation->denda = 0;
         $reservation->customer_id = $request->customer_id;

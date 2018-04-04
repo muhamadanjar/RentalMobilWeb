@@ -112,7 +112,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
       <p class="login-box-msg">Masuk untuk Membuka Aplikasi</p>
-
+      @include('layouts.elements.alert')
       <form action="{{ route('gerbang.loginpost') }}" method="post">
         {{ csrf_field() }}
         <div class="form-group has-feedback">
