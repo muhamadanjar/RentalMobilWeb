@@ -60,7 +60,11 @@ Route::post('register', 'AuthCtrl@register')->name('api.register');
 Route::post('login', 'AuthCtrl@loginjwt')->name('api.login');
 Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
 Route::get('mobil/{id}/status','ApiCtrl@updateStatusMobil')->name('api.updatestatusmobil');
+Route::get('mobil/{id}/checkstatus','ApiCtrl@checkstatusmobil')->name('api.checkstatusmobil');
 Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
+
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');
+Route::get('bookings/{id}/checkstatus','ApiCtrl@checkstatuspesanan')->name('api.checkstatuspesanan');
+
 Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');

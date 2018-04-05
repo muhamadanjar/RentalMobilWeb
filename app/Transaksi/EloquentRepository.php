@@ -70,4 +70,9 @@ class EloquentRepository implements RepositoryInterface{
     function countTransaksi(){
         return $this->sewa->count();
     }
+
+    function checkstatus($id){
+        $sewa = $this->sewa->where('mobil_id',$id)->first();
+        return $sewa->status;
+    }
 }

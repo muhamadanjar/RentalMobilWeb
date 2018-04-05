@@ -8,5 +8,5 @@ interface RepositoryInterface {
     public function updatestatusmobil($id);
     public function mobilavailable();
     public function autoNumber($table,$primary,$prefix);
-
+    public function checkstatus($id);
 }

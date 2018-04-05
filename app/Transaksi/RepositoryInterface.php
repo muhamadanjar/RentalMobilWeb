@@ -9,4 +9,5 @@ interface RepositoryInterface {
     function getlimit($limit);
     function getDatatableData();
     function countTransaksi();
+    function checkstatus($id);
 }

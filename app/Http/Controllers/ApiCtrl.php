@@ -23,7 +23,8 @@ class ApiCtrl extends Controller{
         return response($mobil,200);
     }
     public function updateStatusMobil($id){
-        return $this->mobil->updatestatusmobil($id);
+        $mobil = $this->mobil->updatestatusmobil($id);
+        return response()->json(['status'=>$mobil]);
     }
     public function getTotalMobil(){
         $mobil = $this->mobil->countmobil();
@@ -93,6 +94,16 @@ class ApiCtrl extends Controller{
             ->orderBy('tahun')->get();
 
         return $pemesananbulan_query;
+    }
+
+    public function checkstatusmobil($id){
+        $mobil = $this->mobil->checkstatus($id);
+        return response($mobil,200);
+    }
+
+    public function checkstatuspesanan($id){
+        $sewa = $this->transaksi->checkstatus($id);
+        return response()->json($sewa);
     }
 
 

@@ -5,6 +5,7 @@ namespace App\Transaksi;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Mobil\Mobil;
+use App\Customer;
 class Sewa extends Model
 {
     protected $table = 'sewa';
@@ -21,7 +22,7 @@ class Sewa extends Model
     }
     
     public function Customer(){
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(Customer::class,'customer_id','user_id');
     }
 
     public static function Selectbox() {

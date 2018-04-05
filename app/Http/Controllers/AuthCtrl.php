@@ -17,7 +17,7 @@ use App\User;
 use App\Traits\CustomLogin;
 class AuthCtrl extends Controller{
 	use RedirectsUsers, ThrottlesLogins,CustomLogin;
-    public $redirectTo = '/backend';
+    public $redirectTo = '/';
 	public function __construct($value=''){
         $this->middleware('guest', ['except' => 'logout']);
         //$this->redirect = new RedirectsUsers();

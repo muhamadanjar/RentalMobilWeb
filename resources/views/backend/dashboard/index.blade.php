@@ -191,7 +191,7 @@
       <div class="col-md-6">
         <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">Carousel</h3>
+              <h3 class="box-title">Promo</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -206,21 +206,21 @@
                     <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
 
                     <div class="carousel-caption">
-                      First Slide
+                      Promo 1
                     </div>
                   </div>
                   <div class="item">
                     <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide">
 
                     <div class="carousel-caption">
-                      Second Slide
+                      Promo 2
                     </div>
                   </div>
                   <div class="item">
                     <img src="http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap" alt="Third slide">
 
                     <div class="carousel-caption">
-                      Third Slide
+                      Promo 3
                     </div>
                   </div>
                 </div>
@@ -234,6 +234,53 @@
             </div>
             <!-- /.box-body -->
         </div>
+      </div>
+      <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <i class="ion ion-clipboard"></i>
+
+              <h3 class="box-title">Pemesanan</h3>
+
+              <div class="box-tools pull-right">
+                <ul class="pagination pagination-sm inline">
+                  <li><a href="#">&laquo;</a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+              <ul class="todo-list">
+              @foreach($listtransaksi as $k => $v)
+                <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                  
+                      <input type="checkbox" value="">
+                      <!-- todo text -->
+                      <span class="text">{{$v->mobil->name}} ({{$v->mobil->no_plat}}) -- ({{$v->Customer->name}})</span>
+                      <!-- Emphasis label -->
+                      <small class="label label-danger"><i class="fa fa-clock-o"></i> {{$v->created_at->diffForHumans()}}</small>
+                      <!-- General tools such as edit or delete-->
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                </li>
+              @endforeach
+              </ul>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix no-border">
+            </div>
+          </div>
       </div>
     </div>
 @endsection
