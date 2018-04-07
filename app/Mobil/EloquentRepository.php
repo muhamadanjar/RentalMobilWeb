@@ -72,7 +72,11 @@ class EloquentRepository implements RepositoryInterface {
 
     public function getDriverInfo($id){
         $mobil = $this->find($id);
-        return $mobil->author->officers;
+        return response([
+            'id'=>$mobil->id,
+            'name'=>$mobil->author->name,
+            'mobil'=>$mobil,
+        ]);
     }
 
     public function getDriverLocation(){

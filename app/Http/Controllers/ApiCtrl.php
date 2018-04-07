@@ -24,7 +24,7 @@ class ApiCtrl extends Controller{
     }
     public function getDriverInfo($id){
         $driver = $this->mobil->getDriverInfo($id);
-        return response()->json($driver);
+        return $driver;
     }
     public function updateStatusMobil($id){
         $mobil = $this->mobil->updatestatusmobil($id);
@@ -94,8 +94,8 @@ class ApiCtrl extends Controller{
         return response()->json($sewa);
     }
 
-    public function canceledPesanan($id){
-        $this->transaksi->setStatusPesanan($id,'canceled');
+    public function cancelledPesanan($id){
+        return $this->transaksi->setStatusPesanan($id,'cancelled');
     }
 
 
