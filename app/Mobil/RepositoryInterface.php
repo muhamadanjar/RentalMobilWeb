@@ -9,4 +9,6 @@ interface RepositoryInterface {
     public function mobilavailable();
     public function autoNumber($table,$primary,$prefix);
     public function checkstatus($id);
+    public function getDriverInfo($id);
+    public function getDriverLocation();
 }

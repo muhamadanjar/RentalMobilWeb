@@ -21,7 +21,7 @@ class Sewa extends Model
         return $this->hasOne('PaymentDetail','reservation_id');
     }
     
-    public function Customer(){
+    public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','user_id');
     }
 

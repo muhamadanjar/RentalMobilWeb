@@ -14,6 +14,10 @@ class Mobil extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function supir(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
     public function fasilitas(){
         return $this->hasMany('App\Mobil\Fasilitas', 'fasilitas_id');
         //return $this->belongsToMany(Fasilitas::class,'post_tag');

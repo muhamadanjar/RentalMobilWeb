@@ -53,7 +53,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 });
 
 Route::get('user',function(){
-	return 'foo';
+	return \App\Transaksi\Sewa::find(11)->Customer;
 });
 
 Route::post('register', 'AuthCtrl@register')->name('api.register');
@@ -62,6 +62,7 @@ Route::get('mobil','ApiCtrl@getAllMobil')->name('api.getmobil');
 Route::get('mobil/{id}/status','ApiCtrl@updateStatusMobil')->name('api.updatestatusmobil');
 Route::get('mobil/{id}/checkstatus','ApiCtrl@checkstatusmobil')->name('api.checkstatusmobil');
 Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
+Route::get('mobil/{id}/driverinfo','ApiCtrl@getDriverInfo')->name('api.getdriverinfo');
 
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');

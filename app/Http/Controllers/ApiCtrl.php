@@ -22,6 +22,10 @@ class ApiCtrl extends Controller{
         $mobil = $this->mobil->mobilavailable();
         return response($mobil,200);
     }
+    public function getDriverInfo($id){
+        $driver = $this->mobil->getDriverInfo($id);
+        return response()->json($driver);
+    }
     public function updateStatusMobil($id){
         $mobil = $this->mobil->updatestatusmobil($id);
         return response()->json(['status'=>$mobil]);
@@ -34,7 +38,7 @@ class ApiCtrl extends Controller{
         $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
         ->editColumn('tgl_mulai', function ($user) {
-            return $user->tgl_mulai->format('H:i:s');
+            return $user->tgl_mulai;
         })
         ->editColumn('created_at', '{!! $created_at !!}')
         ->editColumn('updated_at', function ($user) {
@@ -63,25 +67,9 @@ class ApiCtrl extends Controller{
         ->make(true);
     }
     public function makeSewa(Request $request){
-        
-        $reservation = new Sewa();
-        $reservation->status = $request->status;
-        //$reservation->no_transaksi = $request->no_transaksi;
-        //$reservation->tgl_mulai = Carbon::now();
-        //$reservation->tgl_akhir = Carbon::now();
-        $reservation->origin = $request->origin;
-        $reservation->origin_latitude = (isset($request->origin_latitude)) ? $request->origin_latitude : null;
-        $reservation->origin_longitude = (isset($request->origin_longitude)) ? $request->origin_longitude : null;
-        $reservation->destination = $request->destination;
-        $reservation->destination_latitude = (isset($request->destination_latitude)) ? $request->destination_latitude : null;
-        $reservation->destination_longitude = (isset($request->destination_longitude)) ? $request->destination_longitude : null;
-        $reservation->total_bayar = $request->total_bayar;
-        $reservation->denda = 0;
-        $reservation->customer_id = $request->customer_id;
-        $reservation->mobil_id = $request->mobil_id;
-        $reservation->save();
+        $reservation = $this->transaksi->makeSewa($request);
 
-        return response()->json($reservation);
+        return $reservation;
     }
     public function getDataPemesananBulanan(){
         $pemesananbulan_query = DB::table('sewa')
@@ -104,6 +92,10 @@ class ApiCtrl extends Controller{
     public function checkstatuspesanan($id){
         $sewa = $this->transaksi->checkstatus($id);
         return response()->json($sewa);
+    }
+
+    public function canceledPesanan($id){
+        $this->transaksi->setStatusPesanan($id,'canceled');
     }
 
 

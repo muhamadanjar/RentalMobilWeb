@@ -265,12 +265,13 @@
                   
                       <input type="checkbox" value="">
                       <!-- todo text -->
-                      <span class="text">{{$v->mobil->name}} ({{$v->mobil->no_plat}}) -- ({{$v->Customer->name}})</span>
+                      <span class="text">{{$v->mobil->name}} ({{$v->mobil->no_plat}}) -- ({{$v->customer->name}})</span>
                       <!-- Emphasis label -->
+                      <small class="label label-info"><i class="fa fa-info"></i> {{$v->status}}</small>
                       <small class="label label-danger"><i class="fa fa-clock-o"></i> {{$v->created_at->diffForHumans()}}</small>
                       <!-- General tools such as edit or delete-->
                       <div class="tools">
-                        <i class="fa fa-edit"></i>
+                        <a href="#"><i class="fa fa-edit"></i></a>
                         <i class="fa fa-trash-o"></i>
                       </div>
                 </li>

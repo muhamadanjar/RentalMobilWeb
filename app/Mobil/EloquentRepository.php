@@ -42,11 +42,6 @@ class EloquentRepository implements RepositoryInterface {
         return $status;
     }
 
-    public function checkstatus($id){
-        $mobil = $this->find($id);
-        return $mobil->status;
-    }
-
     public function mobilavailable(){
         return $this->mobil->where('status','tersedia')->orderBy('name', 'asc')->get();
     }
@@ -68,5 +63,19 @@ class EloquentRepository implements RepositoryInterface {
         }
  
         return $kd;
+    }
+
+    public function checkstatus($id){
+        $mobil = $this->find($id);
+        return $mobil->status;
+    }
+
+    public function getDriverInfo($id){
+        $mobil = $this->find($id);
+        return $mobil->author->officers;
+    }
+
+    public function getDriverLocation(){
+        # code...
     }
 }
