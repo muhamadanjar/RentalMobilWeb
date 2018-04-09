@@ -24,8 +24,8 @@ Route::get('/rentalmobil', 'HomeController@getRentalMobil')->name('rentalmobil')
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('test',function(){
-	$vat = \App\Transaksi\Sewa::find(23);
-	return response($vat->mobil);
+	$vat = \App\User::find(10);
+	return response($vat->customer);
 });
 
 Route::get('/login', function () {

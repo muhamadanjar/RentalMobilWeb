@@ -41,6 +41,13 @@ class EloquentRepository implements RepositoryInterface {
         
         return $status;
     }
+    public function updatebystatus($id,$status){
+        $mobil = $this->find($id);
+        $status = $mobil->status = $status ;
+        $this->mobil->where('id',$id)->update(['status' => $status]);
+        
+        return $status;
+    }
 
     public function mobilavailable(){
         return $this->mobil->where('status','tersedia')->orderBy('name', 'asc')->get();

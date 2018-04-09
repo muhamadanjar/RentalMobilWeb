@@ -38,6 +38,9 @@ class User extends Authenticatable
     public function permissions(){
         return $this->hasManyThrough(Permission::class, Role::class);
     }
+    public function customer(){
+        return $this->belongsTo(Customer::class,'id','user_id');
+    }
     public function isSuper(){
        if ($this->roles->contains('name', 'admin')) {
             return true;

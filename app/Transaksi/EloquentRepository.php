@@ -82,6 +82,8 @@ class EloquentRepository implements RepositoryInterface{
         \DB::statement(DB::raw('set @rownum=0'));
             $sewa = Sewa::join('mobil','sewa.mobil_id', '=', 'mobil.id')
             ->select([DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+            'sewa.id',
+            'sewa.mobil_id',
             'sewa.origin',
             'sewa.destination',
             \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
@@ -126,5 +128,24 @@ class EloquentRepository implements RepositoryInterface{
         }
  
         return $kd;
+    }
+
+    public function getPesananByCustomer($id){
+        $sewa = $this->sewa->where('customer_id',$id)->where('status','!=','pending')->first();
+        $customer = $sewa->customer;
+        $mobil = $sewa->mobil;
+
+        return response([
+            'id'=>$sewa->id,
+            'status'=>$sewa->status,
+            'origin'=>$sewa->origin,
+            'destination'=>$sewa->destination,
+            'total_bayar'=>$sewa->total_bayar,
+            'denda'=>$sewa->denda,
+            'customer_id'=>$sewa->customer_id,
+            'mobil_id'=>$sewa->mobil_id,
+            'mobil'=>$mobil,
+            'customer'=>$customer,
+        ]);
     }
 }

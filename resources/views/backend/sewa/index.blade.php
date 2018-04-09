@@ -24,7 +24,8 @@
                         <label for="status">Status</label>
                         <select class="form-control" id="status" name="status">
                             <option value="pending">Pending</option>
-                            <option value="canceled">Canceled</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
                             <option value="collected">Collected</option>
                             <option value="complete">Complete</option>
                         </select>
@@ -77,5 +78,19 @@
 
 <script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('/plugins/bootbox/js/bootbox.js') }}"></script>
+<script id="details-template-transaksi" type="text/x-handlebars-template">
+        <div class="label label-info">Mobil </div>
+        <table class="table details-table" id="posts-">
+            <thead>
+            <tr>
+                <th>Mobil</th>
+                <th>Tipe</th>
+                <th>Warna</th>
+                <th>Supir</th>
+                <th>No Telp</th>
+            </tr>
+            </thead>
+        </table>
+</script>
 <script type="text/javascript" src="{{ url('js/rm.js')}}"></script>
 @endsection

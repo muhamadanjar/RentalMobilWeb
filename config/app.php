@@ -235,6 +235,7 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
+        'LRedis'     => Illuminate\Support\Facades\Redis::class,
 
     ],
 

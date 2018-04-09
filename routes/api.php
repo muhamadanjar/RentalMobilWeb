@@ -65,6 +65,8 @@ Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
 Route::get('mobil/{id}/driverinfo','ApiCtrl@getDriverInfo')->name('api.getdriverinfo');
 
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
+
+Route::get('bookings/{id}/notcomplete','ApiCtrl@getReservationNotComplete')->name('api.notcomplete');
 Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');
 Route::get('bookings/{id}/checkstatus','ApiCtrl@checkstatuspesanan')->name('api.checkstatuspesanan');
 Route::get('bookings/{id}/cancelled','ApiCtrl@cancelledPesanan')->name('api.cancelpesanan');

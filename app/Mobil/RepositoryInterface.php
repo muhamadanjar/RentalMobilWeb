@@ -6,6 +6,7 @@ interface RepositoryInterface {
     public function delete($id);
     public function countmobil();
     public function updatestatusmobil($id);
+    public function updatebystatus($id,$status);
     public function mobilavailable();
     public function autoNumber($table,$primary,$prefix);
     public function checkstatus($id);

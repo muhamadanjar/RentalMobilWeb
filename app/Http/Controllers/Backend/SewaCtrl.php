@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Transaksi\Sewa;
-class SewaCtrl extends BackendCtrl
-{
-    public function __construct(Sewa $res)
+use Laracasts\Flash\Flash;
+use App\Transaksi\RepositoryInterface as TransaksiInterface;
+use App\Mobil\RepositoryInterface as MobilInterface;
+class SewaCtrl extends BackendCtrl{
+    public function __construct(Sewa $res,MobilInterface $mobil,TransaksiInterface $transaksi)
     {
         $this->reservation = $res;
+        $this->mobil = $mobil;
+        $this->transaksi = $transaksi;
     }
 
     public function index(){
@@ -27,15 +31,26 @@ class SewaCtrl extends BackendCtrl
     }
 
     public function post(Request $request){
-        $sewa = (session('aksi') == 'edit') ? $this->reservation->findOrFail($request->id) : new Sewa;
-        $sewa->status = $request->status;
-        $sewa->save();
+        try{
+            $sewa = (session('aksi') == 'edit') ? $this->reservation->findOrFail($request->id) : new Sewa;
+            $sewa->status = $request->status;
+            $sewa->save();
+            if($sewa->status == 'complete'){
+                $this->mobil->updatestatusmobil($sewa->mobil_id);
+            }
+            Flash::success(trans('flash/transaksi.status_update'));
+            return redirect()->route('backend.transaksi.index');
+        }catch(Exception $e){
+            Flash::error(trans('flash/transaksi.status_failed'));
+            \DB::rollback();
+            return redirect()->route('backend.transaksi.index');
+        }
         
-        return redirect()->route('backend.mobil.index');
     }
 
     public function destroy($id){
         $this->reservation->findOrFail($id)->delete();
+        Flash::success(trans('flash/transaksi.delete'));
         return redirect()->route('backend.dashboard');
     }
 

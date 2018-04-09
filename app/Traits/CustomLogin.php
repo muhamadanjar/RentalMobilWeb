@@ -54,7 +54,7 @@ trait CustomLogin{
         $subject = "Please verify your email address.";
         Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
-                $mail->from(getenv('FROM_EMAIL_ADDRESS'), "From User/Company Name Goes Here");
+                $mail->from(getenv('MAIL_USERNAME'), "Rental");
                 $mail->to($email, $name);
                 $mail->subject($subject);
         });
@@ -128,8 +128,8 @@ trait CustomLogin{
             return response()->json(['success' => false, 'error' => 'could_not_create_token'], 500);
         }
         // all good so return the token
-        $_user = DB::table('users')->where('username',$request->username)->first();
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user ]])->header('Authorization','Bearer '.$token);
+        $_user = User::orderBy('id')->where('username',$request->username)->first();
+        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user,'customer'=>$_user->customer ]])->header('Authorization','Bearer '.$token);
         //return response()->json(compact('token'));
     }
     /**

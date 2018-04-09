@@ -37,6 +37,9 @@ class ApiCtrl extends Controller{
     public function getReservation(Request $request) {
         $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
+        ->addColumn('action', function ($user) {
+            return '<a href="'.route('backend.transaksi.edit',[$user->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</a>';
+        })
         ->editColumn('tgl_mulai', function ($user) {
             return $user->tgl_mulai;
         })
@@ -44,7 +47,9 @@ class ApiCtrl extends Controller{
         ->editColumn('updated_at', function ($user) {
             return $user->updated_at->format('Y/m/d');
         })
-       
+        ->addColumn('details_url', function($user) {
+            return url('api/mobil/'.$user->mobil_id.'/driverinfo/');
+        })
         ->editColumn('status', '{{$status}}')
         ->filter(function ($query) use ($request) {
             if ($request->has('status')) {
@@ -65,6 +70,15 @@ class ApiCtrl extends Controller{
             
         })
         ->make(true);
+    }
+    public function getReservationDetailsData($id){
+        $posts = User::find($id)->posts();
+
+        return Datatables::of($posts)->make(true);
+    }
+    public function getReservationNotComplete($id){
+        $pesanan = $this->transaksi->getPesananByCustomer($id);
+        return $pesanan;
     }
     public function makeSewa(Request $request){
         $reservation = $this->transaksi->makeSewa($request);

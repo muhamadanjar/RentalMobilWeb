@@ -270,10 +270,7 @@ function loadDesa(id){
             formData.append("_token", window.Laravel.csrfToken);
             console.log(window.Laravel.csrfToken);
             if(!!file.type.match(/.*/)){
-                
                 formData.append("images", file);
-                
-                
             }  
             
             $.ajax({
@@ -467,7 +464,8 @@ function loadDesa(id){
             {data: 'merk'},
             {data: 'tgl_mulai', name: 'tgl_mulai'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'updated_at', name: 'updated_at'}
+            {data: 'updated_at', name: 'updated_at'},
+            {data: 'action',name:'action', orderable: false, searchable: false},
         ]
     });
     $('#table_reservation_search_form').on('submit', function(e) {
