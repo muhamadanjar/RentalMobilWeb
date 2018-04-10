@@ -7,6 +7,7 @@ use App\Transaksi\Sewa;
 use Laracasts\Flash\Flash;
 use App\Transaksi\RepositoryInterface as TransaksiInterface;
 use App\Mobil\RepositoryInterface as MobilInterface;
+use LRedis;
 class SewaCtrl extends BackendCtrl{
     public function __construct(Sewa $res,MobilInterface $mobil,TransaksiInterface $transaksi)
     {
