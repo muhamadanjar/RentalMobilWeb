@@ -5,6 +5,10 @@
 @endsection
 
 @section('content-admin')
+<?php 
+    $_chartpesanan= json_decode($chartpesanan);
+    
+?>
     <!-- Info boxes -->
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -93,11 +97,11 @@
                         @foreach($listtransaksi as $k => $v)
                         <li class="item">
                           <div class="product-img">
-                            <img src="http://placehold.it/160" alt="Product Image">
+                            <img src="http://placehold.it/160" alt="Image">
                           </div>
                           <div class="product-info">
                             <a href="javascript:void(0)" class="product-title">
-                              {{$v->mobil->name}} ({{$v->mobil->no_plat}})
+                              @if(isset($v->mobil)){{$v->mobil->name}} ({{$v->mobil->no_plat}})@endif
                               <span class="label label-warning pull-right">Rp. {{number_format($v->total_bayar)}}</span></a>
                               <span class="product-description">
                                   {{$v->origin }} <i class="fa fa-arrow-right"></i> {{$v->destination}}
@@ -265,7 +269,10 @@
                   
                       <input type="checkbox" value="">
                       <!-- todo text -->
-                      <span class="text">{{$v->mobil->name}} ({{$v->mobil->no_plat}}) -- ({{$v->customer->name}})</span>
+                      <span class="text">
+                      @if(isset($v->mobil)){{$v->mobil->name}} ({{$v->mobil->no_plat}})@endif -- ({{$v->customer->name}})
+                        
+                      </span>
                       <!-- Emphasis label -->
                       <small class="label label-info"><i class="fa fa-info"></i> {{$v->status}}</small>
                       <small class="label label-danger"><i class="fa fa-clock-o"></i> {{$v->created_at->diffForHumans()}}</small>
@@ -310,9 +317,7 @@
         
         xAxis: {
             categories: [
-                '2014',
-                '2015',
-                '2016',
+               
             ],
             crosshair: true
         },
@@ -336,14 +341,7 @@
                 borderWidth: 0
             }
         },
-        series: [{
-            name: 'Rental',
-            data: [49.9, 71.5, 106.4]
-        }, {
-            name: 'Taxi',
-            data: [83.6, 78.8, 98.5]
-
-        }]
+        series: @if(isset($_chartpesanan->chart)){!! json_encode($_chartpesanan->chart,JSON_NUMERIC_CHECK) !!} @else [] @endif,
     });
     </script>
 @endsection

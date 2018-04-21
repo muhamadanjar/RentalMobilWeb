@@ -46,9 +46,11 @@ class EloquentRepository implements RepositoryInterface{
     public function makeSewa($request){
         $reservation = new Sewa();
         $reservation->status = $request->status;
-        //$reservation->no_transaksi = $request->no_transaksi;
+        $reservation->no_transaksi = $this->autoNumber('sewa','no_transaksi','RENT');
         //$reservation->tgl_mulai = Carbon::now();
         //$reservation->tgl_akhir = Carbon::now();
+        $reservation->sewa_latitude = (isset($request->sewa_latitude)) ? $request->sewa_latitude : null;
+        $reservation->sewa_longitude = (isset($request->sewa_longitude)) ? $request->sewa_longitude : null;
         $reservation->origin = $request->origin;
         $reservation->origin_latitude = (isset($request->origin_latitude)) ? $request->origin_latitude : null;
         $reservation->origin_longitude = (isset($request->origin_longitude)) ? $request->origin_longitude : null;
@@ -60,20 +62,34 @@ class EloquentRepository implements RepositoryInterface{
         $reservation->customer_id = $request->customer_id;
         $reservation->mobil_id = $request->mobil_id;
         $reservation->save();
-        $mobil = Mobil::find($reservation->mobil_id);
-        $customer = Customer::where('user_id',$reservation->customer_id)->first();
-        return response([
+        $mobil = $reservation->mobil;/*Mobil::find($reservation->mobil_id);*/
+        $customer = $reservation->customer;/*Customer::where('id',$reservation->customer_id)->first()*/
+        return $reservation;
+        /*return array(
             'id'=>$reservation->id,
             'status'=>$reservation->status,
+            'no_transaksi'=>$reservation->no_transaksi,
             'origin'=>$reservation->origin,
             'destination'=>$reservation->destination,
             'total_bayar'=>$reservation->total_bayar,
             'denda'=>$reservation->denda,
             'customer_id'=>$reservation->customer_id,
             'mobil_id'=>$reservation->mobil_id,
-            'mobil'=>$mobil,
-            'customer'=>$customer,
-        ]);
+            'mobil'=> array(
+                'name'=>$mobil->name,
+                'driver'=>$mobil->supir->name,
+                'merk'=>$mobil->merk,
+                'warna'=>$mobil->warna,
+                'tahun'=>$mobil->tahun,
+                'foto'=>$mobil->foto
+            ),
+            'customer'=>array(
+                'name'=>$customer->name,
+                'email'=>$customer->email,
+                'no_telp'=>$customer->no_telp,
+                'sex'=>$customer->sex
+            )
+        );*/
     }
     public function getlimit($limit = '5'){
         return $this->sewa->limit($limit)->orderBy('tgl_mulai', 'desc')->get();
@@ -114,16 +130,12 @@ class EloquentRepository implements RepositoryInterface{
     public function autoNumber($table,$primary,$prefix){
         $q=DB::table($table)->select(DB::raw('MAX(RIGHT('.$primary.',3)) as kd_max'));
         $prx=$prefix;
-        if($q->count()>0)
-        {
-            foreach($q->get() as $k)
-            {
+        if($q->count()>0){
+            foreach($q->get() as $k){
                 $tmp = ((int)$k->kd_max)+1;
                 $kd = $prx.sprintf("%04s", $tmp);
             }
-        }
-        else
-        {
+        }else{
             $kd = $prx."0001";
         }
  
@@ -147,5 +159,59 @@ class EloquentRepository implements RepositoryInterface{
             'mobil'=>$mobil,
             'customer'=>$customer,
         ]);
+    }
+    public function getPesananByCustomerAll($id){
+        $sewa = $this->sewa->where('customer_id',$id)->get();
+        
+        $data = array();$_data = array();
+        foreach($sewa as $k => $v){
+            $customer = $v->customer;
+            $mobil = $v->mobil;
+            $data['id'] = $v->id;
+            $data['status']= $v->status;
+            $data['origin']= $v->origin;
+            $data['destination']= $v->destination;
+            $data['total_bayar']= $v->total_bayar;
+            $data['denda']= $v->denda;
+            $data['customer_id']= $v->customer_id;
+            $data['mobil_id']= $v->mobil_id;
+            $data['mobil']= $mobil;
+            $data['customer']= $customer;
+            array_push($_data,$data);
+        }
+        
+        return response($_data);
+    }
+    public function statistikPemesanan($statistik='bulan'){
+        if($statistik == 'hari'){
+            $statistik_query = DB::table('sewa')
+            ->join('sewa_detail','sewa.id','sewa_detail.sewa_id')
+            ->select(
+                DB::raw('DAY(sewa.created_at) as hari'),
+                DB::raw('MONTH(sewa.created_at) as bulan'),
+                DB::raw('YEAR(sewa.created_at) as tahun'),
+                DB::raw('COUNT(sewa_type) as total_bulan')
+            )->orderBy('tahun')->groupBy('hari')->get();
+        }else if($statistik == 'tahun'){
+                $statistik_query = DB::table('sewa')
+                ->join('sewa_detail','sewa.id','sewa_detail.sewa_id')
+                ->select(
+                    DB::raw('DAY(sewa.created_at) as hari'),
+                    DB::raw('MONTH(sewa.created_at) as bulan'),
+                    DB::raw('YEAR(sewa.created_at) as tahun'),
+                    DB::raw('COUNT(sewa_type) as total_bulan')
+                )->orderBy('tahun')->groupBy('tahun')->get();
+        }else{
+            $statistik_query = DB::table('sewa')
+            ->join('sewa_detail','sewa.id','sewa_detail.sewa_id')
+            ->select(
+                DB::raw('MONTH(sewa.created_at) as bulan'),
+                DB::raw('YEAR(sewa.created_at) as tahun'),
+                DB::raw('COUNT(sewa_type) as total_bulan'),
+                'sewa_detail.sewa_type'
+            )->orderBy('tahun')->groupBy('sewa_type')->groupBy('bulan')->groupBy('tahun')->get();
+        }
+        
+        return $statistik_query;
     }
 }

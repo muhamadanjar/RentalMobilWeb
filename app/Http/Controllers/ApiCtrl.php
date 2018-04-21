@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Gate;
 use App\Mobil\Mobil;
 use App\Transaksi\Sewa;
 use App\User;
+use App\Customer;
 use Carbon\Carbon;
 use Datatables;
-use DB;
+use DB; 
+use Mail;
 use App\Mobil\RepositoryInterface as MobilInterface;
 use App\Transaksi\RepositoryInterface as TransaksiInterface;
 
@@ -80,10 +82,58 @@ class ApiCtrl extends Controller{
         $pesanan = $this->transaksi->getPesananByCustomer($id);
         return $pesanan;
     }
-    public function makeSewa(Request $request){
+    public function getReservationByCustomer($id){
+        $pesanan = $this->transaksi->getPesananByCustomerAll($id);
+        return $pesanan;
+    }
+    public function makeSewaRental(Request $request){
         $reservation = $this->transaksi->makeSewa($request);
+        $mobil = $reservation->mobil;
+        $customer = $reservation->customer;
+        $data = array();
+        $email = $customer->email;
+        $name = $customer->name;
+        $subject = 'Invoice';
+        $data['no_transaksi'] = $reservation->no_transaksi;
+        $data['origin'] = $reservation->origin;
+        $data['destination'] = $reservation->destination;
+        $data['name'] = $name;
+        $data['email'] = $email;
+        $data['customer'] = $name;
+        $data['driver'] = $mobil->supir->name;
+        $data['jeniskendaraan'] = $mobil->name;
+        $data['tarif'] = $reservation->total_bayar;
+        $data['total'] = $reservation->total_bayar;
+        Mail::send('email.invocespesan',['data'=>$data],
+            function($mail) use ($email, $name, $subject){
+                $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
+                $mail->to($email, $name);
+                $mail->subject($subject);
+        });
 
         return $reservation;
+    }
+    public function makeSewaReguler(Request $request){
+        try{
+            $customers = new Customer() ;
+            $customers->sex = $request->sex;
+            $customers->name = $request->name;
+            $customers->email = $request->email;
+            $customers->no_telp = $request->email;
+            $customers->religion = $request->religion;
+            $customers->address = $request->address;
+            $customers->save();
+            $data = array();
+            $reservation = $this->transaksi->makeSewa($request);
+        }catch(Exception $e){
+            return response()->json(['success'=> false, 'error'=> $e]);
+        }
+
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Thanks for Ordering! Please wait until your receive email..'
+        ]);
+        
     }
     public function getDataPemesananBulanan(){
         $pemesananbulan_query = DB::table('sewa')
@@ -110,6 +160,23 @@ class ApiCtrl extends Controller{
 
     public function cancelledPesanan($id){
         return $this->transaksi->setStatusPesanan($id,'cancelled');
+    }
+
+    public function createCustomer(Request $request){
+        $customers = new Customer() ;
+        
+        $customers->sex = $request->sex;
+        $customers->name = $request->name;
+        $customers->email = $request->email;
+        $customers->no_telp = $request->email;
+        $customers->religion = $request->religion;
+        $customers->address = $request->address;
+        $customers->save();
+        return $customers;
+    }
+
+    public function createCustomerAndBookCar(Request $request){
+        
     }
 
 

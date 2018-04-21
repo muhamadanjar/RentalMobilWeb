@@ -94,6 +94,14 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class, 'author_id');
     }
 
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(){
+        return [];
+    }
+
     public function getPermalink(){
         return url('images/uploads/users').DIRECTORY_SEPARATOR.'/';
     }

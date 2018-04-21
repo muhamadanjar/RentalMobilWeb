@@ -38,6 +38,7 @@ class DashboardCtrl extends BackendCtrl{
         //$countagenda = $this->agenda->countNewThisWeek();
         $datastatistik = $this->activity->statistikPengunjung();
         $chartstatistik = $this->getChartStatistik();
+        $chartpesanan = $this->getChartPesanan();
         $totalmobil = $this->mobil->countmobil();
         return view('backend.dashboard.index')
         //->with('transdata',$transdata)
@@ -47,7 +48,8 @@ class DashboardCtrl extends BackendCtrl{
         ->with('countmobil',$totalmobil)
         ->with('datastatistik',$datastatistik)
         ->with('listtransaksi',$listtransaksi)
-        ->with('chartstatistik',$chartstatistik);
+        ->with('chartstatistik',$chartstatistik)
+        ->with('chartpesanan',$chartpesanan);
     }
 
     
@@ -74,6 +76,26 @@ class DashboardCtrl extends BackendCtrl{
         return json_encode($arr);
     }
 
-
+    public function getChartPesanan(){
+        $chartbar = $this->transaksi->statistikPemesanan();
+        $arr = array();
+        $category = array();
+        $total = 0;
+        $month = 0;
+        $data = [];
+        
+        foreach ($chartbar as $key => $value) {
+            array_push($category,date('M',mktime(date('H'),date('i'),date('s'),$value->bulan,date('j'),$value->tahun)));
+            array_push($data, $value->total_bulan);
+            $arr['chart'][$key]['name'] = $value->sewa_type;
+            $arr['chart'][$key]['data'] = $data;
+            $total += $value->total_bulan;
+        }
+        //$arr['chart'][0]['name'] = 'Statistik';
+        //$arr['chart'][0]['data'] = $data;
+        $arr['category'] = $category;
+        $arr['total'] = $total;
+        return json_encode($arr);
+    }
     
 }

@@ -12,7 +12,7 @@ class RegisterCtrl extends Controller{
 
     public function post(Request $request){
         $register = $this->register($request);
-        return ($register);
-        //return redirect()->route('home');
+        //return ($register);
+        return redirect()->route('home');
     }
 }

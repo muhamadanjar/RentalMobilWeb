@@ -52,9 +52,9 @@ trait CustomLogin{
         $verification_code = str_random(30); //Generate verification code
         DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
         $subject = "Please verify your email address.";
-        Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
+        Mail::send('email.verify', ['email' => $email,'name' => $name, 'verification_code' => $verification_code],
             function($mail) use ($email, $name, $subject){
-                $mail->from(getenv('MAIL_USERNAME'), "Rental");
+                $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
                 $mail->to($email, $name);
                 $mail->subject($subject);
         });
@@ -81,7 +81,9 @@ trait CustomLogin{
                     'message'=> 'Account already verified..'
                 ]);
             }
-            $user->update(['isverified' => 1]);
+            $user->isverified = 1;
+            $user->save();
+            //$user->update(['isverified' => 1]);
             DB::table('user_verifications')->where('token',$verification_code)->delete();
             return response()->json([
                 'success'=> true,
@@ -129,7 +131,7 @@ trait CustomLogin{
         }
         // all good so return the token
         $_user = User::orderBy('id')->where('username',$request->username)->first();
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user,'customer'=>$_user->customer ]])->header('Authorization','Bearer '.$token);
+        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user,'customer'=>$_user->customer,'roles'=>$_user->roles ]])->header('Authorization','Bearer '.$token);
         //return response()->json(compact('token'));
     }
     /**

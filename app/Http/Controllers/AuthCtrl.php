@@ -106,8 +106,7 @@ class AuthCtrl extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    protected function credentials(Request $request)
-    {
+    protected function credentials(Request $request){
         return $request->only($this->username(), 'password');
     }
 

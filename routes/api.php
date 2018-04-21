@@ -41,7 +41,7 @@ Route::get('/test2', function () {
 	}
 
 	// the token is valid and we have found the user via the sub claim
-	return response()->json(compact('user'));
+	return response()->json($user);
 });
 
 Route::group(['middleware' => ['jwt.auth']], function() {
@@ -52,8 +52,31 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     });
 });
 
-Route::get('user',function(){
-	return \App\Transaksi\Sewa::find(11)->Customer;
+
+
+Route::get('/user', function () {
+    try {
+		if (! $user = JWTAuth::parseToken()->authenticate()) {
+			return response()->json(['error'=>'user_not_found'], 404);
+		}
+	} catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+		return response()->json(['error'=>'token_expired'], $e->getStatusCode());
+	} catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+		return response()->json(['error'=>'token_invalid'], $e->getStatusCode());
+	} catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+		return response()->json(['error'=>'token_absent'], $e->getStatusCode());
+	}
+	// the token is valid and we have found the user via the sub claim
+	$data = \App\User::find($user->id);
+	return response(['user'=> [
+		'id'=>$user->id,
+		'name'=>$user->name,
+		'email'=>$user->email,
+		'uuid'=>$user->uuid,
+		'username'=>$user->name,
+		'foto'=>$user->foto,
+		'customer'=>$user->customer],
+		'customer'=>$user->customer],200);
 });
 
 Route::post('register', 'AuthCtrl@register')->name('api.register');
@@ -67,8 +90,14 @@ Route::get('mobil/{id}/driverinfo','ApiCtrl@getDriverInfo')->name('api.getdriver
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 
 Route::get('bookings/{id}/notcomplete','ApiCtrl@getReservationNotComplete')->name('api.notcomplete');
-Route::post('bookings','ApiCtrl@makeSewa')->name('api.makesewa');
+Route::get('bookings/{id}/bycustomer','ApiCtrl@getReservationByCustomer')->name('api.bycostumer');
+
+Route::post('bookings','ApiCtrl@makeSewaRental')->name('api.makesewarental');
+Route::post('bookings/reguler','ApiCtrl@makeSewaReguler')->name('api.makesewareguler');
 Route::get('bookings/{id}/checkstatus','ApiCtrl@checkstatuspesanan')->name('api.checkstatuspesanan');
 Route::get('bookings/{id}/cancelled','ApiCtrl@cancelledPesanan')->name('api.cancelpesanan');
 Route::get('bookings/{id}/collected','ApiCtrl@cancelledPesanan')->name('api.collectpesanan');
 Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');
+
+
+Route::post('customer/create','ApiCtrl@createCustomer')->name('api.customer.create');

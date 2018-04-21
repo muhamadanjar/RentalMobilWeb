@@ -45,7 +45,7 @@
                         <div class="box box-widget widget-user">
                             <!-- Add the bg color to the header using any of the bg-* classes -->
                             <div class="widget-user-header bg-orange-active">
-                                <h3 class="widget-user-username">Taxi</h3>
+                                <h3 class="widget-user-username">Reguler</h3>
                                 
                             </div>
                             <div class="widget-user-image">

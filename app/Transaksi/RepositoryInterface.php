@@ -14,4 +14,6 @@ interface RepositoryInterface {
     function setStatusPesanan($id,$status);
     function autoNumber($table, $primary, $prefix);
     function getPesananByCustomer($id);
+    function getPesananByCustomerAll($id);
+    function statistikPemesanan($statistik);
 }
