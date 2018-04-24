@@ -75,18 +75,21 @@ class SewaCtrl extends BackendCtrl{
             $sewa = (session('aksi') == 'edit') ? $this->reservation->findOrFail($request->id) : new Sewa;
             $sewa->status = $request->status;
             $sewa->mobil_id = $request->mobil;
-            $sewa->harga = $request->harga;
+            $sewa->total_bayar = $request->total_bayar;
             $sewa->save();
             if($sewa->status == 'complete'){
-                $this->mobil->updatestatusmobil($sewa->mobil_id);
+                //$this->mobil->updatestatusmobil($sewa->mobil_id);
+                $this->mobil->updatestatus($sewa->mobil_id,'tersedia');
             }elseif($sewa->status == 'confirmed'){
+                $this->mobil->updatestatus($sewa->mobil_id,'dipinjam');
                 $data = array();
                 $email = $sewa->customer->email;
                 $name = $sewa->customer->name;
                 $subject = 'Pesanan anda sudah terkonfirmasi.';
                 $data['email'] = $sewa->customer->email;
                 $data['name'] = $sewa->customer->name;
-                Mail::send('email.infoinline', ['data' => $data],
+                $data['no_transaksi'] = $sewa->no_transaksi;
+                Mail::send('email.orderconfirm', ['data' => $data],
                     function($mail) use ($email, $name, $subject){
                         $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
                         $mail->to($email, $name);
@@ -94,11 +97,11 @@ class SewaCtrl extends BackendCtrl{
                 });
             }
             Flash::success(trans('flash/transaksi.status_update'));
-            return redirect()->route('backend.transaksi.index');
+            return redirect()->route('backend.transaksi.task.index');
         }catch(Exception $e){
             Flash::error(trans('flash/transaksi.status_failed'));
             \DB::rollback();
-            return redirect()->route('backend.transaksi.index');
+            return redirect()->route('backend.transaksi.task.index');
         }
         
     }

@@ -31,7 +31,7 @@ if(session('aksi') == 'edit'){
 }
 ?>
 
-<form role="form" method="POST" enctype="multipart/form-data" action="{{ route('backend.transaksi.post') }}">
+<form role="form" method="POST" enctype="multipart/form-data" action="{{ route('backend.transaksi.posttask') }}">
 	<div class="row">
 		<div class="col-md-8">
 			<div class="panel panel-default">

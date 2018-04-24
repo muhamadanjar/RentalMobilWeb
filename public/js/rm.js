@@ -529,6 +529,10 @@ function loadDesa(id){
         serverSide: true,
         ajax: {
             url:'/api/task',
+            data: function (d) {
+                d.status = $('#status').val();
+                d.sq = $('input[name=sq]').val();
+            }
         },
         columns: [
             {data: 'rownum',name:'rank', orderable: false, searchable: false},
@@ -543,6 +547,7 @@ function loadDesa(id){
         ]
     });
     $('#table_task_search_form').on('submit', function(e) {
+        console.log(e)
         table_task.draw();
         e.preventDefault();
     });

@@ -154,7 +154,7 @@ class ApiCtrl extends Controller{
         }catch(Exception $e){
             return response()->json(['success'=> false, 'error'=> $e]);
         }
-        Mail::send('email.infoinline',['data'=>$data],
+        Mail::send('email.info',['data'=>$data],
             function($mail) use ($email, $name, $subject){
                 $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
                 $mail->to($email, $name);

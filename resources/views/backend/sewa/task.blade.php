@@ -16,8 +16,7 @@
             <form id="table_task_search_form">
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="tgl_mulai">Waktu Penjemputan</label>
-                        <!--<input type="text" class="form-control" id="tgl_mulai" name="tgl_mulai" placeholder="Tanggal Mulai">-->
+                        <label for="tgl_mulai"></label>
                         <input type="text" class="form-control" id="sq" name="sq" placeholder="Cari">
                     </div>
                     <div class="col-md-6">

@@ -38,8 +38,15 @@ class EloquentRepository implements RepositoryInterface {
     public function updatestatusmobil($id){
         $mobil = $this->find($id);
         $status = ($mobil->status =='tersedia') ? 'dipinjam' : 'tersedia' ;
-        $this->mobil->where('id',$id)->update(['status' => $status]);
-        
+        //$this->mobil->where('id',$id)->update(['status' => $status]);
+        $mobil->status = $status;
+        $mobil->save();
+        return $status;
+    }
+    public function updatestatus($id,$status){
+        $mobil = $this->find($id);
+        $mobil->status = $status;
+        $mobil->save();
         return $status;
     }
     public function updatebystatus($id,$status){

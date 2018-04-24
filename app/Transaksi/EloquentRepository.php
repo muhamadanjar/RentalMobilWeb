@@ -234,7 +234,8 @@ class EloquentRepository implements RepositoryInterface{
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
             ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
             ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
-            ->whereRaw('sewa.status=?', ['pending'])
+            //->whereRaw('sewa.status=?', ['pending'])
+            ->whereRaw('sewa_detail.sewa_type=?', ['reguler'])
             ->select(
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),
