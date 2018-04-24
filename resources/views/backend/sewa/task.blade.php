@@ -13,7 +13,7 @@
             
         </div>
         <div class="box-body">
-            <form id="table_reservation_search_form">
+            <form id="table_task_search_form">
                 <div class="row">
                     <div class="col-md-6">
                         <label for="tgl_mulai">Waktu Penjemputan</label>
@@ -43,17 +43,14 @@
                 </div>
                 
             </form>
-        	<table id="table_reservation" class="display table table-responsive table-bordered" cellspacing="0" width="100%">
+        	<table id="table_task" class="display table table-responsive table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th width="3%"></th>
                         <th>Asal</th>
                         <th>Tujuan</th>
-                        <th>Biaya</th>
                         <th>Status</th>
-                        <th>No Plat</th>
-                        <th>Warna</th>
-                        <th>Merk</th>
+                        <th>Sewa Type</th>
                         <th>Waktu Penjemputan</th>
                         <th>Tanggal Pemesanan</th>
                         <th>Tanggal Update</th>
@@ -80,4 +77,5 @@
 <script type="text/javascript" src="{{ url('/plugins/bootbox/js/bootbox.js') }}"></script>
 @include('layouts.handlebar')
 <script type="text/javascript" src="{{ url('js/rm.js')}}"></script>
+
 @endsection

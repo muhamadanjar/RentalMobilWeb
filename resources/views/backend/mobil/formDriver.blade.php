@@ -9,6 +9,7 @@
     $warna='';
     $harga='';
     $harga_perjam ='';
+    $deposit='';
     
    
   ?>
@@ -58,11 +59,11 @@
                                 <input type="text" name="warna" class="form-control" id="warna" value="{{$warna}}">
                             </div>
                             <div class="form-group">
-                                <label for="type">Harga Mobil</label>
+                                <label for="type">Harga Mobil (per Kilo)</label>
                                 <input type="text" name="harga" class="form-control" id="harga" value="{{$harga}}">
                             </div>
                             <div class="form-group">
-                                <label for="type">Harga Mobil</label>
+                                <label for="type">Harga Mobil (per Jam)</label>
                                 <input type="text" name="harga_perjam" class="form-control" id="harga_perjam" value="{{$harga_perjam}}">
                             </div>
 
@@ -112,7 +113,10 @@
                         </div>
 
                         <div class="panel-footer">
-                            
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" placeholder="Deposit" name="deposit">
+                                <span class="fa fa-money form-control-feedback"></span>
+                            </div>
                         </div>
                     </div>
                 </div>

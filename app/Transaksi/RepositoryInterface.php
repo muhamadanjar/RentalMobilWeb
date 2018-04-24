@@ -16,4 +16,5 @@ interface RepositoryInterface {
     function getPesananByCustomer($id);
     function getPesananByCustomerAll($id);
     function statistikPemesanan($statistik);
+    function getDataRange($dari,$sampai,$type);
 }

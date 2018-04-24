@@ -294,8 +294,9 @@ function loadDesa(id){
                         fileinput.parent().parent().parent().find('img.imgfoto').attr('src',fileinput_path+data.filename);
                     }
                 },
-                error: errorHandler = function() {
+                error: errorHandler = function(e) {
                     alert("Something went wrong!");
+                    console.log(e);
                 },
             });
         }
@@ -336,10 +337,11 @@ function loadDesa(id){
     var table_dom = $('#table_dom').DataTable();
     var table_user = $('#table_user').DataTable();
     var table_role = $('#table_role').DataTable({});
+    var template = Handlebars.compile($("#details-mobil-template").html());
     var table_mobil = $('#table_mobil').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '/backend/mobil/getdata',
+        ajax: '/api/mobil/datatable',
         columns: [
             {
                 //"className":      'details-control',
@@ -354,6 +356,7 @@ function loadDesa(id){
                             '<ul class="dropdown-menu">' +
                                 '<li><a class="edit">Edit</a></li>' +
                                 '<li data-title="Hapus Mobil" data-message="Hapus Mobil ??"><a class="hapus">Hapus</a></li>' +
+                                '<li data-title="Lihat Driver" data-message="Lihat Driver ??"><a class="lihatdriver">Lihat Driver</a></li>' +
                             '</ul>' +
                         '</div>' +
                     '</div>' 
@@ -364,11 +367,13 @@ function loadDesa(id){
             {data: 'type', name: 'type'},
             {data: 'warna', name: 'warna'},
             {data: 'harga', name: 'harga'},
+            {data: 'harga_perjam', name: 'harga_perjam'},
             
         ],
     });
     $('#table_mobil tbody').on('click', 'a',function(e) {
         var data =  table_mobil.row($(this).parents('tr')).data();
+        var row = table_mobil.row($(this).parents('tr'));
         var id = data.id;
         
         if ($(this).hasClass('edit')) {
@@ -438,9 +443,54 @@ function loadDesa(id){
             $('#formConfirm').on('click', '#frm_submit', function(e) {
                 newForm.submit();
             });
+        }else if($(this).hasClass('lihatdriver')){
+            e.preventDefault();
+            var el = $(this).parent();
+            var title = el.attr('data-title');
+            var msg = el.attr('data-message');
+            var dataForm = el.attr('data-form');
+            var tableId = 'mobil-' + data.id;
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                
+            } else {
+                // Open this row
+                row.child(template(data)).show();
+                initTableSubMobil(tableId, data);
+                
+            }
+            
+            /*var table = jQuery('<table>', {
+                'id': tableId,
+                'class': 'table table-responsive table-detail'
+            });
+
+            console.log(data);
+            
+            $('#formConfirm')
+            .find('#frm_body').append(table)
+            .end().find('#frm_title').html(title)
+            .end().modal('show');
+            initTableSubMobil(tableId, data);*/
         }
-        table_agenda.draw();
+        //table_mobil.draw();
     });
+
+    function initTableSubMobil(tableId, data) {
+        $('#' + tableId).DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: data.details_url,
+            dom:'<"table"t>',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'deposit', name: 'deposit' }
+            ]
+        })
+    }
 
     var table_reservation = $('#table_reservation').DataTable({
         processing: true,
@@ -470,6 +520,50 @@ function loadDesa(id){
     });
     $('#table_reservation_search_form').on('submit', function(e) {
         table_reservation.draw();
+        e.preventDefault();
+    });
+
+
+    var table_task = $('#table_task').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url:'/api/task',
+        },
+        columns: [
+            {data: 'rownum',name:'rank', orderable: false, searchable: false},
+            {data: 'origin'},
+            {data: 'destination'},
+            {data: 'status'},
+            {data: 'sewa_type'},
+            {data: 'tgl_mulai', name: 'tgl_mulai'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'updated_at', name: 'updated_at'},
+            {data: 'action',name:'action', orderable: false, searchable: false},
+        ]
+    });
+    $('#table_task_search_form').on('submit', function(e) {
+        table_task.draw();
+        e.preventDefault();
+    });
+
+    var table_promo = $('#table_promo').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url:'/api/promo',
+        },
+        columns: [
+            {data: 'action',name:'action', orderable: false, searchable: false},
+            {data: 'kode_promo',name: 'kode_promo'},
+            {data: 'name',name: 'name'},
+            {data: 'tgl_mulai', name: 'tgl_mulai'},
+            {data: 'tgl_akhir', name: 'tgl_akhir'},
+            
+        ]
+    });
+    $('#table_promo_search_form').on('submit', function(e) {
+        table_promo.draw();
         e.preventDefault();
     });
     

@@ -36,4 +36,10 @@ class Sewa extends Model
         }
         return $data;
     }
+
+    public function scopeReguler($query){
+        return $query->join('sewa_detail', 'sewa.id', '=', 'sewa_detail.sewa_id')
+        ->where('sewa_detail.type_sewa','reguler')
+        ->select('sewa.*');
+    }
 }

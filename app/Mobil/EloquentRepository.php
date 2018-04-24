@@ -2,6 +2,7 @@
 
 use DB;
 use Datatables;
+use App\Officer\Officer;
 class EloquentRepository implements RepositoryInterface {
 
     /**
@@ -79,14 +80,38 @@ class EloquentRepository implements RepositoryInterface {
 
     public function getDriverInfo($id){
         $mobil = $this->find($id);
+        $officer = Officer::where('user_id',$mobil->user_id)->first();
         return response([
             'id'=>$mobil->id,
             'name'=>$mobil->author->name,
             'mobil'=>$mobil,
+            'officers'=>$officer
         ]);
     }
 
     public function getDriverLocation(){
         # code...
+    }
+
+    public function getDatatableData(){
+        \DB::statement(DB::raw('set @rownum=0'));
+            $mobil = Mobil::orderBy('id','ASC')
+            ->select(
+            [
+                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'mobil.id',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.type',
+                'mobil.warna',
+                'mobil.harga',
+                'mobil.harga_perjam',
+                'mobil.user_id',
+                'mobil.created_at',
+                'mobil.updated_at'
+            ]
+        );
+        
+        return $mobil;
     }
 }

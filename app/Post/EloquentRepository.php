@@ -182,14 +182,13 @@ class EloquentRepository implements RepositoryInterface {
     public function getBerita(){
         return $this->post->berita()->whereStatus('published');
     }
-    public function postfeatureimage($path = '/foto'){
+    public function postfeatureimage($path = ''){
         $dir = public_path().$path;
         if(!is_dir($dir))
             mkdir($dir);
             $ext = pathinfo($_FILES["images"]["name"],PATHINFO_EXTENSION);
             $filename = time().'_'.urlencode(pathinfo($_FILES["images"]["name"],PATHINFO_FILENAME)).'.'.$ext;
             if(move_uploaded_file($_FILES["images"]["tmp_name"], $dir. $filename)){
-                    
                 return json_encode(array(
                         'error'=>false,
                         'dir'=>$dir,

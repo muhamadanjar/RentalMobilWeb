@@ -62,8 +62,15 @@ class EloquentRepository implements RepositoryInterface{
         $reservation->customer_id = $request->customer_id;
         $reservation->mobil_id = $request->mobil_id;
         $reservation->save();
-        $mobil = $reservation->mobil;/*Mobil::find($reservation->mobil_id);*/
-        $customer = $reservation->customer;/*Customer::where('id',$reservation->customer_id)->first()*/
+        
+        DB::table('sewa_detail')->insert(
+            [
+                'sewa_id' => $reservation->id, 
+                'sewa_type' => $request->sewa_type,
+                'duration'=>$request->duration,
+                'distance'=>$request->distance
+            ]
+        );
         return $reservation;
         /*return array(
             'id'=>$reservation->id,
@@ -96,23 +103,30 @@ class EloquentRepository implements RepositoryInterface{
     }
     public function getDatatableData(){
         \DB::statement(DB::raw('set @rownum=0'));
-            $sewa = Sewa::join('mobil','sewa.mobil_id', '=', 'mobil.id')
-            ->select([DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'sewa.id',
-            'sewa.mobil_id',
-            'sewa.origin',
-            'sewa.destination',
-            \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
-            'sewa.status',
-            \DB::raw("CONCAT('Rp.',FORMAT(sewa.denda,2)) as denda"),
-            'sewa.tgl_mulai',
-            'sewa.tgl_akhir',
-            'mobil.no_plat',
-            'mobil.merk',
-            'mobil.warna',
-            'mobil.tahun',
-            'sewa.created_at',
-            'sewa.updated_at']);
+            $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+            ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
+            ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
+            ->select(
+            [
+                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'sewa.id',
+                'sewa.mobil_id',
+                'sewa.origin',
+                'sewa.destination',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
+                'sewa.status',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.denda,2)) as denda"),
+                'sewa.tgl_mulai',
+                'sewa.tgl_akhir',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.warna',
+                'mobil.tahun',
+                'sewa_detail.sewa_type',
+                'sewa.created_at',
+                'sewa.updated_at'
+            ]
+        );
         
         return $sewa;
     }
@@ -213,5 +227,70 @@ class EloquentRepository implements RepositoryInterface{
         }
         
         return $statistik_query;
+    }
+
+    public function getDatatableDataTask(){
+        \DB::statement(DB::raw('set @rownum=0'));
+            $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+            ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
+            ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
+            ->whereRaw('sewa.status=?', ['pending'])
+            ->select(
+            [
+                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'sewa.id',
+                'sewa.mobil_id',
+                'sewa.origin',
+                'sewa.destination',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
+                'sewa.status',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.denda,2)) as denda"),
+                'sewa.tgl_mulai',
+                'sewa.tgl_akhir',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.warna',
+                'mobil.tahun',
+                'sewa_detail.sewa_type',
+                'sewa.created_at',
+                'sewa.updated_at'
+            ]
+        );
+        
+        return $sewa;
+    }
+
+    public function getDataRange($dari,$sampai,$type){
+        \DB::statement(DB::raw('set @rownum=0'));
+            $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+            ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
+            ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
+            ->whereRaw('sewa.tgl_mulai >= ? or sewa.tgl_akhir <= ?' , [$dari,$sampai])
+            ->whereRaw('sewa_detail.sewa_type = ?' , [$type])
+            ->select(
+            [
+                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'sewa.id',
+                'sewa.mobil_id',
+                'sewa.origin',
+                'sewa.destination',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
+                'sewa.status',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.denda,2)) as denda"),
+                'sewa.tgl_mulai',
+                'sewa.tgl_akhir',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.warna',
+                'mobil.tahun',
+                'sewa_detail.sewa_type',
+                'sewa.created_at',
+                'sewa.updated_at'
+            ]
+        )->get();
+
+        
+        
+        return $sewa;
     }
 }

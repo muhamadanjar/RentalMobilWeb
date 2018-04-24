@@ -65,4 +65,5 @@
 <script src="{{ asset('assets/adminlte/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <!--<script src="{{ asset('assets/adminlte/dist/js/demo.js')}}"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 @endsection

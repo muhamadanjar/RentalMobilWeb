@@ -4,6 +4,11 @@
     </IfModule>
 
     RewriteEngine On
+    #RewriteBase / # <------------ This one you missed
+    #Just to redirect to www.site.com when only site.com comes
+    #RewriteCond %{HTTP_HOST} !^www\. [NC]
+    #RewriteRule ^(.*)$ http://www.%{HTTP_HOST} [R=301,L]
+    #end of codes
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

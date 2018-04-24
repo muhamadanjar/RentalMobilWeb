@@ -107,11 +107,11 @@
 <div class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="../../index2.html"><b>Rental</b>Mobil</a>
+      <a href="../../index2.html"><b>Utama</b>Trans</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-      <p class="login-box-msg">Masuk untuk Membuka Aplikasi</p>
+      <p class="login-box-msg">Log In Administrator</p>
       @include('layouts.elements.alert')
       <form action="{{ route('gerbang.loginpost') }}" method="post">
         {{ csrf_field() }}
@@ -124,13 +124,13 @@
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
-          <div class="col-xs-8">
+          <!--<div class="col-xs-8">
             <div class="checkbox icheck">
               <label>
                 <input type="checkbox" name="remember"> Remember Me
               </label>
             </div>
-          </div>
+          </div>-->
           <!-- /.col -->
           <div class="col-xs-4">
             <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
@@ -150,8 +150,8 @@
 
       <!--<a href="#">I forgot my password</a><br>
       <a href="register.html" class="text-center">Register a new membership</a>-->
-      <a href="#">Lupa password</a><br>
-      <a href="{{ route('registration')}}" class="text-center">Daftar Anggota Baru</a>
+      <!--<a href="#">Lupa password</a><br>
+      <a href="{{ route('registration')}}" class="text-center">Daftar Anggota Baru</a>-->
     </div>
     <!-- /.login-box-body -->
   </div>

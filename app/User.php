@@ -81,8 +81,9 @@ class User extends Authenticatable
         return $this->roles()->detach($role);
     }
     public function officers(){
-        return $this->hasOne(Officer::class);
-        //return $this->hasMany(Officer::class);
+        //return $this->hasOne(Officer::class);
+        return $this->hasMany(Officer::class);
+        //return $this->belongsTo(Officer::class);
     }
     public function customers(){
         return $this->hasOne(Customer::class);

@@ -8,6 +8,7 @@ use Laracasts\Flash\Flash;
 use App\Transaksi\RepositoryInterface as TransaksiInterface;
 use App\Mobil\RepositoryInterface as MobilInterface;
 use LRedis;
+use Mail;
 class SewaCtrl extends BackendCtrl{
     public function __construct(Sewa $res,MobilInterface $mobil,TransaksiInterface $transaksi)
     {
@@ -55,5 +56,50 @@ class SewaCtrl extends BackendCtrl{
         return redirect()->route('backend.dashboard');
     }
 
-    
+    public function task(){
+        return view('backend.sewa.task');
+    }
+
+    public function taskForm($id){
+        session(['aksi'=>'edit']);
+        $task = $this->reservation->findOrFail($id);
+        $sewa_detail = \DB::table('sewa_detail')->where('sewa_id',$task->id)->first();
+        
+        $mobil = $this->mobil->mobilavailable();
+        return view('backend.sewa.formTask')->with('sewaDetail',$sewa_detail)
+        ->withTask($task)->withMobil($mobil);
+    }
+
+    public function postTask(Request $request){
+        try{
+            $sewa = (session('aksi') == 'edit') ? $this->reservation->findOrFail($request->id) : new Sewa;
+            $sewa->status = $request->status;
+            $sewa->mobil_id = $request->mobil;
+            $sewa->harga = $request->harga;
+            $sewa->save();
+            if($sewa->status == 'complete'){
+                $this->mobil->updatestatusmobil($sewa->mobil_id);
+            }elseif($sewa->status == 'confirmed'){
+                $data = array();
+                $email = $sewa->customer->email;
+                $name = $sewa->customer->name;
+                $subject = 'Pesanan anda sudah terkonfirmasi.';
+                $data['email'] = $sewa->customer->email;
+                $data['name'] = $sewa->customer->name;
+                Mail::send('email.infoinline', ['data' => $data],
+                    function($mail) use ($email, $name, $subject){
+                        $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
+                        $mail->to($email, $name);
+                        $mail->subject($subject);
+                });
+            }
+            Flash::success(trans('flash/transaksi.status_update'));
+            return redirect()->route('backend.transaksi.index');
+        }catch(Exception $e){
+            Flash::error(trans('flash/transaksi.status_failed'));
+            \DB::rollback();
+            return redirect()->route('backend.transaksi.index');
+        }
+        
+    }
 }

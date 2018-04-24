@@ -10,5 +10,5 @@ return array(
     'delete_not_allowed' => 'Anda tidak diijinkan untuk Menghapus data mobil ini',
 
     'drivercreated'   => 'Driver berhasil ditambahkan',
-    
+    'error'   => 'Data gagal di simpan',
 );

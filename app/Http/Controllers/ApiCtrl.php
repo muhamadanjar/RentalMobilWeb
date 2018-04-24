@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Mobil\Mobil;
 use App\Transaksi\Sewa;
+use App\Transaksi\Promo;
 use App\User;
 use App\Customer;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class ApiCtrl extends Controller{
     }
     public function getAllMobil(){
         $mobil = $this->mobil->mobilavailable();
-        return response($mobil,200);
+        return $mobil;
     }
     public function getDriverInfo($id){
         $driver = $this->mobil->getDriverInfo($id);
@@ -36,6 +37,12 @@ class ApiCtrl extends Controller{
         $mobil = $this->mobil->countmobil();
         return response($mobil,200);
     }
+    public function checkstatusmobil($id){
+        $mobil = $this->mobil->checkstatus($id);
+        return response($mobil,200);
+    }
+
+
     public function getReservation(Request $request) {
         $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
@@ -74,9 +81,21 @@ class ApiCtrl extends Controller{
         ->make(true);
     }
     public function getReservationDetailsData($id){
-        $posts = User::find($id)->posts();
-
+        $posts = $this->transaksi->find($id)->customer;
         return Datatables::of($posts)->make(true);
+    }
+    public function getTask(Request $request) {
+        $task = $this->transaksi->getDatatableDataTask();
+        return Datatables::of($task)
+        ->addColumn('action', function ($user) {
+            return '<a href="'.route('backend.transaksi.taskform',[$user->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-send"></i> Aksi</a>';
+        })
+        ->filter(function ($query) use ($request) {
+            if ($request->has('status')) {
+                $query->where('sewa.status', 'like', "%{$request->get('status')}%");
+            }
+        })
+        ->make(true);
     }
     public function getReservationNotComplete($id){
         $pesanan = $this->transaksi->getPesananByCustomer($id);
@@ -123,15 +142,28 @@ class ApiCtrl extends Controller{
             $customers->religion = $request->religion;
             $customers->address = $request->address;
             $customers->save();
+            
             $data = array();
+            $request->customer_id = $customers->id;
             $reservation = $this->transaksi->makeSewa($request);
+            $email = $customers->email;
+            $name = $customers->name;
+            $subject = 'Info Pesanan';
+            $data['name'] = $name;
+            $data['no_transaksi'] = $reservation->no_transaksi;
         }catch(Exception $e){
             return response()->json(['success'=> false, 'error'=> $e]);
         }
-
+        Mail::send('email.infoinline',['data'=>$data],
+            function($mail) use ($email, $name, $subject){
+                $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
+                $mail->to($email, $name);
+                $mail->subject($subject);
+        });
         return response()->json([
             'success'=> true,
-            'message'=> 'Thanks for Ordering! Please wait until your receive email..'
+            'message'=> 'Thanks for Ordering! Please wait until your receive email..',
+            'data'=> ['customers'=>$customers,'reservation'=>$reservation]
         ]);
         
     }
@@ -146,11 +178,6 @@ class ApiCtrl extends Controller{
             ->orderBy('tahun')->get();
 
         return $pemesananbulan_query;
-    }
-
-    public function checkstatusmobil($id){
-        $mobil = $this->mobil->checkstatus($id);
-        return response($mobil,200);
     }
 
     public function checkstatuspesanan($id){
@@ -179,5 +206,39 @@ class ApiCtrl extends Controller{
         
     }
 
+    public function getMobil(Request $request){
+        $mobil = $this->mobil->getDatatableData();
+        return Datatables::of($mobil)
+        ->addColumn('details_url', function($m) {
+            return url('api/mobil/detail-data/datatable/' . $m->user_id);
+        })
+        ->filter(function ($query) use ($request) {
+            if ($request->has('status')) {
+                $query->where('mobil.status', 'like', "%{$request->get('status')}%");
+            }
+        })
+        ->make(true);        
+    }
+
+    public function getMobilDriver($id){
+        $mobil = User::join('officers','users.id','=','officers.user_id')
+        ->where('users.id',$id)
+        ->select(['officers.id','officers.name','officers.deposit']);
+        return Datatables::of($mobil)->make(true);
+    }
+    
+    public function getPromo(Request $request){
+        $promo = Promo::orderBy('tgl_mulai','DESC')->select();
+        return Datatables::of($promo)
+        ->addColumn('action', function ($p) {
+            return '<div class="btn-group"><a href="'.route('backend.promo.edit',[$p->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</a><a href="'.route('backend.promo.delete',[$p->id]).'" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Hapus</a></div>';
+        })
+        ->filter(function ($query) use ($request) {
+            if ($request->has('kode_promo')) {
+                $query->where('promo.kode_promo', 'like', "%{$request->get('q')}%");
+            }
+        })
+        ->make(true); 
+    }
 
 }

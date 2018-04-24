@@ -97,10 +97,18 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 
 	Route::resource('transaksi', 'SewaCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('transaksi/post','SewaCtrl@post')->name('transaksi.post');
+	Route::get('transaksi/task','SewaCtrl@task')->name('transaksi.task.index');
+	Route::get('transaksi/task/{id}','SewaCtrl@taskForm')->name('transaksi.taskform');
+	
+	Route::resource('promo', 'PromoCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
+	Route::post('promo/post','PromoCtrl@post')->name('promo.post');
+	Route::get('promo/{id}/delete','PromoCtrl@destroy')->name('promo.delete');
+	Route::post('promo/upload','PromoCtrl@uploadPhoto')->name('promo.upload');
+
 	Route::resource('permissions', 'PermissionCtrl',['only' => ['index']]);
 
 	Route::resource('laporan', 'LaporanCtrl',['only' => ['index']]);
-	Route::post('laporan/proses','SewaCtrl@post')->name('laporan.proses');
+	Route::post('laporan/proses','LaporanCtrl@post')->name('laporan.proses');
 	// User Profile
     Route::group(['prefix' => 'me'], function($router){
         $router->get('/', 'MeCtrl@index')->name('me.profile');

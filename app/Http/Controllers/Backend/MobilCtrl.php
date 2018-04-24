@@ -39,7 +39,8 @@ class MobilCtrl extends BackendCtrl
         if(Gate::check('edit.mobil')){
             session(['aksi'=>'edit']);
             $mobil = Mobil::find($id);
-            return view('backend.mobil.tambah')->with('mobil',$mobil);
+            $officers = Officer::where('user_id',$mobil->user_id)->first();
+            return view('backend.mobil.tambah')->with('mobil',$mobil)->with('officers',$officers);
         }
         return redirect()->route('backend.index')->with('flash.error','Anda Tidak diijinkan Mengakses Halaman ini');
 
@@ -60,8 +61,9 @@ class MobilCtrl extends BackendCtrl
     }
 
     public function postMobil(Request $request){
-        $user = auth()->user();
+        
         $mobil = (session('aksi') == 'edit') ? Mobil::find($request->id) : new Mobil;
+        $user = (session('aksi') == 'edit') ? User::find($mobil->user_id) : auth()->user();
         $mobil->no_plat = $request->no_plat;
         $mobil->merk = $request->merk;
         $mobil->type = $request->type;
@@ -70,6 +72,21 @@ class MobilCtrl extends BackendCtrl
         $mobil->harga_perjam = $request->harga_perjam;   
         $mobil->author()->associate($user);
         $mobil->save();
+        try{
+            $deposit = ($request->deposit_temp + $request->deposit);
+            $officers = Officer::where('user_id',$mobil->user_id);
+            $officers->update([
+                'deposit'=>$deposit,
+                'name'=>$request->name,
+                'no_telp'=>$request->no_telp,
+                'alamat'=>$request->alamat,
+                'nip'=>$request->nip,
+            ]);
+            
+        }
+        catch(Exception $e){
+            Flash::error(trans('flash/mobil.error'));
+        }
         return redirect()->route('backend.mobil.index');
     }
 
@@ -101,6 +118,7 @@ class MobilCtrl extends BackendCtrl
         $officers->no_telp = $request->no_telp;
         $officers->role = 'staff/karyawan';
         $officers->user_id = $driver->id;
+        $officers->deposit = $request->deposit;
         $officers->save();
 
         $mobil = new Mobil();
@@ -116,4 +134,5 @@ class MobilCtrl extends BackendCtrl
         return redirect()->route('backend.dashboard.index');
         
     }
+
 }

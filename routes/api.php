@@ -86,6 +86,8 @@ Route::get('mobil/{id}/status','ApiCtrl@updateStatusMobil')->name('api.updatesta
 Route::get('mobil/{id}/checkstatus','ApiCtrl@checkstatusmobil')->name('api.checkstatusmobil');
 Route::get('totalmobil','ApiCtrl@getTotalMobil')->name('api.gettotalmobil');
 Route::get('mobil/{id}/driverinfo','ApiCtrl@getDriverInfo')->name('api.getdriverinfo');
+Route::get('mobil/datatable','ApiCtrl@getMobil')->name('api.getmobil');
+Route::get('mobil/detail-data/datatable/{id}','ApiCtrl@getMobilDriver')->name('api.getmobil');
 
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 
@@ -99,5 +101,22 @@ Route::get('bookings/{id}/cancelled','ApiCtrl@cancelledPesanan')->name('api.canc
 Route::get('bookings/{id}/collected','ApiCtrl@cancelledPesanan')->name('api.collectpesanan');
 Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');
 
+Route::get('task','ApiCtrl@getTask')->name('api.gettask');
+Route::get('promo','ApiCtrl@getPromo')->name('api.getpromo');
+
 
 Route::post('customer/create','ApiCtrl@createCustomer')->name('api.customer.create');
+
+
+Route::get('/getprovinsi',function ($id=''){
+	return DB::table('wilayah_provinsi')->orderBy('nama_provinsi','ASC')->get();
+});
+Route::get('/getkabupaten/{id}',function ($id=''){
+	return DB::table('wilayah_kabupaten')->where('kode_prov',$id)->orderBy('nama_kabupaten','ASC')->get();
+});
+Route::get('/getkecamatan/{id}',function ($id=''){
+	return DB::table('wilayah_kecamatan')->where('kode_kab',$id)->get();
+});
+Route::get('/getdesa/{id}',function ($id=''){
+	return DB::table('wilayah_desa')->where('kode_kec',$id)->get();
+});

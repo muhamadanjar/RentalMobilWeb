@@ -12,4 +12,5 @@ interface RepositoryInterface {
     public function checkstatus($id);
     public function getDriverInfo($id);
     public function getDriverLocation();
+    public function getDatatableData();
 }

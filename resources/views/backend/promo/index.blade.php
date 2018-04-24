@@ -2,10 +2,10 @@
 @section('content-admin')
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title">Mobil</h3>
+            <h3 class="box-title">Promo</h3>
             <div class="box-tools text-right">
                 <div class="btn-group">
-                    
+                    <a href="{{ route('backend.promo.create') }}" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span> Tambah</a>
                     
                 </div>
             </div>
@@ -13,15 +13,14 @@
         </div>
             <!-- /.box-header -->
         <div class="box-body">
-        	<table class="display table" cellspacing="0" width="100%" id="table_mobil">
+        	<table class="display table" cellspacing="0" width="100%" id="table_promo">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>No Plat</th>
-                        <th>Merk</th>
-                        <th>Type</th>
-                        <th>Warna</th>
-                        <th>Harga</th>
+                        <th>Kode</th>
+                        <th>Promo</th>
+                        <th>Dari</th>
+                        <th>Sampai</th>
                     </tr>
                 </thead>
                 
@@ -34,7 +33,7 @@
     </div>
 
 @endsection
-@section('title','Mobil')
+@section('title','Promo')
 @section('style-head')
 @parent
 <link rel="stylesheet" href="{{ url('/plugins/datatables/datatables.min.css')}}">
