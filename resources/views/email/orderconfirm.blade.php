@@ -132,6 +132,10 @@
                                                 <span style="font-size:10px;color:#9e9e9e;line-height:16px">Jenis Kendaraan:</span><br>
                                                 <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['jeniskendaraan']}}</span>
                                             </td>
+                                            <td align="left" class="m_-351366858515564487tdp5">
+                                              <span style="font-size:10px;color:#9e9e9e;line-height:16px">Kode Booking</span><br>
+                                              <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['no_transaksi']}}</span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -145,10 +149,39 @@
                                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                     <tbody>
                                       <tr>
-                                        <td align="left" class="m_-351366858515564487tdp5">
+                                        <td align="left" class="m_-351366858515564487tdp5" style="width:270px">
                                           <span style="font-size:10px;color:#9e9e9e;line-height:14px">Pengemudi: </span><br>
-                                          <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['driver']}}</span>
+                                          <span style="font-size:12px;line-height:16px;font-weight:bold;width:270px">{{$data['driver']}}</span>
                                         </td>
+                                        <td align="left" class="m_-351366858515564487tdp5">
+                                          <span style="font-size:10px;color:#9e9e9e;line-height:16px">Lokasi Penjemputan:</span><br/>
+                                          <span style="font-size:12px;line-height:16px;font-weight:bold">
+                                            <a href="https://maps.google.com/?q={{$data['origin']}}&amp;entry=gmail&amp;source=g">{{$data['origin']}}</a>
+                                          </span>
+                                          
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td height="3"><img style="display:block" src="https://ci4.googleusercontent.com/proxy/KNtCGe0etNX6tA16SOybvvomjU0EoDDJbhwapyhBYqy4HH7zO6w8_Vt_9UpfT9GsUS6xwC2mfMlHDAfSOdHj6F74EysNc88rAq7oYRG4BI5WrvRtzgs=s0-d-e1-ft#https://grabtaxi-marketing.s3.amazonaws.com/email/img/_blank.gif" alt="" width="20" height="3" border="0" class="CToWUd"></td>
+                            </tr>
+                            <tr>
+                              <td align="left" valign="top" class="m_-351366858515564487tdp5">
+                                  <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                    <tbody>
+                                      <tr>
+                                        <td align="left" class="m_-351366858515564487tdp5" style="width:270px">
+                                          <span style="font-size:10px;color:#9e9e9e;line-height:14px">No Telp: </span><br>
+                                          <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['no_telp']}}</span>
+                                        </td>
+                                        <td align="left" class="m_-351366858515564487tdp5">
+                                              <span style="font-size:10px;color:#9e9e9e;line-height:16px">Lokasi Tujuan:</span><br>
+                                              <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['destination']}}</span>
+                                        </td>
+                                        
                                       </tr>
                                     </tbody>
                                   </table>
@@ -171,42 +204,12 @@
                                   </table>
                               </td>
                             </tr>
-                            <tr>
-                              <td height="3"><img style="display:block" src="https://ci4.googleusercontent.com/proxy/KNtCGe0etNX6tA16SOybvvomjU0EoDDJbhwapyhBYqy4HH7zO6w8_Vt_9UpfT9GsUS6xwC2mfMlHDAfSOdHj6F74EysNc88rAq7oYRG4BI5WrvRtzgs=s0-d-e1-ft#https://grabtaxi-marketing.s3.amazonaws.com/email/img/_blank.gif" alt="" width="20" height="5" border="0" class="CToWUd"></td>
-                            </tr>       
-                            <tr>
-                              <td align="left" valign="top" class="m_-351366858515564487tdp5">
-                                <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                                  <tbody>
-                                    <tr> 
-                                        <td align="left" class="m_-351366858515564487tdp5">
-                                          <span style="font-size:10px;color:#9e9e9e;line-height:16px">Kode Booking</span><br>
-                                          <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['no_transaksi']}}</span>
-                                        </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
+                            
+                            
                             <tr>
                                 <td height="3"><img style="display:block" src="https://ci4.googleusercontent.com/proxy/KNtCGe0etNX6tA16SOybvvomjU0EoDDJbhwapyhBYqy4HH7zO6w8_Vt_9UpfT9GsUS6xwC2mfMlHDAfSOdHj6F74EysNc88rAq7oYRG4BI5WrvRtzgs=s0-d-e1-ft#https://grabtaxi-marketing.s3.amazonaws.com/email/img/_blank.gif" alt="" width="20" height="5" border="0" class="CToWUd"></td>
                             </tr>
-                            <tr>
-                              <td align="left" valign="top" class="m_-351366858515564487tdp5">
-                                  <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                                    <tbody>
-                                      <tr> 
-                                      <td align="left" class="m_-351366858515564487tdp5">
-                                        <span style="font-size:10px;color:#9e9e9e;line-height:16px">Lokasi Penjemputan:</span>
-                                        <span class="im"><br>
-                                          <span style="font-size:12px;line-height:16px;font-weight:bold"><a href="https://maps.google.com/?q={{$data['origin']}}&amp;entry=gmail&amp;source=g">{{$data['origin']}}</a></span>
-                                        </span>
-                                      </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                              </td>
-                            </tr>
+                            
                             <tr>
                               <td height="3"><img style="display:block" src="https://ci4.googleusercontent.com/proxy/KNtCGe0etNX6tA16SOybvvomjU0EoDDJbhwapyhBYqy4HH7zO6w8_Vt_9UpfT9GsUS6xwC2mfMlHDAfSOdHj6F74EysNc88rAq7oYRG4BI5WrvRtzgs=s0-d-e1-ft#https://grabtaxi-marketing.s3.amazonaws.com/email/img/_blank.gif" alt="" width="20" height="5" border="0" class="CToWUd"></td>
                             </tr>
@@ -214,10 +217,7 @@
                               <td align="left" valign="top" class="m_-351366858515564487tdp5">
                                   <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                       <tbody><tr> 
-                                          <td align="left" class="m_-351366858515564487tdp5">
-                                              <span style="font-size:10px;color:#9e9e9e;line-height:16px">Lokasi Tujuan:</span><br>
-                                              <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['destination']}}</span>
-                                          </td>
+                                          
                                       </tr>
                                       </tbody>
                                   </table>

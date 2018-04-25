@@ -118,8 +118,9 @@ if(session('aksi') == 'edit'){
 @endsection
 @section('script-end')
 @parent
+<script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
 
+<script type="text/javascript" src="{{ url('js/rm.js')}}"></script>
 
-<script type="text/javascript" src="{{ url('js/sikko.js')}}"></script>
 @endsection
 

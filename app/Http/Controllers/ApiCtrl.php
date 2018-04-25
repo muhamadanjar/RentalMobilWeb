@@ -42,7 +42,6 @@ class ApiCtrl extends Controller{
         return response($mobil,200);
     }
 
-
     public function getReservation(Request $request) {
         $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
@@ -58,6 +57,9 @@ class ApiCtrl extends Controller{
         })
         ->addColumn('details_url', function($user) {
             return url('api/mobil/'.$user->mobil_id.'/driverinfo/');
+        })
+        ->setRowClass(function ($data) {
+            return $data->sewa_type == 'rental' ? 'alert-success' : 'alert-warning';
         })
         ->editColumn('status', '{{$status}}')
         ->filter(function ($query) use ($request) {
@@ -119,11 +121,12 @@ class ApiCtrl extends Controller{
         $data['name'] = $name;
         $data['email'] = $email;
         $data['customer'] = $name;
+        $data['no_telp'] = $customer->no_telp;
         $data['driver'] = $mobil->supir->name;
         $data['jeniskendaraan'] = $mobil->name;
         $data['tarif'] = $reservation->total_bayar;
         $data['total'] = $reservation->total_bayar;
-        Mail::send('email.invocespesan',['data'=>$data],
+        Mail::send('email.orderconfirm',['data'=>$data],
             function($mail) use ($email, $name, $subject){
                 $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
                 $mail->to($email, $name);

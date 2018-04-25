@@ -47,8 +47,8 @@ class EloquentRepository implements RepositoryInterface{
         $reservation = new Sewa();
         $reservation->status = $request->status;
         $reservation->no_transaksi = $this->autoNumber('sewa','no_transaksi','RENT');
-        //$reservation->tgl_mulai = Carbon::now();
-        //$reservation->tgl_akhir = Carbon::now();
+        $reservation->tgl_mulai = (isset($request->tgl_mulai)) ? $request->tgl_mulai : null;
+        $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? $request->tgl_akhir : null;
         $reservation->sewa_latitude = (isset($request->sewa_latitude)) ? $request->sewa_latitude : null;
         $reservation->sewa_longitude = (isset($request->sewa_longitude)) ? $request->sewa_longitude : null;
         $reservation->origin = $request->origin;
@@ -293,5 +293,15 @@ class EloquentRepository implements RepositoryInterface{
         
         
         return $sewa;
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

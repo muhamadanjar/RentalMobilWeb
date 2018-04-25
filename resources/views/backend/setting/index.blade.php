@@ -65,9 +65,6 @@
                                 <input class="form-control" name="footer_right_pane" value="{{ array_get($setting, 'footer_right_pane', '') }}"></input>
                             </div>
 
-                        
-                        
-                           
                             <div class="form-group">
                                 <h5 class="semibold text-primary nm">Lainnya.</h5>
                                 <p class="text-muted nm">Pengaturan Lainnya</p>
@@ -126,9 +123,7 @@
 
                         <div class="form-group">
                             <label>Telepon Kami</label>
-                            <textarea rows="4" class="form-control tinymce_200" name="our_phone">
-                                {{ array_get($setting, 'our_phone', '') }}
-                            </textarea>
+                            <input type="text" class="form-control" name="our_phone" value="{{ array_get($setting, 'our_phone', '') }}">
                         </div>
 
                         <div class="form-group">

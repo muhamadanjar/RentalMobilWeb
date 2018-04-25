@@ -17,4 +17,5 @@ interface RepositoryInterface {
     function getPesananByCustomerAll($id);
     function statistikPemesanan($statistik);
     function getDataRange($dari,$sampai,$type);
+    function generateRandomString($length);
 }

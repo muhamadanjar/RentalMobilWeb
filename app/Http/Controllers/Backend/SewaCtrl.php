@@ -89,6 +89,7 @@ class SewaCtrl extends BackendCtrl{
                 $data['email'] = $sewa->customer->email;
                 $data['name'] = $sewa->customer->name;
                 $data['no_transaksi'] = $sewa->no_transaksi;
+                $data['no_telp'] = $sewa->no_transaksi;
                 Mail::send('email.orderconfirm', ['data' => $data],
                     function($mail) use ($email, $name, $subject){
                         $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
