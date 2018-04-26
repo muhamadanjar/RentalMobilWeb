@@ -17,11 +17,13 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Mobil</th>
                         <th>No Plat</th>
                         <th>Merk</th>
                         <th>Type</th>
                         <th>Warna</th>
-                        <th>Harga</th>
+                        <th>Harga (per Km)</th>
+                        <th>Harga (per Jam)</th>
                     </tr>
                 </thead>
                 

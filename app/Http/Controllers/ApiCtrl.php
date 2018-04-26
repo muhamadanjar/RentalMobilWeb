@@ -46,22 +46,38 @@ class ApiCtrl extends Controller{
         $sewa = $this->transaksi->getDatatableData();
         return Datatables::of($sewa)
         ->addColumn('action', function ($user) {
-            return '<a href="'.route('backend.transaksi.edit',[$user->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</a>';
+            $content = '<div class="btn-group">';
+            $content .= '<a href="'.route('backend.transaksi.edit',[$user->id]).'" class="btn btn-xs btn-primary btn-edit"><i class="fa fa-edit"></i> Edit</a>';
+            $content .= '<a href="#" class="btn btn-xs btn-primary btn-detail"><i class="fa fa-more"></i> Detail</a>';
+            $content .= '</div>';
+            return $content;
+        })
+        
+        ->editColumn('rownum', function ($tr) {
+            return '<b>'.$tr->rownum.'</b>';
+        })
+        ->editColumn('total_bayar', function ($tr) {
+            return '<i>'.$tr->total_bayar.'</i>';
         })
         ->editColumn('tgl_mulai', function ($user) {
             return $user->tgl_mulai;
         })
-        ->editColumn('created_at', '{!! $created_at !!}')
-        ->editColumn('updated_at', function ($user) {
-            return $user->updated_at->format('Y/m/d');
+        ->editColumn('created_at', function ($user) {
+            return $user->created_at->format('Y/m/d');
+        })
+        ->editColumn('tgl_akhir', function ($user) {
+            return $user->tgl_akhir;
         })
         ->addColumn('details_url', function($user) {
-            return url('api/mobil/'.$user->mobil_id.'/driverinfo/');
+            return url('api/reservation/'.$user->mobil_id.'/detail/');
         })
         ->setRowClass(function ($data) {
-            return $data->sewa_type == 'rental' ? 'alert-success' : 'alert-warning';
+            return $data->sewa_type == 'rental' ? 'alert-default' : 'alert-info';
         })
-        ->editColumn('status', '{{$status}}')
+        ->editColumn('status', function($transaksi){
+            $class = $transaksi->status == 'pending' ? 'bg-orange' : 'label-success';
+            return '<span class="label '.$class.'">'.$transaksi->status.'</span>';
+        })
         ->filter(function ($query) use ($request) {
             if ($request->has('status')) {
                 $query->where('sewa.status', 'like', "%{$request->get('status')}%");
@@ -83,8 +99,54 @@ class ApiCtrl extends Controller{
         ->make(true);
     }
     public function getReservationDetailsData($id){
-        $posts = $this->transaksi->find($id)->customer;
-        return Datatables::of($posts)->make(true);
+        $driver = User::leftjoin('officers','users.id','=','officers.user_id')
+            ->leftjoin('mobil','users.id','=','mobil.user_id')
+            ->where('mobil.id',$id)
+            ->select([
+                'mobil.id AS mobilID',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.type',
+                'mobil.warna',
+                'mobil.harga',
+                'mobil.harga_perjam',
+                'mobil.tahun',
+                'mobil.foto AS fotoMobil',
+                'mobil.status AS statuMobil',
+                'officers.name AS driverName',
+                'officers.nip',
+                'officers.alamat',
+                'officers.no_telp',
+                'officers.role',
+                'officers.deposit',
+            ]);
+
+        $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+            ->join('customers','sewa.customer_id','=','customers.id')->where('sewa.id',$id)
+            ->select(
+            [
+                'sewa.*',
+                'sewa_detail.sewa_type',
+                'sewa_detail.duration',
+                'sewa_detail.distance',
+                'customers.sex',
+                'customers.name AS nameCustomer',
+                'customers.email AS emailCustomer',
+                'customers.no_telp AS no_telpCustomer',
+                'customers.religion',
+                'customers.tgl_lahir',
+                'customers.address',
+                'customers.job',
+                'customers.nationality',
+                'customers.education',
+                'customers.status AS statusCustomer',
+            ]);
+            
+        $sewaDetail = DB::table('sewamobil')
+            ->join('driverrental','sewamobil.mobil_id','=','driverrental.mobilID')
+            ->where('sewamobil.id',$id)
+        ->select();
+            return Datatables::of($sewaDetail)->make(true);
     }
     public function getTask(Request $request) {
         $task = $this->transaksi->getDatatableDataTask();

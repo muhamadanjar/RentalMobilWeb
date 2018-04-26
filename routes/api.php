@@ -90,6 +90,7 @@ Route::get('mobil/datatable','ApiCtrl@getMobil')->name('api.getmobil');
 Route::get('mobil/detail-data/datatable/{id}','ApiCtrl@getMobilDriver')->name('api.getmobil');
 
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
+Route::get('reservation/{id}/detail','ApiCtrl@getReservationDetailsData')->name('api.getreservationdetail');
 
 Route::get('bookings/{id}/notcomplete','ApiCtrl@getReservationNotComplete')->name('api.notcomplete');
 Route::get('bookings/{id}/bycustomer','ApiCtrl@getReservationByCustomer')->name('api.bycostumer');

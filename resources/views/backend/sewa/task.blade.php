@@ -4,7 +4,7 @@
     <div class="col-md-12">
     <div class="box box-default">
         <div class="box-header with-border">
-            <h3 class="box-title"><i class="fa fa-exchange"></i>Data Transaksi</h3>
+            <h3 class="box-title"><i class="fa fa-exchange"></i>Data Transaksi Reguler</h3>
             <div class="box-tools pull-right">
                 <div class="btn-group">
                    
@@ -51,8 +51,8 @@
                         <th>Status</th>
                         <th>Sewa Type</th>
                         <th>Waktu Penjemputan</th>
-                        <th>Tanggal Pemesanan</th>
-                        <th>Tanggal Update</th>
+                        <th>Waktu Pemesanan</th>
+                        <th>Tanggal Selesai</th>
                     </tr>
                 </thead>
                 <tbody>

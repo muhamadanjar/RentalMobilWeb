@@ -181,7 +181,6 @@
                                               <span style="font-size:10px;color:#9e9e9e;line-height:16px">Lokasi Tujuan:</span><br>
                                               <span style="font-size:12px;line-height:16px;font-weight:bold">{{$data['destination']}}</span>
                                         </td>
-                                        
                                       </tr>
                                     </tbody>
                                   </table>

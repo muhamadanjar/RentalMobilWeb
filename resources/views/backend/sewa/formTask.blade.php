@@ -57,13 +57,13 @@ if(session('aksi') == 'edit'){
 						
 					<div class="form-group">
 						<label>Tanggal Mulai</label>
-						<input type="text" class="form-control" name="tgl_mulai" value="{{ $tgl_mulai }}">
+						<input type="text" class="form-control" name="tgl_mulai" id="tgl_mulai" value="{{ $tgl_mulai }}">
 						<div class="col-md-6"></div>
 					</div>
 
                     <div class="form-group">
 						<label>Tanggal Akhir</label>
-						<input type="text" class="form-control" name="tgl_akhir" value="{{ $tgl_akhir }}">
+						<input type="text" class="form-control" name="tgl_akhir" id="tgl_akhir" value="{{ $tgl_akhir }}">
 						<div class="col-md-6"></div>
 					</div>
 
@@ -120,10 +120,11 @@ if(session('aksi') == 'edit'){
 					<input type="hidden" id="duration" name="duration" value="{{$sewaDetail->duration}}"/>
 					<input type="hidden" id="distance" name="distance" value="{{$sewaDetail->distance}}"/>
 					<input type="hidden" name="sewa_type" value="{{$sewaDetail->sewa_type}}"/>
+					<input type="hidden" name="mobil_id" value="{{$mobil_id}}"/>
 						<div class="form-group">
                                 <label for="mobil">Mobil</label>
-                                <select name="mobil" class="select2 form-control" id="mobil">
-                                    <option value="--">----</option>
+                                <select name="mobil" class="select2 mobil form-control" id="mobil">
+                                    <option value="0">----</option>
 									@foreach($mobil as $k => $v)
                                     	<option value="{{$v->id}}" @if($mobil_id == $v->id) selected="selected" @endif>{{$v->name}}</option>
                                     @endforeach
@@ -177,18 +178,33 @@ if(session('aksi') == 'edit'){
 @endsection
 @section('script-end')
 @parent
-<script src="{{ asset('plugins/select2/dist/js/select2.full.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('plugins/select2/dist/js/select2.full.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('/plugins/datatables/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('/plugins/bootbox/js/bootbox.js') }}"></script>
+<script type="text/javascript" src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 <script type="text/javascript">
     $(function () {
         //Initialize Select2 Elements
 		$('.select2').select2();
-		loadData($('select#mobil').val());
+		//Date picker
+		$('#tgl_mulai').datepicker({
+			autoclose: true
+		});
+		$('#tgl_akhir').datepicker({
+			autoclose: true
+		});
+		/*$('.timepicker').timepicker({
+			showInputs: false
+		});*/
+
+
+		loadData($('input[name="mobil_id"]').val());
 		$('select#mobil').on('change',function(){
 			loadData($(this).val());
 		});
 		function loadData(id) { 
 			$.ajax({
-				url:'/api/mobil/'+id+'/driverinfo',
+				url:window._URLROOT+'/api/mobil/'+id+'/driverinfo',
 				method: 'get'
 			}).then(function(response){
 				$('.warnaMobil').text(response.mobil.warna);
@@ -199,7 +215,7 @@ if(session('aksi') == 'edit'){
 				$('.fotoDriver').attr('src',response.mobil.author.foto);
 				var distanceInKM = Math.round($('#distance').val()* 0.001);
 				$('#total_bayar').val(Math.round(distanceInKM * response.mobil.harga));
-				
+				$("#status").val('confirmed');
 			});
 		}
     });

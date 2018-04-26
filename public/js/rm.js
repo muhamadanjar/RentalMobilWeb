@@ -341,7 +341,7 @@ function loadDesa(id){
     var table_mobil = $('#table_mobil').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '/api/mobil/datatable',
+        ajax: window._URLROOT+'/api/mobil/datatable',
         columns: [
             {
                 //"className":      'details-control',
@@ -362,6 +362,7 @@ function loadDesa(id){
                     '</div>' 
                 ,
             },
+            {data: 'name', name: 'name'},
             {data: 'no_plat', name: 'no_plat'},
             {data: 'merk', name: 'merk'},
             {data: 'type', name: 'type'},
@@ -491,12 +492,12 @@ function loadDesa(id){
             ]
         })
     }
-
+    var template_transaksi = Handlebars.compile($("#details-transaksi-template").html());
     var table_reservation = $('#table_reservation').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-            url:'/api/reservation',
+            url:window._URLROOT+'/api/reservation',
             data: function (d) {
                 d.tgl_mulai = $('input[name=tgl_mulai]').val();
                 d.status = $('select[name=status]').val();
@@ -505,30 +506,63 @@ function loadDesa(id){
         },
         columns: [
             {data: 'rownum',name:'rank', orderable: false, searchable: false},
+            {data: 'no_transaksi'},
             {data: 'origin'},
             {data: 'destination'},
             {data: 'total_bayar'},
             {data: 'status'},
-            {data: 'no_plat'},
-            {data: 'warna'},
-            {data: 'merk'},
             {data: 'tgl_mulai', name: 'tgl_mulai'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'updated_at', name: 'updated_at'},
-            {data: 'action',name:'action', orderable: false, searchable: false},
+            {data: 'tgl_akhir', name: 'tgl_akhir'},
+            {data: 'action',name:'action', orderable: false, searchable: false,width: "100px"},
         ]
     });
     $('#table_reservation_search_form').on('submit', function(e) {
         table_reservation.draw();
         e.preventDefault();
     });
+    $('#table_reservation tbody').on('click', 'a',function(e) {
+        var data =  table_reservation.row($(this).parents('tr')).data();
+        var row = table_reservation.row($(this).parents('tr'));
+        var id = data.id;
+        
+        if($(this).hasClass('btn-detail')){
+            e.preventDefault();
+            var el = $(this).parent();
+            var title = el.attr('data-title');
+            var msg = el.attr('data-message');
+            var dataForm = el.attr('data-form');
+            var tableId = 'transaksi-' + data.id;
+            $('#formInfo')
+            .find('#frm_body').html('')
+            .append(template_transaksi(data))
+            .end().find('#frm_title').html('Info')
+            .end().modal('show');
+            initTableSubTransaksi(tableId,data);
+        }
+    });
+    function initTableSubTransaksi(tableId, data) {
+        $('#' + tableId).DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: data.details_url,
+            dom:'<"table"t>',
+            columns: [
+                { data: 'userNamaLengkap', name: 'userNamaLengkap' },
+                { data: 'namaMobil', name: 'namaMobil' },
+                { data: 'warna', name: 'warna' },
+                { data: 'no_plat', name: 'no_plat' },
+                { data: 'driverTelp', name: 'driverTelp' },
+            ]
+        })
+    }
 
 
     var table_task = $('#table_task').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-            url:'/api/task',
+            url:window._URLROOT+'/api/task',
             data: function (d) {
                 d.status = $('#status').val();
                 d.sq = $('input[name=sq]').val();
@@ -542,7 +576,7 @@ function loadDesa(id){
             {data: 'sewa_type'},
             {data: 'tgl_mulai', name: 'tgl_mulai'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'updated_at', name: 'updated_at'},
+            {data: 'tgl_akhir', name: 'tgl_akhir'},
             {data: 'action',name:'action', orderable: false, searchable: false},
         ]
     });
@@ -556,7 +590,7 @@ function loadDesa(id){
         processing: true,
         serverSide: true,
         ajax: {
-            url:'/api/promo',
+            url:window._URLROOT+'/api/promo',
         },
         columns: [
             {data: 'action',name:'action', orderable: false, searchable: false},

@@ -47,16 +47,15 @@
                 <thead>
                     <tr>
                         <th width="3%"></th>
+                        <th>No Transaksi</th>
                         <th>Asal</th>
                         <th>Tujuan</th>
                         <th>Biaya</th>
                         <th>Status</th>
-                        <th>No Plat</th>
-                        <th>Warna</th>
-                        <th>Merk</th>
                         <th>Waktu Penjemputan</th>
                         <th>Tanggal Pemesanan</th>
-                        <th>Tanggal Update</th>
+                        <th>Tanggal Selesai</th>
+                        <th width="100px"></th>
                     </tr>
                 </thead>
                 <tbody>

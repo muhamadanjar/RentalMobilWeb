@@ -107,6 +107,7 @@ class EloquentRepository implements RepositoryInterface {
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),
                 'mobil.id',
+                'mobil.name',
                 'mobil.no_plat',
                 'mobil.merk',
                 'mobil.type',

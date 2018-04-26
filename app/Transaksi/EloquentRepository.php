@@ -106,10 +106,12 @@ class EloquentRepository implements RepositoryInterface{
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
             ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
             ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
+            ->orderBy('sewa.created_at','DESC')
             ->select(
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),
                 'sewa.id',
+                'sewa.no_transaksi',
                 'sewa.mobil_id',
                 'sewa.origin',
                 'sewa.destination',
@@ -240,6 +242,7 @@ class EloquentRepository implements RepositoryInterface{
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),
                 'sewa.id',
+                'sewa.no_transaksi',
                 'sewa.mobil_id',
                 'sewa.origin',
                 'sewa.destination',
@@ -266,8 +269,10 @@ class EloquentRepository implements RepositoryInterface{
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
             ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
             ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
-            ->whereRaw('sewa.tgl_mulai >= ? or sewa.tgl_akhir <= ?' , [$dari,$sampai])
-            ->whereRaw('sewa_detail.sewa_type = ?' , [$type])
+            ->whereRaw('sewa.tgl_mulai BETWEEN ? AND ?' , [$dari,$sampai])
+            ->orWhereRaw('sewa.tgl_akhir BETWEEN ? AND ?' , [$dari,$sampai])
+            //->whereRaw('sewa.tgl_mulai >= ? or sewa.tgl_akhir <= ?' , [$dari,$sampai])
+            //->whereRaw('sewa_detail.sewa_type = ?' , [$type])
             ->select(
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),

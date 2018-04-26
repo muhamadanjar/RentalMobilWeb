@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'UtamaTrans',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,6 +52,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'urlroot' => env('APP_URL_ROOT', 'http://mustikasumberlestari.com/utamatrans'),
+    
 
     /*
     |--------------------------------------------------------------------------
