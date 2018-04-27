@@ -83,8 +83,9 @@ class SewaCtrl extends BackendCtrl{
                 $sewa->save();
                 Flash::success(trans('flash/transaksi.status_update'));
             }elseif($sewa->status == 'confirmed'){
-                if($request->mobil != 0){
+                if($request->mobil_id != 0){
                     $this->mobil->updatestatus($sewa->mobil_id,'dipinjam');
+                    $sewa->save();
                     $data = array();
                     $email = $sewa->customer->email;
                     $name = $sewa->customer->name;
@@ -109,7 +110,7 @@ class SewaCtrl extends BackendCtrl{
                             $mail->to($email, $name);
                             $mail->subject($subject);
                     });
-                    $sewa->save();
+                    
                 }else{
                     Flash::error('Data gagal disimpan, Mobil harus di isi.');
                     return redirect()->route('backend.transaksi.task.index');

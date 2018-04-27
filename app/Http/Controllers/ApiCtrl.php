@@ -92,7 +92,8 @@ class ApiCtrl extends Controller{
                     ->orWhere('sewa.destination', 'like', "%{$request->get('sq')}%")
                     ->orWhere('mobil.no_plat', 'like', "%{$request->get('sq')}%")
                     ->orWhere('mobil.warna', 'like', "%{$request->get('sq')}%")
-                    ->orWhere('mobil.merk', 'like', "%{$request->get('sq')}%");
+                    ->orWhere('mobil.merk', 'like', "%{$request->get('sq')}%")
+                    ->orWhere('sewa.no_transaksi', 'like', "%{$request->get('sq')}%");
             }
             
         })
@@ -260,7 +261,7 @@ class ApiCtrl extends Controller{
         $customers->sex = $request->sex;
         $customers->name = $request->name;
         $customers->email = $request->email;
-        $customers->no_telp = $request->email;
+        $customers->no_telp = $request->no_telp;
         $customers->religion = $request->religion;
         $customers->address = $request->address;
         $customers->save();
@@ -304,6 +305,15 @@ class ApiCtrl extends Controller{
             }
         })
         ->make(true); 
+    }
+
+    public function getPromoData(){
+        $promo = Promo::orderBy('tgl_mulai','DESC')->select()->get();
+        $p = new Promo();
+        foreach($promo as $key => $v){
+            $v->foto = url($p->getPermalink().$v->foto);
+        }
+        return $promo;
     }
 
 }

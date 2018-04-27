@@ -1,7 +1,6 @@
 <?php namespace App\Transaksi;
 
 interface RepositoryInterface {
-
     function all();
     function find($id);
     function delete($id);
@@ -15,6 +14,8 @@ interface RepositoryInterface {
     function autoNumber($table, $primary, $prefix);
     function getPesananByCustomer($id);
     function getPesananByCustomerAll($id);
+    function getDatatableDataRental();
+    function getDatatableDataTask();
     function statistikPemesanan($statistik);
     function getDataRange($dari,$sampai,$type);
     function generateRandomString($length);

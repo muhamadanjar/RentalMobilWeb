@@ -58,7 +58,12 @@ class EloquentRepository implements RepositoryInterface {
     }
 
     public function mobilavailable(){
-        return $this->mobil->where('status','tersedia')->orderBy('name', 'asc')->get();
+        $mobil = $this->mobil->where('status','tersedia')->orderBy('name', 'asc')->get();
+        $new = new Mobil();
+        foreach($mobil as $key =>$v){
+            $v->foto = $new->getPermalink().$v->foto;
+        }
+        return $mobil;
     }
 
     public function autoNumber($table,$primary,$prefix){

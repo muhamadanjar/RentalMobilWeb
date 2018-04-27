@@ -109,7 +109,7 @@
 
                         <div class="form-group">
                             <label>Alamat Kami</label>
-                            <textarea rows="4" class="form-control tinymce_200" name="our_address">
+                            <textarea rows="4" class="form-control" name="our_address" id="our_address">
                                 {{ array_get($setting, 'our_address', '') }}
                             </textarea>
                         </div>
@@ -128,7 +128,7 @@
 
                         <div class="form-group">
                             <label>Support Kami</label>
-                            <textarea rows="4" class="form-control tinymce_200" name="our_support">
+                            <textarea rows="4" class="form-control tinymce_200" name="our_support" id="our_support">
                                 {{ array_get($setting, 'our_support', '') }}
                             </textarea>
                         </div>    
@@ -144,18 +144,8 @@
 @endsection
 @section('script-end')
 @parent
-<script type="text/javascript" src="{{ url('assets/plugins/selectize/js/selectize.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/addon/timepicker/jquery-ui-timepicker.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/jquery-ui/js/jquery-ui-touch.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/inputmask/js/inputmask.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/select2/js/select2.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/touchspin/js/jquery.bootstrap-touchspin.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/javascript/backend/forms/element.js')}}"></script>
-
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/tabletools/js/dataTables.tableTools.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/datatables/js/datatables-bs3.js')}}"></script>
-<script type="text/javascript" src="{{ url('assets/plugins/tinymce/tinymce.min.js')}}"></script>
-<script type="text/javascript" src="{{ url('js/sikko.js')}}"></script>
+<script>
+    CKEDITOR.replace( 'our_address' );
+    CKEDITOR.replace( 'our_support' );
+</script>
 @endsection

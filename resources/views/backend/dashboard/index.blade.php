@@ -108,7 +108,7 @@
                               <small class="label label-danger"><i class="fa fa-clock-o"></i> {{$v->created_at->diffForHumans()}}</small>
                               <!-- General tools such as edit or delete-->
                               <div class="tools">
-                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('backend.transaksi.edit',[$v->id]) }}"><i class="fa fa-edit"></i></a>
                                 <i class="fa fa-trash-o"></i>
                               </div>
                         </li>
@@ -143,7 +143,11 @@
                         @foreach($listtransaksi as $k => $v)
                         <li class="item">
                           <div class="product-img">
+                            @if(isset($v->mobil))
+                              <img src="{{$v->mobil->getPermalink()}}{{$v->mobil->foto}}" alt="Image">
+                            @else
                             <img src="http://placehold.it/160" alt="Image">
+                            @endif
                           </div>
                           <div class="product-info">
                             <a href="javascript:void(0)" class="product-title">

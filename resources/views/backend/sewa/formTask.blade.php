@@ -120,7 +120,7 @@ if(session('aksi') == 'edit'){
 					<input type="hidden" id="duration" name="duration" value="{{$sewaDetail->duration}}"/>
 					<input type="hidden" id="distance" name="distance" value="{{$sewaDetail->distance}}"/>
 					<input type="hidden" name="sewa_type" value="{{$sewaDetail->sewa_type}}"/>
-					<input type="hidden" name="mobil_id" value="{{$mobil_id}}"/>
+					<input type="hidden" name="mobil_id"  id="mobil_id" value="{{$mobil_id}}"/>
 						<div class="form-group">
                                 <label for="mobil">Mobil</label>
                                 <select name="mobil" class="select2 mobil form-control" id="mobil">
@@ -216,6 +216,7 @@ if(session('aksi') == 'edit'){
 				var distanceInKM = Math.round($('#distance').val()* 0.001);
 				$('#total_bayar').val(Math.round(distanceInKM * response.mobil.harga));
 				$("#status").val('confirmed');
+				$('#mobil_id').val(response.mobil.id);
 			});
 		}
     });

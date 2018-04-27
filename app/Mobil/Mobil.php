@@ -22,4 +22,13 @@ class Mobil extends Model
         return $this->hasMany('App\Mobil\Fasilitas', 'fasilitas_id');
         //return $this->belongsToMany(Fasilitas::class,'post_tag');
     }
+
+    public function getPermalink(){
+        return url('images/car').DIRECTORY_SEPARATOR;
+    }
+
+    public function getPath(){
+        
+        return public_path('images/car').DIRECTORY_SEPARATOR.'/';
+    }
 }

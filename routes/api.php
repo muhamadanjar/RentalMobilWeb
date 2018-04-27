@@ -104,6 +104,7 @@ Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getp
 
 Route::get('task','ApiCtrl@getTask')->name('api.gettask');
 Route::get('promo','ApiCtrl@getPromo')->name('api.getpromo');
+Route::get('promo/data','ApiCtrl@getPromoData')->name('api.getpromodata');
 
 
 Route::post('customer/create','ApiCtrl@createCustomer')->name('api.customer.create');

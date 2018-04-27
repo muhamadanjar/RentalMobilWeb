@@ -44,11 +44,13 @@ class EloquentRepository implements RepositoryInterface{
         return $sewa;
     }
     public function makeSewa($request){
+        $tgl_mulai = new Carbon($request->tgl_mulai);
+        $tgl_akhir = new Carbon($request->tgl_akhir);
         $reservation = new Sewa();
         $reservation->status = $request->status;
         $reservation->no_transaksi = $this->autoNumber('sewa','no_transaksi','RENT');
-        $reservation->tgl_mulai = (isset($request->tgl_mulai)) ? $request->tgl_mulai : null;
-        $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? $request->tgl_akhir : null;
+        $reservation->tgl_mulai = (isset($request->tgl_mulai)) ? $tgl_mulai->toDateTimeString() : null;
+        $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? $tgl_akhir->toDateTimeString() : null;
         $reservation->sewa_latitude = (isset($request->sewa_latitude)) ? $request->sewa_latitude : null;
         $reservation->sewa_longitude = (isset($request->sewa_longitude)) ? $request->sewa_longitude : null;
         $reservation->origin = $request->origin;
@@ -231,6 +233,38 @@ class EloquentRepository implements RepositoryInterface{
         return $statistik_query;
     }
 
+    public function getDatatableDataRental(){
+        \DB::statement(DB::raw('set @rownum=0'));
+            $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+            ->leftjoin('mobil','sewa.mobil_id', '=', 'mobil.id')
+            ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
+            //->whereRaw('sewa.status=?', ['pending'])
+            ->whereRaw('sewa_detail.sewa_type=?', ['rental'])
+            ->select(
+            [
+                DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'sewa.id',
+                'sewa.no_transaksi',
+                'sewa.mobil_id',
+                'sewa.origin',
+                'sewa.destination',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.total_bayar,2)) as total_bayar"),
+                'sewa.status',
+                \DB::raw("CONCAT('Rp.',FORMAT(sewa.denda,2)) as denda"),
+                'sewa.tgl_mulai',
+                'sewa.tgl_akhir',
+                'mobil.no_plat',
+                'mobil.merk',
+                'mobil.warna',
+                'mobil.tahun',
+                'sewa_detail.sewa_type',
+                'sewa.created_at',
+                'sewa.updated_at'
+            ]
+        );
+        
+        return $sewa;
+    }
     public function getDatatableDataTask(){
         \DB::statement(DB::raw('set @rownum=0'));
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')

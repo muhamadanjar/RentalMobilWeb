@@ -496,6 +496,7 @@ function loadDesa(id){
     var table_reservation = $('#table_reservation').DataTable({
         processing: true,
         serverSide: true,
+        responsive: true,
         ajax: {
             url:window._URLROOT+'/api/reservation',
             data: function (d) {
@@ -561,6 +562,7 @@ function loadDesa(id){
     var table_task = $('#table_task').DataTable({
         processing: true,
         serverSide: true,
+        responsive: true,
         ajax: {
             url:window._URLROOT+'/api/task',
             data: function (d) {
