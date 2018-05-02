@@ -131,7 +131,14 @@ trait CustomLogin{
         }
         // all good so return the token
         $_user = User::orderBy('id')->where('username',$request->username)->first();
-        return response()->json(['success' => true, 'data'=> [ 'token' => $token, 'user'=>$_user,'customer'=>$_user->customer,'roles'=>$_user->roles ]])->header('Authorization','Bearer '.$token);
+        return response()->json(['success' => true, 'data'=> [ 
+            'token' => $token, 
+            'user'=>$_user,
+            'customer'=>$_user->customer,
+            'roles'=>$_user->roles,
+            'officers' =>$_user->officers,
+            'mobil' =>$_user->mobil]
+        ])->header('Authorization','Bearer '.$token);
         //return response()->json(compact('token'));
     }
     /**

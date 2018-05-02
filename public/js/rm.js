@@ -291,7 +291,7 @@ function loadDesa(id){
                     if($('.txtfoto').length > 0) {
                         fileinput.closest('div.controlupload').find('.txtfoto')
                             .css({"color": "peru", "border": "2px solid blue"}).val(data.filename);
-                        fileinput.parent().parent().parent().find('img.imgfoto').attr('src',fileinput_path+data.filename);
+                        fileinput.parent().parent().parent().find('img.imgfoto').attr('src',fileinput_path+'/'+data.filename);
                     }
                 },
                 error: errorHandler = function(e) {
@@ -585,6 +585,35 @@ function loadDesa(id){
     $('#table_task_search_form').on('submit', function(e) {
         console.log(e)
         table_task.draw();
+        e.preventDefault();
+    });
+
+    var table_rental = $('#table_rental').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        ajax: {
+            url:window._URLROOT+'/api/rental',
+            data: function (d) {
+                d.status = $('#status').val();
+                d.sq = $('input[name=sq]').val();
+            }
+        },
+        columns: [
+            {data: 'rownum',name:'rank', orderable: false, searchable: false},
+            {data: 'origin'},
+            {data: 'destination'},
+            {data: 'status'},
+            {data: 'sewa_type'},
+            {data: 'tgl_mulai', name: 'tgl_mulai'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'tgl_akhir', name: 'tgl_akhir'},
+            {data: 'action',name:'action', orderable: false, searchable: false},
+        ]
+    });
+    $('#table_task_search_form').on('submit', function(e) {
+        console.log(e)
+        table_rental.draw();
         e.preventDefault();
     });
 

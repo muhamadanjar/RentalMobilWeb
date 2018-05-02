@@ -101,6 +101,10 @@ Route::group(['prefix'=>'backend','as'=>'backend.','namespace' => 'Backend','mid
 	Route::get('transaksi/task','SewaCtrl@task')->name('transaksi.task.index');
 	Route::get('transaksi/task/{id}','SewaCtrl@taskForm')->name('transaksi.taskform');
 	Route::post('transaksi/task','SewaCtrl@postTask')->name('transaksi.posttask');
+
+	Route::get('transaksi/rental','SewaCtrl@rental')->name('transaksi.rental.index');
+	Route::get('transaksi/rental/{id}','SewaCtrl@rentalForm')->name('transaksi.rentalform');
+	Route::post('transaksi/rental','SewaCtrl@postRental')->name('transaksi.postrental');
 	
 	Route::resource('promo', 'PromoCtrl',['only' => ['index', 'create', 'edit', 'destroy']]);
 	Route::post('promo/post','PromoCtrl@post')->name('promo.post');

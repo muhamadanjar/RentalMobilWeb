@@ -12,7 +12,7 @@ class Promo extends Model
 
 
     public function getPermalink(){
-        return url('images/uploads/promo').DIRECTORY_SEPARATOR.'/';
+        return url('images/uploads/promo').DIRECTORY_SEPARATOR;
     }
 
     public function getPath(){

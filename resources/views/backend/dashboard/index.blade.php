@@ -90,7 +90,7 @@
                     <div class="box-body">
                       <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                       <ul class="todo-list">
-                      @foreach($listtransaksi as $k => $v)
+                      @foreach($reguler as $k => $v)
                         <li>
                               <span class="handle">
                                 <i class="fa fa-ellipsis-v"></i>
@@ -105,10 +105,10 @@
                               </span>
                               <!-- Emphasis label -->
                               <small class="label label-info"><i class="fa fa-info"></i> {{$v->status}}</small>
-                              <small class="label label-danger"><i class="fa fa-clock-o"></i> {{$v->created_at->diffForHumans()}}</small>
+                              <small class="label label-danger"><i class="fa fa-clock-o"></i> {{\Carbon\Carbon::parse($v->created_at)->diffForHumans()}}</small>
                               <!-- General tools such as edit or delete-->
                               <div class="tools">
-                                <a href="{{ route('backend.transaksi.edit',[$v->id]) }}"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('backend.transaksi.taskform',[$v->id]) }}"><i class="fa fa-edit"></i></a>
                                 <i class="fa fa-trash-o"></i>
                               </div>
                         </li>

@@ -92,7 +92,7 @@
                                         <span class="input-group-btn">
                                             <input type="file" name="users_file" class="hidden file fileupload" 
                                             data-url="{{ route('backend.promo.upload')}}" 
-                                            data-path="/images/uploads/promo/">
+                                            data-path="{{ asset('/images/uploads/promo/')}}">
                                             <button type="button" class="btn btn-info btn-flat formUpload">Foto!</button>
                                         </span>
                                     </div>

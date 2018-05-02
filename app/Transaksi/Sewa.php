@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Mobil\Mobil;
 use App\Customer;
+use Carbon\Carbon;
 class Sewa extends Model
 {
     protected $table = 'sewa';
     protected $fillable = array('status', 'tgl_mulai', 'tgl_akhir', 'type_id', 'origin', 'destination', 'user_id');
     public $timestamps = true;
 
-    protected $dates = ['tgl_mulai','tgl_akhir'];
+    protected $dates = ['tgl_mulai','tgl_akhir','created_at'];
     
     public function mobil(){
         return $this->belongsTo(Mobil::class,'mobil_id');
@@ -41,5 +42,9 @@ class Sewa extends Model
         return $query->join('sewa_detail', 'sewa.id', '=', 'sewa_detail.sewa_id')
         ->where('sewa_detail.type_sewa','reguler')
         ->select('sewa.*');
+    }
+
+    public function getTimeAgoAttribute(){
+        return Carbon::parse($this->created_at);
     }
 }

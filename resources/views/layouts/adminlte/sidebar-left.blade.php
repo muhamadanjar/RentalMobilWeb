@@ -71,7 +71,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('backend.transaksi.index')}}"><i class="fa fa-circle-o"></i> Pemesanan</a></li>
-            <li><a href="{{ route('backend.transaksi.task.index')}}"><i class="fa fa-circle-o"></i> Task</a></li>
+            <li><a href="{{ route('backend.transaksi.task.index')}}"><i class="fa fa-circle-o"></i> Reguler</a></li>
+            <li><a href="{{ route('backend.transaksi.rental.index')}}"><i class="fa fa-circle-o"></i> Rental</a></li>
           </ul>
         </li>
         <li class="treeview">

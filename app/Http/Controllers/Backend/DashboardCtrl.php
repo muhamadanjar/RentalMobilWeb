@@ -33,6 +33,7 @@ class DashboardCtrl extends BackendCtrl{
         //$transdatadaerah = $this->transmigrasi->getTransPivotDaerahData();
 
         $listtransaksi = $this->transaksi->getlimit(3);
+        $reguler = $this->transaksi->getlimitType(5,'reguler');
         $countpost = $this->post->countByType('post');
         $countuser = $this->user->countUser();
         //$countagenda = $this->agenda->countNewThisWeek();
@@ -48,6 +49,7 @@ class DashboardCtrl extends BackendCtrl{
         ->with('countmobil',$totalmobil)
         ->with('datastatistik',$datastatistik)
         ->with('listtransaksi',$listtransaksi)
+        ->with('reguler',$reguler)
         ->with('chartstatistik',$chartstatistik)
         ->with('chartpesanan',$chartpesanan);
     }

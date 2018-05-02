@@ -75,7 +75,10 @@ Route::get('/user', function () {
 		'uuid'=>$user->uuid,
 		'username'=>$user->name,
 		'foto'=>$user->foto,
-		'customer'=>$user->customer],
+		'customer'=>$user->customer,
+		'mobil'=>$user->mobil,
+		'officers'=>$user->officers
+	],
 		'customer'=>$user->customer],200);
 });
 
@@ -91,6 +94,11 @@ Route::get('mobil/detail-data/datatable/{id}','ApiCtrl@getMobilDriver')->name('a
 
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::get('reservation/{id}/detail','ApiCtrl@getReservationDetailsData')->name('api.getreservationdetail');
+Route::get('reservation/{id}/driver','ApiCtrl@getReservationByDriver')->name('api.getreservationbydriver');
+Route::get('reservation/{id}/regulerdriver','ApiCtrl@getReservationRegulerByDriver')->name('api.getreservationbydriver');
+Route::get('reservation/{id}/rentaldriver','ApiCtrl@getReservationRentalByDriver')->name('api.getreservationbydriver');
+Route::get('reservation/{id}/active/{type}','ApiCtrl@getReservationActiveByDriver')->name('api.getreservationactivebydriver');
+Route::get('reservation/{id}/driver/changestatus/{status}','ApiCtrl@getReservationChangeStatusByDriver')->name('api.getreservationchangestatusbydriver');
 
 Route::get('bookings/{id}/notcomplete','ApiCtrl@getReservationNotComplete')->name('api.notcomplete');
 Route::get('bookings/{id}/bycustomer','ApiCtrl@getReservationByCustomer')->name('api.bycostumer');
@@ -103,6 +111,7 @@ Route::get('bookings/{id}/collected','ApiCtrl@cancelledPesanan')->name('api.coll
 Route::get('pemesananbulanan','ApiCtrl@getDataPemesananBulanan')->name('api.getpemesananbulanan');
 
 Route::get('task','ApiCtrl@getTask')->name('api.gettask');
+Route::get('rental','ApiCtrl@getRental')->name('api.getrental');
 Route::get('promo','ApiCtrl@getPromo')->name('api.getpromo');
 Route::get('promo/data','ApiCtrl@getPromoData')->name('api.getpromodata');
 

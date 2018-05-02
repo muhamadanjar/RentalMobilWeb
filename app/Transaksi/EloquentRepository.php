@@ -44,13 +44,13 @@ class EloquentRepository implements RepositoryInterface{
         return $sewa;
     }
     public function makeSewa($request){
-        $tgl_mulai = new Carbon($request->tgl_mulai);
-        $tgl_akhir = new Carbon($request->tgl_akhir);
+        $tgl_mulai = strtotime($request->tgl_mulai);
+        $tgl_akhir = strtotime($request->tgl_akhir);
         $reservation = new Sewa();
         $reservation->status = $request->status;
         $reservation->no_transaksi = $this->autoNumber('sewa','no_transaksi','RENT');
-        $reservation->tgl_mulai = (isset($request->tgl_mulai)) ? $tgl_mulai->toDateTimeString() : null;
-        $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? $tgl_akhir->toDateTimeString() : null;
+        $reservation->tgl_mulai = (isset($request->tgl_mulai)) ? date('Y-m-d H:i:s',$tgl_mulai) : null;
+        $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? date('Y-m-d H:i:s',$tgl_akhir) : null;
         $reservation->sewa_latitude = (isset($request->sewa_latitude)) ? $request->sewa_latitude : null;
         $reservation->sewa_longitude = (isset($request->sewa_longitude)) ? $request->sewa_longitude : null;
         $reservation->origin = $request->origin;
@@ -102,6 +102,13 @@ class EloquentRepository implements RepositoryInterface{
     }
     public function getlimit($limit = '5'){
         return $this->sewa->limit($limit)->orderBy('tgl_mulai', 'desc')->get();
+    }
+    public function getlimitType($limit = '5',$type ='rental'){
+        return $this->sewa->join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+        ->where('sewa_detail.sewa_type',$type)->limit($limit)->orderBy('created_at', 'desc')
+        ->select('sewa.*')
+        ->get();
+        
     }
     public function getDatatableData(){
         \DB::statement(DB::raw('set @rownum=0'));
@@ -159,7 +166,6 @@ class EloquentRepository implements RepositoryInterface{
  
         return $kd;
     }
-
     public function getPesananByCustomer($id){
         $sewa = $this->sewa->where('customer_id',$id)->where('status','!=','pending')->first();
         $customer = $sewa->customer;
@@ -180,7 +186,6 @@ class EloquentRepository implements RepositoryInterface{
     }
     public function getPesananByCustomerAll($id){
         $sewa = $this->sewa->where('customer_id',$id)->get();
-        
         $data = array();$_data = array();
         foreach($sewa as $k => $v){
             $customer = $v->customer;
@@ -232,7 +237,6 @@ class EloquentRepository implements RepositoryInterface{
         
         return $statistik_query;
     }
-
     public function getDatatableDataRental(){
         \DB::statement(DB::raw('set @rownum=0'));
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
@@ -297,7 +301,6 @@ class EloquentRepository implements RepositoryInterface{
         
         return $sewa;
     }
-
     public function getDataRange($dari,$sampai,$type){
         \DB::statement(DB::raw('set @rownum=0'));
             $sewa = Sewa::join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
@@ -333,7 +336,6 @@ class EloquentRepository implements RepositoryInterface{
         
         return $sewa;
     }
-
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -343,4 +345,17 @@ class EloquentRepository implements RepositoryInterface{
         }
         return $randomString;
     }
+    public function getActivationsReservationByDriver($id,$type){
+        return $this->sewa->join('sewa_detail','sewa.id','=','sewa_detail.sewa_id')
+        ->join('customers','sewa.customer_id','=','customers.id')
+        ->where('sewa_detail.sewa_type',$type)
+        ->where('sewa.status','!=','complete')
+        ->where('sewa.status','!=','cancelled')
+        ->where('sewa.mobil_id',$id)
+        ->select('sewa.*','sewa_detail.sewa_type','sewa_detail.duration','sewa_detail.distance',
+            'customers.name AS customerName','customers.email AS customerEmail',
+            'customers.no_telp AS customerTelp',DB::raw('TIMESTAMPDIFF(DAY,tgl_mulai, tgl_akhir) as waktupinjam'))
+        ->first();
+    }
+
 }

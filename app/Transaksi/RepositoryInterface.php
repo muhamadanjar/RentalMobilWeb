@@ -7,6 +7,7 @@ interface RepositoryInterface {
     function post($aksi);
     function makeSewa($request);
     function getlimit($limit);
+    function getlimitType($limit,$type);
     function getDatatableData();
     function countTransaksi();
     function checkstatus($id);
@@ -19,4 +20,5 @@ interface RepositoryInterface {
     function statistikPemesanan($statistik);
     function getDataRange($dari,$sampai,$type);
     function generateRandomString($length);
+    function getActivationsReservationByDriver($id,$type);
 }

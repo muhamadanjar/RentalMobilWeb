@@ -149,11 +149,43 @@ class ApiCtrl extends Controller{
         ->select();
             return Datatables::of($sewaDetail)->make(true);
     }
+    public function getReservationByDriver($id){
+        return DB::table('sewamobil')->orderBy('created_at','DESC')->where('mobil_id',$id)->get();
+    }
+    public function getReservationRentalByDriver($id){
+        return DB::table('sewamobil')
+        ->orderBy('created_at','DESC')
+        ->where('sewa_type','rental')
+        ->where('mobil_id',$id)->get();
+    } 
+    public function getReservationRegulerByDriver($id){
+        return DB::table('sewamobil')
+        ->orderBy('created_at','DESC')
+        ->where('sewa_type','reguler')
+        ->where('mobil_id',$id)->get();
+    }
+    public function getReservationActiveByDriver($id,$type='rental'){
+        return $this->transaksi->getActivationsReservationByDriver($id,$type);
+        
+    }  
     public function getTask(Request $request) {
         $task = $this->transaksi->getDatatableDataTask();
         return Datatables::of($task)
         ->addColumn('action', function ($user) {
             return '<a href="'.route('backend.transaksi.taskform',[$user->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-send"></i> Aksi</a>';
+        })
+        ->filter(function ($query) use ($request) {
+            if ($request->has('status')) {
+                $query->where('sewa.status', 'like', "%{$request->get('status')}%");
+            }
+        })
+        ->make(true);
+    }
+    public function getRental(Request $request){
+        $rental = $this->transaksi->getDatatableDataRental();
+        return Datatables::of($rental)
+        ->addColumn('action', function ($rental) {
+            return '<a href="'.route('backend.transaksi.taskform',[$rental->id]).'" class="btn btn-xs btn-primary"><i class="fa fa-send"></i> Aksi</a>';
         })
         ->filter(function ($query) use ($request) {
             if ($request->has('status')) {
@@ -314,6 +346,20 @@ class ApiCtrl extends Controller{
             $v->foto = url($p->getPermalink().$v->foto);
         }
         return $promo;
+    }
+
+    public function getReservationChangeStatusByDriver($id,$status){
+        $reservationId = $id;
+        $reservationData = $this->transaksi->find($reservationId);
+        $mobilId = $reservationData->mobil_id;
+        try{
+            $this->transaksi->setStatusPesanan($reservationId,$status);
+            $this->mobil->updatestatus($mobilId,$statusMobil);
+        }catch(\Exception $e){
+            return response(['error'=>$e]);
+        }
+        
+        return $reservationData;
     }
 
 }

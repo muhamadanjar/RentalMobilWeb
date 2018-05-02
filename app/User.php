@@ -8,6 +8,7 @@ use App\Officer\Officer;
 use App\Customer;
 use App\Post\Post;
 use App\Post\Comment;
+use App\Mobil\Mobil;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -81,12 +82,15 @@ class User extends Authenticatable
         return $this->roles()->detach($role);
     }
     public function officers(){
-        //return $this->hasOne(Officer::class);
-        return $this->hasMany(Officer::class);
+        return $this->hasOne(Officer::class);
+        //return $this->hasMany(Officer::class);
         //return $this->belongsTo(Officer::class);
     }
     public function customers(){
         return $this->hasOne(Customer::class);
+    }
+    public function mobil(){
+        return $this->hasOne(Mobil::class);
     }
     public function posts(){
         return $this->hasMany(Post::class, 'author_id');
