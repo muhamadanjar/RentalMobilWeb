@@ -92,6 +92,10 @@ Route::get('mobil/{id}/driverinfo','ApiCtrl@getDriverInfo')->name('api.getdriver
 Route::get('mobil/datatable','ApiCtrl@getMobil')->name('api.getmobil');
 Route::get('mobil/detail-data/datatable/{id}','ApiCtrl@getMobilDriver')->name('api.getmobil');
 
+Route::get('mobil/getalldriverlocation','ApiCtrl@getAllDriverLocation')->name('api.getalldriverlocation');
+Route::get('mobil/{id}/getdriverlocation','ApiCtrl@getDriverLocation')->name('api.getdriverlocation');
+Route::post('mobil/setdriverlocation','ApiCtrl@setDriverLocation')->name('api.setdriverlocation');
+
 Route::get('reservation','ApiCtrl@getReservation')->name('api.getreservation');
 Route::get('reservation/{id}/detail','ApiCtrl@getReservationDetailsData')->name('api.getreservationdetail');
 Route::get('reservation/{id}/driver','ApiCtrl@getReservationByDriver')->name('api.getreservationbydriver');

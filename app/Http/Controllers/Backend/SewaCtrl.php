@@ -74,8 +74,12 @@ class SewaCtrl extends BackendCtrl{
         try{
             $sewa = (session('aksi') == 'edit') ? $this->reservation->findOrFail($request->id) : new Sewa;
             $sewa->status = $request->status;
-            $sewa->mobil_id = $request->mobil;
             $sewa->total_bayar = $request->total_bayar;
+            if($sewa->mobil_id == 0){
+                $sewa->mobil_id = $request->mobil;
+            }else{
+                $sewa->mobil_id = $request->mobil_id;
+            }
             
             if($sewa->status == 'complete'){
                 //$this->mobil->updatestatusmobil($sewa->mobil_id);
@@ -84,14 +88,18 @@ class SewaCtrl extends BackendCtrl{
                 Flash::success(trans('flash/transaksi.status_update'));
             }elseif($sewa->status == 'confirmed'){
                 if($request->mobil_id != 0){
-                    $this->mobil->updatestatus($sewa->mobil_id,'dipinjam');
+                    //$this->mobil->updatestatus($sewa->mobil_id,'dipinjam');
                     $sewa->save();
                     $data = array();
                     $email = $sewa->customer->email;
                     $name = $sewa->customer->name;
                     $mobil = $sewa->mobil;
+                    
                     $customer = $sewa->customer;
                     $sd = \DB::table('sewa_detail')->where('sewa_id',$sewa->id)->first();
+                    $driverInfo = \DB::table('users')->where('id',$mobil['user_id'])->first();
+                    
+                    
                     $subject = 'Pesanan anda sudah terkonfirmasi.';
                     $data['no_transaksi'] = $sewa->no_transaksi;
                     $data['origin'] = $sewa->origin;
@@ -100,16 +108,16 @@ class SewaCtrl extends BackendCtrl{
                     $data['email'] = $email;
                     $data['customer'] = $name;
                     $data['no_telp'] = $customer->no_telp;
-                    $data['driver'] = $mobil->supir->name;
+                    $data['driver'] = $driverInfo->name;
                     $data['jeniskendaraan'] = $sd->sewa_type;
                     $data['tarif'] = $sewa->total_bayar;
                     $data['total'] = $sewa->total_bayar;
-                    Mail::send('email.orderconfirm', ['data' => $data],
+                    /*Mail::send('email.orderconfirm', ['data' => $data],
                         function($mail) use ($email, $name, $subject){
                             $mail->from(getenv('MAIL_USERNAME'), "Trans Utama");
                             $mail->to($email, $name);
                             $mail->subject($subject);
-                    });
+                    });*/
                     
                 }else{
                     Flash::error('Data gagal disimpan, Mobil harus di isi.');

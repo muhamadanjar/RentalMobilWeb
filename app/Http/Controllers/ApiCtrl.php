@@ -29,6 +29,19 @@ class ApiCtrl extends Controller{
         $driver = $this->mobil->getDriverInfo($id);
         return $driver;
     }
+    public function setDriverLocation(Request $request){
+        $driver = $this->mobil->setDriverLocation($request);
+        return $driver;
+    }
+    public function getDriverLocation($id){
+        $driver = $this->mobil->getDriverLocation($id);
+        return $driver;
+    }
+    public function getAllDriverLocation(){
+        $driver = $this->mobil->getAllDriverLocation();
+        return $driver;
+    }
+    
     public function updateStatusMobil($id){
         $mobil = $this->mobil->updatestatusmobil($id);
         return response()->json(['status'=>$mobil]);

@@ -1,3 +1,4 @@
+
 @extends('layouts.adminlte.main')
 @section('title','Dashboard')
 @section('breadcrumb')
@@ -9,6 +10,7 @@
     $_chartpesanan= json_decode($chartpesanan);
     
 ?>
+ 
     <!-- Info boxes -->
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -119,6 +121,12 @@
                     <div class="box-footer clearfix no-border">
                     </div>
                   </div>
+                  <div class="box">
+                    <div class="box-body">
+                      <div id="map_canvas" style="height:500px"></div>
+                    </div>
+                  </div>
+                  
                   <div class="chart">
                     
                     <div id="orderChart1" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
@@ -208,7 +216,7 @@
             </div>
             
           </div>
-          <
+          
         </div>
         <!-- /.col -->
     </div>
@@ -266,4 +274,124 @@
         series: @if(isset($_chartpesanan->chart)){!! json_encode($_chartpesanan->chart,JSON_NUMERIC_CHECK) !!} @else [] @endif,
     });
     </script>
+    <script type="text/javascript">
+        var map;
+        var markers = [];
+        var mapMinZoom = 12,mapMaxZoom = 18;
+        var infoWindow;
+        var host = 'https://'+window.location;
+
+        function initialize() {
+          map = new google.maps.Map(document.getElementById('map_canvas'), {
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              center: new google.maps.LatLng(3.6426183,98.5294044),
+              zoom: 10,
+              mapTypeControl: false,
+              mapTypeControlOptions: {
+                  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                  position: google.maps.ControlPosition.TOP_CENTER
+              },
+              zoomControl: true,
+              zoomControlOptions: {
+                  position: google.maps.ControlPosition.TOP_LEFT
+              },
+              scaleControl: false,
+              streetViewControl: true,
+              streetViewControlOptions: {
+                  position: google.maps.ControlPosition.LEFT_TOP
+              },
+              fullscreenControl: true
+          });
+          if (navigator.geolocation) {
+            var locationMarker = null;
+            navigator.geolocation.getCurrentPosition(
+                function( position ){
+                    if (locationMarker){
+                        return;
+                    }
+                    console.log( "Initial Position Found" );
+
+                    locationMarker = addMarker(
+                        position.coords.latitude,
+                        position.coords.longitude,
+                        "Initial Position"
+                    );
+
+                },
+                function( error ){
+                    console.log( "Something went wrong: ", error );
+                },
+                {
+                    timeout: (5 * 1000),
+                    maximumAge: (1000 * 60 * 15),
+                    enableHighAccuracy: true
+                }
+            );
+            var positionTimer = navigator.geolocation.watchPosition(
+                function( position ){
+                    console.log( "Newer Position Found" );
+                    console.log (position);
+                    updateMarker(
+                        locationMarker,
+                        position.coords.latitude,
+                        position.coords.longitude,
+                        "Updated / Accurate Position"
+                    );
+                    var pos = new google.maps.LatLng(
+                        position.coords.latitude, 
+                        position.coords.longitude);   
+                    map.setCenter(pos);
+
+                }
+            );
+            setTimeout(function(){
+                navigator.geolocation.clearWatch( positionTimer );
+              },(1000 * 60 * 5)
+            );
+
+          }
+
+          //initGeolocation(map);
+          //initTraffic(map);
+        }
+        function addMarker (latitude, longitude){
+          var marker = new google.maps.Marker({
+          map: map,
+                  position: new google.maps.LatLng(
+                      latitude,
+                      longitude
+                  ),
+                  flat: true,
+                  icon: {
+                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                    strokeColor : 'red',
+                    strokeWeight : 3,
+                    scale: 3,
+                    //rotation: google.maps.geometry.spherical.computeHeading(from:LatLng, to:LatLng)
+                  },
+          });
+
+        return( marker );
+        }
+        function updateMarker(marker, latitude, longitude, label) {
+          var prevPosn = marker.getPosition();
+          marker.setPosition(
+            new google.maps.LatLng(
+              latitude,
+              longitude
+            )
+          );
+          marker.setIcon({
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+            strokeColor: 'red',
+            strokeWeight: 3,
+            scale: 6,
+            rotation: google.maps.geometry.spherical.computeHeading(prevPosn, marker.getPosition())
+          })
+          if (label) {
+            marker.setTitle(label);
+          }
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-kEXeuhgPWY__PZ9mzePYwJuMwOzLyC0&callback=initialize&libraries=places&libraries=geometry" async defer></script>
 @endsection

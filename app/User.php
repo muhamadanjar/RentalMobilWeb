@@ -92,6 +92,9 @@ class User extends Authenticatable
     public function mobil(){
         return $this->hasOne(Mobil::class);
     }
+    public function location(){
+        return $this->hasOne(Location::class,'user_id');
+    }
     public function posts(){
         return $this->hasMany(Post::class, 'author_id');
     }

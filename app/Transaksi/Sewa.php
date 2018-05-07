@@ -16,7 +16,7 @@ class Sewa extends Model
     protected $dates = ['tgl_mulai','tgl_akhir','created_at'];
     
     public function mobil(){
-        return $this->belongsTo(Mobil::class,'mobil_id');
+        return $this->belongsTo(Mobil::class,'mobil_id','id');
     }
     public function Payment(){
         return $this->hasOne('PaymentDetail','reservation_id');

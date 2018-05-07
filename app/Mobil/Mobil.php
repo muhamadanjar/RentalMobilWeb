@@ -4,6 +4,7 @@ namespace App\Mobil;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Mobil\Fasilitas;
+use App\User;
 class Mobil extends Model
 {
     protected $table = 'mobil';
@@ -15,7 +16,7 @@ class Mobil extends Model
     }
 
     public function supir(){
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->hasOne(User::class, 'user_id');
     }
 
     public function fasilitas(){

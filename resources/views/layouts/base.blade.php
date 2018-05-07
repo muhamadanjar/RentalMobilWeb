@@ -36,6 +36,7 @@
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
+                'serverUrl' =>getenv('APP_URL_ROOT')
             ]); ?>;
             window._URLROOT = '<?php echo getenv('APP_URL_ROOT');?>';
         </script>

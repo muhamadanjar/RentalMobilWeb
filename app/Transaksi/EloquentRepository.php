@@ -53,10 +53,10 @@ class EloquentRepository implements RepositoryInterface{
         $reservation->tgl_akhir = (isset($request->tgl_akhir)) ? date('Y-m-d H:i:s',$tgl_akhir) : null;
         $reservation->sewa_latitude = (isset($request->sewa_latitude)) ? $request->sewa_latitude : null;
         $reservation->sewa_longitude = (isset($request->sewa_longitude)) ? $request->sewa_longitude : null;
-        $reservation->origin = $request->origin;
+        $reservation->origin = (isset($request->origin)) ? $request->origin : null;
         $reservation->origin_latitude = (isset($request->origin_latitude)) ? $request->origin_latitude : null;
         $reservation->origin_longitude = (isset($request->origin_longitude)) ? $request->origin_longitude : null;
-        $reservation->destination = $request->destination;
+        $reservation->destination = (isset($request->destination)) ? $request->destination : null;
         $reservation->destination_latitude = (isset($request->destination_latitude)) ? $request->destination_latitude : null;
         $reservation->destination_longitude = (isset($request->destination_longitude)) ? $request->destination_longitude : null;
         $reservation->total_bayar = $request->total_bayar;
@@ -244,6 +244,7 @@ class EloquentRepository implements RepositoryInterface{
             ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
             //->whereRaw('sewa.status=?', ['pending'])
             ->whereRaw('sewa_detail.sewa_type=?', ['rental'])
+            ->orderBy('sewa.created_at','DESC')
             ->select(
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),
@@ -276,6 +277,7 @@ class EloquentRepository implements RepositoryInterface{
             ->leftjoin('customers','sewa.customer_id', '=', 'customers.id')
             //->whereRaw('sewa.status=?', ['pending'])
             ->whereRaw('sewa_detail.sewa_type=?', ['reguler'])
+            ->orderBy('sewa.created_at','DESC')
             ->select(
             [
                 DB::raw('@rownum  := @rownum  + 1 AS rownum'),

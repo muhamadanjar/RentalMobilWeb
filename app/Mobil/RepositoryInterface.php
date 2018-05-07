@@ -12,6 +12,7 @@ interface RepositoryInterface {
     public function autoNumber($table,$primary,$prefix);
     public function checkstatus($id);
     public function getDriverInfo($id);
-    public function getDriverLocation();
+    public function getDriverLocation($id);
+    public function setDriverLocation($request);
     public function getDatatableData();
 }

@@ -3,6 +3,9 @@
 use DB;
 use Datatables;
 use App\Officer\Officer;
+use App\User;
+use App\Location;
+use Carbon\Carbon;
 class EloquentRepository implements RepositoryInterface {
 
     /**
@@ -47,7 +50,7 @@ class EloquentRepository implements RepositoryInterface {
         $mobil = $this->find($id);
         $mobil->status = $status;
         $mobil->save();
-        return $status;
+        return $mobil;
     }
     public function updatebystatus($id,$status){
         $mobil = $this->find($id);
@@ -101,8 +104,41 @@ class EloquentRepository implements RepositoryInterface {
         ]);
     }
 
-    public function getDriverLocation(){
-        # code...
+    public function getDriverLocation($id){
+        $location = Location::join('users','user_location.user_id','=','users.id')
+        ->where('user_id',$id)
+        ->select('users.*','user_location.latitude','user_location.longitude','user_location.latest_update')
+        ->first();
+        return $location;
+    }
+
+    public function getAllDriverLocation(){
+        $location = Location::join('users','user_location.user_id','=','users.id')
+        ->select('users.*','user_location.latitude','user_location.longitude','user_location.latest_update')
+        ->get();
+        return $location;
+    }
+
+    public function setDriverLocation($request){
+        $id = $request->user_id;
+        $user = User::find($id);
+        
+        $location = Location::where('user_id','=',$user->id)->first();
+        if($location){
+            $location->latitude = $request->latitude;
+            $location->longitude = $request->longitude;
+            $location->latest_update = Carbon::now();
+            $location->save();
+        }else{
+            $location = new Location();
+            $location->user_id = $request->user_id;
+            $location->latitude = $request->latitude;
+            $location->longitude = $request->longitude;
+            $location->latest_update = Carbon::now();
+            $location->save();
+        }
+
+        return $location;
     }
 
     public function getDatatableData(){

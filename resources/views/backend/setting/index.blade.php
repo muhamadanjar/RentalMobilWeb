@@ -101,6 +101,22 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
+                                <label>Google Map Api</label>
+                                <input class="form-control" name="google_map_api" value="{{ array_get($setting, 'google_map_api', '') }}"></input>
+                        </div>
+                        <div class="form-group">
+                                <label>Email 1</label>
+                                <input class="form-control" name="email_one" value="{{ array_get($setting, 'email_one', '') }}"></input>
+                        </div>
+                        <div class="form-group">
+                                <label>Latitude</label>
+                                <input class="form-control" name="latitude" value="{{ array_get($setting, 'latitude', '') }}"></input>
+                        </div>
+                        <div class="form-group">
+                                <label>Longitude</label>
+                                <input class="form-control" name="longitude" value="{{ array_get($setting, 'longitude', '') }}"></input>
+                        </div>
+                        <div class="form-group">
                             <label>Tentang Kami</label>
                             <textarea rows="4" class="form-control tinymce_post" name="about_us">
                                 {{ array_get($setting, 'about_us', '') }}
